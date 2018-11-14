@@ -27,6 +27,11 @@ namespace CHEPPP
                     String[] move = nextMove.Split(" ");
                     Move playerMove = new Move(move[0], move[1], Player.White);
                     bool isValid = game.IsValidMove(playerMove);
+
+                    if (!isValid)
+                    {
+                        continue;
+                    }
                     MoveType type = game.ApplyMove(playerMove, true);
 
                 }
