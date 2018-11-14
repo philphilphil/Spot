@@ -23,7 +23,7 @@ namespace CHEPPP
             {
                 if (piece == null)
                 {
-                    rowString += "  ";
+                    rowString += "x ";
                 }
                 else
                 {
