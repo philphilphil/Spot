@@ -31,13 +31,7 @@ namespace CHEPPP
                 }
             }
 
-
             return rowString;
-        }
-
-        private static string GetPieceChar(Piece piece)
-        {
-            throw new NotImplementedException();
         }
     }
 }
