@@ -11,6 +11,7 @@ namespace CHEPPP
         {
             // Let's start by creating a chess game instance.
             ChessGame game = new ChessGame();
+            Engine engine = new Engine();
 
             while (true)
             {
@@ -18,9 +19,14 @@ namespace CHEPPP
 
                 if (game.WhoseTurn == Player.Black)
                 {
-                    IEnumerable<Move> validMoves = game.GetValidMoves(Player.Black);
-                    Move randomMove = validMoves.OrderBy(t => Guid.NewGuid()).FirstOrDefault();
-                    MoveType type = game.ApplyMove(randomMove, true);
+                    //Random move
+                    //IEnumerable<Move> validMoves = game.GetValidMoves(Player.Black);
+                    //Move randomMove = validMoves.OrderBy(t => Guid.NewGuid()).FirstOrDefault();
+                    //MoveType type = game.ApplyMove(randomMove, true);
+
+                    //calculate move
+                    Move bestMove = engine.CalculateBestMove(game);
+                    MoveType type = game.ApplyMove(bestMove, true);
                 }
                 else
                 {
@@ -36,23 +42,6 @@ namespace CHEPPP
 
                 }
             }
-  
-            //Console.WriteLine("Move type: {0}", type);
-
-
-            //Console.WriteLine("It's this color's turn: {0}", game.WhoseTurn);
-
-            //// You can figure out all valid moves using GetValidMoves.
-            //IEnumerable<Move> validMoves = game.GetValidMoves(Player.Black);
-
-            //Console.WriteLine("How many valid moves does black have? {0}", validMoves.Count());
-
-            //bool hasValidMoves = game.HasAnyValidMoves(Player.Black);
-            //Console.WriteLine("Black has any valid moves: {0}", hasValidMoves);
-
-            //CLITools.DrawBoard(game);
-
-
             Console.ReadKey();
         }
         private static string UpdateConsoleAndGetMove(ChessGame game)
