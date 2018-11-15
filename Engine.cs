@@ -17,20 +17,18 @@ namespace CHEPPP
             //get all possible legal moves
             List<Move> validMoves = game.GetValidMoves(game.WhoseTurn).ToList();
 
-
-
             //itterate through all possible moves
-            foreach (var item in validMoves)
+            foreach (var move in validMoves)
             {
                 //set fen back to original position
                 game = new ChessGame(originalPositionFen);
 
                 //do the move
                 var turnMadeBy = game.WhoseTurn;
-                MoveType type = game.ApplyMove(item, true);
+                MoveType type = game.ApplyMove(move, true);
 
-                //get board value after this move
-                var boardRating = GetBoardRating(game.GetBoard());
+                //get best board rating after depth 4
+                var boardRating = MinMaxBestMove(game, 3);
 
                 //if its blacks turn, take negative of the rating because blacks pieces are valued in -
                 if (turnMadeBy == Player.Black)
@@ -42,12 +40,40 @@ namespace CHEPPP
                 if (boardRating > bestRating)
                 {
                     bestRating = boardRating;
-                    bestMove = item;
+                    bestMove = move;
                 }
             }
 
             return bestMove;
         }
+
+        public int MinMaxBestMove(ChessGame game, int depth)
+        {
+            int bestMove = 0;
+            //when final depth is found, return found mov
+            if (depth == 0)
+            {
+                return GetBoardRating(game.GetBoard());
+            }
+
+            List<Move> validMoves = game.GetValidMoves(game.WhoseTurn).ToList();
+
+            //itterate through all possible moves
+            foreach (var move in validMoves)
+            {
+                String originalPositionFen = game.GetFen();
+                var turnMadeBy = game.WhoseTurn;
+                MoveType type = game.ApplyMove(move, true);
+                bestMove = MinMaxBestMove(game, depth - 1);
+                game = new ChessGame(originalPositionFen);
+
+            }
+
+            //something went wrong
+
+            return bestMove;
+        }
+
 
         /// <summary>
         /// Calculates the value of the current board based on pre given piece value numbers

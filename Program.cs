@@ -10,7 +10,9 @@ namespace CHEPPP
         static void Main(string[] args)
         {
             // Let's start by creating a chess game instance.
-            ChessGame game = new ChessGame();
+            //min max test fen 8/8/2R2B2/2N5/3b4/8/8/8 w KQkq -
+
+            ChessGame game = new ChessGame(@"7k/8/8/2R2B2/2N5/3b4/8/7K w - - 0 1");
             Engine engine = new Engine();
 
             while (true)
