@@ -65,6 +65,9 @@ namespace CHEPPP
                 case "isready":
                     IsReady();
                     break;
+                case "uci":
+                    IsReady();
+                    break;
                 case "position":
                     Position(uciCommand);
                     break;
