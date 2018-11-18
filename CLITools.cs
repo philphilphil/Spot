@@ -2,7 +2,7 @@ using ChessDotNet;
 using Serilog;
 using System;
 
-namespace CHEPPP
+namespace CHEP
 {
     static class CLITools
     {

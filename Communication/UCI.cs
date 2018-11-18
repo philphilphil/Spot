@@ -3,7 +3,7 @@ using Serilog;
 using System;
 using System.Reflection;
 
-namespace CHEPPP
+namespace CHEP
 {
     public class UCI
     {
@@ -100,7 +100,7 @@ namespace CHEPPP
 
         private void SendId()
         {
-            Console.WriteLine("id name CHEPPP 0.1"); // TODO: get version from assembly
+            Console.WriteLine("id name CHEP 0.1"); // TODO: get version from assembly
             Console.WriteLine("id author Phil Baum");
         }
 
