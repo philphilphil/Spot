@@ -9,6 +9,14 @@ namespace CHEPPP
     {
         static void Main(string[] args)
         {
+            //PlayInCLI();
+
+            UCI uci = new UCI();
+            uci.Start();
+        }
+
+        private static void PlayInCLI()
+        {
             // Let's start by creating a chess game instance.
             //min max test fen 8/8/2R2B2/2N5/3b4/8/8/8 w KQkq -
 
@@ -46,6 +54,7 @@ namespace CHEPPP
             }
             Console.ReadKey();
         }
+
         private static string UpdateConsoleAndGetMove(ChessGame game)
         {
             Console.Clear();

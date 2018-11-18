@@ -1,4 +1,5 @@
 ﻿using ChessDotNet;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,9 @@ namespace CHEPPP
             //itterate through all possible moves
             foreach (var move in validMoves)
             {
+
+                CLITools.WriteAndLog(String.Format("info currmove {0}{1}", move.OriginalPosition.ToString().ToLower(), move.NewPosition.ToString().ToLower()));
+
                 //set fen back to original position
                 game = new ChessGame(originalPositionFen);
 

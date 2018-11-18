@@ -1,4 +1,5 @@
 using ChessDotNet;
+using Serilog;
 using System;
 
 namespace CHEPPP
@@ -32,6 +33,12 @@ namespace CHEPPP
             }
 
             return rowString;
+        }
+
+        public static void WriteAndLog(string message)
+        {
+            Log.Debug(message);
+            Console.WriteLine(message);
         }
     }
 }

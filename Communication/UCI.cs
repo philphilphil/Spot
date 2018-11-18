@@ -1,10 +1,14 @@
-﻿using System;
+﻿using ChessDotNet;
+using Serilog;
+using System;
 using System.Reflection;
 
 namespace CHEPPP
 {
     public class UCI
     {
+
+        ChessGame game;
         public UCI()
         {
             SendId();
@@ -13,12 +17,19 @@ namespace CHEPPP
 
         public void Start()
         {
+
+            Log.Logger = new LoggerConfiguration()
+               .MinimumLevel.Debug()
+               .WriteTo.File("logs\\uci_logs.txt")
+               .CreateLogger();
+
             while (true)
             {
                 string uciCommand = Console.ReadLine();
                 if (uciCommand != null)
                 {
-                    if (ParseUciCommand(uciCommand.Trim().ToLower())) {
+                    if (ParseUciCommand(uciCommand.Trim().ToLower()))
+                    {
                         //command runs
                     }
                     else
@@ -45,17 +56,20 @@ namespace CHEPPP
                 return true; // Invalid
             }
 
-            uciCommand = commandParts[0];
+            Log.Debug(uciCommand);
 
-            switch (uciCommand)
+            switch (commandParts[0])
             {
                 case "quit":
-                    return false;    
+                    return false;
                 case "isready":
                     IsReady();
                     break;
                 case "position":
-                    Position(commandParts);
+                    Position(uciCommand);
+                    break;
+                case "go":
+                    Go(uciCommand);
                     break;
                 default:
                     return true;
@@ -63,13 +77,22 @@ namespace CHEPPP
             return true;
         }
 
-        private void Position(string[] parts)
+        private void Go(string uciCommand)
         {
-            if (parts.Length < 2)
-            {
-                Console.WriteLine("Invalid command, Fen missing?");
-                return; // Invalid
-            }
+            Engine engine = new Engine();
+            Move move = engine.CalculateBestMove(new ChessGame());
+
+            CLITools.WriteAndLog(String.Format("bestmove {0}{1}", move.OriginalPosition.ToString().ToLower(), move.NewPosition.ToString().ToLower()));
+        }
+
+        //cmd: position fen N7/P3pk1p/3p2p1/r4p2/8/4b2B/4P1KP/1R6 w - - 0 34
+        private void Position(string uciCommand)
+        {
+            //Get string after fen
+            int indexOfFen = uciCommand.IndexOf("fen") + 3;
+            String fen = uciCommand.Substring(indexOfFen, uciCommand.Length - indexOfFen);
+
+            this.game = new ChessGame(fen);
         }
 
         private void SendId()
