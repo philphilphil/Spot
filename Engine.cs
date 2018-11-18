@@ -9,23 +9,25 @@ namespace CHEPPP
 {
     class Engine
     {
+        DateTime startTime;
+
         public Move CalculateBestMove(ChessGame game)
         {
             Move bestMove = null;
-            int bestRating = -9999;
+            int bestRating = -9999;  
             String originalPositionFen = game.GetFen();
 
             //get all possible legal moves
             List<Move> validMoves = game.GetValidMoves(game.WhoseTurn).ToList();
 
-            DateTime startTime = DateTime.Now;
+            this.startTime = DateTime.Now;
 
             //itterate through all possible moves
             foreach (var move in validMoves)
             {
+                //dummy values for now
+                Console.WriteLine("info depth 1 score cp 1 time " + MillisecondsSinceStart(this.startTime) + " nodes 1 nps 1 pv e2e4 e7e5 g1f3");
 
-                CLITools.WriteAndLog(String.Format("info currmove {0}{1} currmovenumber 1 depth 1 pv e2e4 e7e5 g1f3", move.OriginalPosition.ToString().ToLower(), move.NewPosition.ToString().ToLower()));
-                Console.WriteLine("info depth 2 score cp 214 time " + MillisecondsSinceStart(startTime) +" nodes 2124 nps 34928 pv e2e4 e7e5 g1f3");
                 //set fen back to original position
                 game = new ChessGame(originalPositionFen);
 
@@ -74,6 +76,7 @@ namespace CHEPPP
             //itterate through all possible moves
             foreach (var move in validMoves)
             {
+               
                 String originalPositionFen = game.GetFen();
                 var turnMadeBy = game.WhoseTurn;
                 MoveType type = game.ApplyMove(move, true);
