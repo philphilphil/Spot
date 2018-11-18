@@ -36,7 +36,7 @@ namespace CHEPPP
                 MoveType type = game.ApplyMove(move, true);
 
                 //get best board rating after depth 4
-                var boardRating = MinMaxBestMove(game, 3);
+                var boardRating = MiniMaxBestMove(game, 3);
 
                 //if its blacks turn, take negative of the rating because blacks pieces are valued in -
                 if (turnMadeBy == Player.Black)
@@ -62,7 +62,8 @@ namespace CHEPPP
             return ms.ToString();
         }
 
-        public int MinMaxBestMove(ChessGame game, int depth)
+        //MiniMax - https://en.wikipedia.org/wiki/Minimax#Pseudocode
+        public int MiniMaxBestMove(ChessGame game, int depth)
         {
             int bestMove = 0;
             //when final depth is found, return found mov
@@ -80,7 +81,7 @@ namespace CHEPPP
                 String originalPositionFen = game.GetFen();
                 var turnMadeBy = game.WhoseTurn;
                 MoveType type = game.ApplyMove(move, true);
-                bestMove = MinMaxBestMove(game, depth - 1);
+                bestMove = MiniMaxBestMove(game, depth - 1);
                 game = new ChessGame(originalPositionFen);
 
             }
