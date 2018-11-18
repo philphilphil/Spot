@@ -28,7 +28,7 @@ namespace CHEPPP
                 string uciCommand = Console.ReadLine();
                 if (uciCommand != null)
                 {
-                    if (ParseUciCommand(uciCommand.Trim().ToLower()))
+                    if (ParseUciCommand(uciCommand.Trim()))
                     {
                         //command runs
                     }
@@ -80,7 +80,7 @@ namespace CHEPPP
         private void Go(string uciCommand)
         {
             Engine engine = new Engine();
-            Move move = engine.CalculateBestMove(new ChessGame());
+            Move move = engine.CalculateBestMove(this.game);
 
             CLITools.WriteAndLog(String.Format("bestmove {0}{1}", move.OriginalPosition.ToString().ToLower(), move.NewPosition.ToString().ToLower()));
         }
