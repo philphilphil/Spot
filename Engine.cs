@@ -18,12 +18,14 @@ namespace CHEPPP
             //get all possible legal moves
             List<Move> validMoves = game.GetValidMoves(game.WhoseTurn).ToList();
 
+            DateTime startTime = DateTime.Now;
+
             //itterate through all possible moves
             foreach (var move in validMoves)
             {
 
-                CLITools.WriteAndLog(String.Format("info currmove {0}{1}", move.OriginalPosition.ToString().ToLower(), move.NewPosition.ToString().ToLower()));
-
+                CLITools.WriteAndLog(String.Format("info currmove {0}{1} currmovenumber 1 depth 1 pv e2e4 e7e5 g1f3", move.OriginalPosition.ToString().ToLower(), move.NewPosition.ToString().ToLower()));
+                Console.WriteLine("info depth 2 score cp 214 time " + MillisecondsSinceStart(startTime) +" nodes 2124 nps 34928 pv e2e4 e7e5 g1f3");
                 //set fen back to original position
                 game = new ChessGame(originalPositionFen);
 
@@ -49,6 +51,13 @@ namespace CHEPPP
             }
 
             return bestMove;
+        }
+
+        private string MillisecondsSinceStart(DateTime startDate)
+        {
+            TimeSpan span = DateTime.Now - startDate;
+            int ms = (int)span.TotalMilliseconds;
+            return ms.ToString();
         }
 
         public int MinMaxBestMove(ChessGame game, int depth)
