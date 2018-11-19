@@ -36,7 +36,7 @@ namespace CHEP
                 MoveType type = game.ApplyMove(move, true);
 
                 //get best board rating after depth 4
-                var boardRating = MiniMaxBestMove(game, 3);
+                var boardRating = MiniMaxBestMove(game, 3, true);
 
                 //if its blacks turn, take negative of the rating because blacks pieces are valued in -
                 if (turnMadeBy == Player.Black)
@@ -63,9 +63,9 @@ namespace CHEP
         }
 
         //MiniMax - https://en.wikipedia.org/wiki/Minimax#Pseudocode
-        public int MiniMaxBestMove(ChessGame game, int depth)
+        public int MiniMaxBestMove(ChessGame game, int depth, bool maximizingPlayer)
         {
-            int bestMove = 0;
+            
             //when final depth is found, return found mov
             if (depth == 0)
             {
@@ -74,21 +74,36 @@ namespace CHEP
 
             List<Move> validMoves = game.GetValidMoves(game.WhoseTurn).ToList();
 
-            //itterate through all possible moves
-            foreach (var move in validMoves)
+
+            if (maximizingPlayer)
             {
-               
-                String originalPositionFen = game.GetFen();
-                var turnMadeBy = game.WhoseTurn;
-                MoveType type = game.ApplyMove(move, true);
-                bestMove = MiniMaxBestMove(game, depth - 1);
-                game = new ChessGame(originalPositionFen);
+                int bestMove = -9999;
+                foreach (var move in validMoves)
+                {
+                    String originalPositionFen = game.GetFen();
+                    var turnMadeBy = game.WhoseTurn;
+                    MoveType type = game.ApplyMove(move, true);
+                    bestMove = Math.Max(bestMove, MiniMaxBestMove(game, depth - 1, false));
+                    game = new ChessGame(originalPositionFen);
+                }
 
+                return bestMove;
             }
+            else //minimizing player
+            {
+                int bestMove = 9999;
+                foreach (var move in validMoves)
+                {
+                    String originalPositionFen = game.GetFen();
+                    var turnMadeBy = game.WhoseTurn;
+                    MoveType type = game.ApplyMove(move, true);
+                    bestMove = Math.Min(bestMove, MiniMaxBestMove(game, depth - 1, true));
+                    game = new ChessGame(originalPositionFen);
 
-            //something went wrong
+                }
 
-            return bestMove;
+                return bestMove;
+            }
         }
 
 
