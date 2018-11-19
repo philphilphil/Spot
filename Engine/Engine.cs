@@ -26,7 +26,7 @@ namespace CHEP
             foreach (var move in validMoves)
             {
                 //dummy values for now
-                Console.WriteLine("info depth 1 score cp 1 time " + MillisecondsSinceStart(this.startTime) + " nodes 1 nps 1 pv e2e4 e7e5 g1f3");
+                Console.WriteLine("info depth 1 score cp 1 time " + MillisecondsSinceStart(this.startTime) + " nodes 1");
 
                 //set fen back to original position
                 game = new ChessGame(originalPositionFen);
