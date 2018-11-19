@@ -74,10 +74,19 @@ namespace CHEP
                 case "go":
                     Go(uciCommand);
                     break;
+                case "debug":
+                    Debug();
+                    break;
                 default:
                     return true;
             }
             return true;
+        }
+
+        private void Debug()
+        {
+            this.game = new ChessGame("7k/8/8/2R2B2/2N5/3b4/8/7K w - - 0 1");
+            this.Go("");
         }
 
         private void Go(string uciCommand)
