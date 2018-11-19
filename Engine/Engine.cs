@@ -10,6 +10,7 @@ namespace CHEP
     class Engine
     {
         DateTime startTime;
+        int nodeCounter = 0;
 
         public Move CalculateBestMove(ChessGame game)
         {
@@ -26,7 +27,7 @@ namespace CHEP
             foreach (var move in validMoves)
             {
                 //dummy values for now
-                Console.WriteLine("info depth 1 score cp 1 time " + MillisecondsSinceStart(this.startTime) + " nodes 1");
+                Console.WriteLine("info depth 1 score cp 1 time " + MillisecondsSinceStart(this.startTime) + " nodes "+ nodeCounter.ToString());
 
                 //set fen back to original position
                 game = new ChessGame(originalPositionFen);
@@ -66,7 +67,7 @@ namespace CHEP
         //MiniMax - https://en.wikipedia.org/wiki/Minimax#Pseudocode
         public int MiniMaxBestMove(ChessGame game, int depth, bool maximizingPlayer)
         {
-            
+            nodeCounter++;
             //when final depth is found, return found mov
             if (depth == 0)
             {
