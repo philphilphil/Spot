@@ -85,7 +85,7 @@ namespace CHEP
 
         private void Debug()
         {
-            this.game = new ChessGame(@"k5r1/7p/1r6/2P3b1/2p5/1P1Q4/P4PPP/R5K1 w - - 0 1");
+            this.game = new ChessGame(@"6r1/7p/1r6/2P3bk/2p3p1/1P1Q4/P4PPP/R5K1 w - - 0 1");
             this.Go("");
         }
 

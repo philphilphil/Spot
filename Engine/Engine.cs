@@ -15,7 +15,7 @@ namespace CHEP
         public Move CalculateBestMove(ChessGame game)
         {
             Move bestMove = null;
-            int bestRating = -9999;  
+            int bestRating = -9999;
             String originalPositionFen = game.GetFen();
 
             //get all possible legal moves
@@ -27,7 +27,7 @@ namespace CHEP
             foreach (var move in validMoves)
             {
                 //dummy values for now
-                Console.WriteLine("info depth 1 score cp 1 time " + MillisecondsSinceStart(this.startTime) + " nodes "+ nodeCounter.ToString());
+                Console.WriteLine("info depth 1 score cp 1 time " + MillisecondsSinceStart(this.startTime) + " nodes " + nodeCounter.ToString());
 
                 //set fen back to original position
                 game = new ChessGame(originalPositionFen);
@@ -38,7 +38,7 @@ namespace CHEP
 
                 //get best board rating after depth 3
                 bool maximisingPlayer = turnMadeBy == Player.White ? true : false;
-                var boardRating = MiniMaxBestMove(game, 3, maximisingPlayer);
+                var boardRating = MiniMaxBestMove(game, 3, -9999, 9999, maximisingPlayer);
 
                 //if its blacks turn, take negative of the rating because blacks pieces are valued in -
                 if (turnMadeBy == Player.Black)
@@ -65,7 +65,7 @@ namespace CHEP
         }
 
         //MiniMax - https://en.wikipedia.org/wiki/Minimax#Pseudocode
-        public int MiniMaxBestMove(ChessGame game, int depth, bool maximizingPlayer)
+        public int MiniMaxBestMove(ChessGame game, int depth, int alpha, int beta, bool maximizingPlayer)
         {
             nodeCounter++;
             //when final depth is found, return found mov
@@ -85,8 +85,14 @@ namespace CHEP
                     String originalPositionFen = game.GetFen();
                     var turnMadeBy = game.WhoseTurn;
                     MoveType type = game.ApplyMove(move, true);
-                    bestMove = Math.Max(bestMove, MiniMaxBestMove(game, depth - 1, false));
+                    bestMove = Math.Max(bestMove, MiniMaxBestMove(game, depth - 1, alpha, beta, true));
                     game = new ChessGame(originalPositionFen);
+
+                    alpha = Math.Max(alpha, bestMove);
+                    if (beta <= alpha)
+                    {
+                        return bestMove;
+                    }
                 }
 
                 return bestMove;
@@ -99,9 +105,14 @@ namespace CHEP
                     String originalPositionFen = game.GetFen();
                     var turnMadeBy = game.WhoseTurn;
                     MoveType type = game.ApplyMove(move, true);
-                    bestMove = Math.Min(bestMove, MiniMaxBestMove(game, depth - 1, true));
+                    bestMove = Math.Min(bestMove, MiniMaxBestMove(game, depth - 1, alpha, beta, false));
                     game = new ChessGame(originalPositionFen);
 
+                    beta = Math.Min(beta, bestMove);
+                    if (beta <= alpha)
+                    {
+                        return bestMove;
+                    }
                 }
 
                 return bestMove;
