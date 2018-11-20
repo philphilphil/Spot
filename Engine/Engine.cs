@@ -36,9 +36,9 @@ namespace CHEP
                 var turnMadeBy = game.WhoseTurn;
                 MoveType type = game.ApplyMove(move, true);
 
-                //get best board rating after depth 3
+                //get best board rating after depth 4
                 bool maximisingPlayer = turnMadeBy == Player.White ? true : false;
-                var boardRating = MiniMaxBestMove(game, 3, -9999, 9999, maximisingPlayer);
+                var boardRating = MiniMaxBestMove(game, 4, -9999, 9999, maximisingPlayer);
 
                 //if its blacks turn, take negative of the rating because blacks pieces are valued in -
                 if (turnMadeBy == Player.Black)
