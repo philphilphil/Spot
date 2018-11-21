@@ -164,22 +164,22 @@ namespace CHEP
             switch (piece.GetFenCharacter().ToString().ToLower())
             {
                 case "p":
-                    value = 10;
+                    value = 100;
                     break;
                 case "n":
-                    value = 30;
+                    value = 320;
                     break;
                 case "b":
-                    value = 40;
+                    value = 330;
                     break;
                 case "r":
-                    value = 60;
+                    value = 500;
                     break;
                 case "q":
-                    value = 90;
+                    value = 900;
                     break;
                 case "k":
-                    value = 900;
+                    value = 2000;
                     break;
                 default:
                     break;
@@ -187,5 +187,6 @@ namespace CHEP
 
             return value;
         }
+
     }
 }
