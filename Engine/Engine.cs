@@ -10,6 +10,8 @@ namespace CHEP
     class Engine
     {
         DateTime startTime;
+        int[,] pawnWhite;
+        int[,] pawnBlack;
         int nodeCounter = 0;
 
         public Move CalculateBestMove(ChessGame game)
@@ -17,6 +19,8 @@ namespace CHEP
             Move bestMove = null;
             int bestRating = -9999;
             String originalPositionFen = game.GetFen();
+
+            SetupPieceSquareEvals();
 
             //get all possible legal moves
             List<Move> validMoves = game.GetValidMoves(game.WhoseTurn).ToList();
@@ -55,6 +59,24 @@ namespace CHEP
             }
 
             return bestMove;
+        }
+
+        private void SetupPieceSquareEvals()
+        {
+            // Piece-Square Tables https://www.chessprogramming.org/Simplified_Evaluation_Function
+            // pawn
+            this.pawnWhite = new int[,]
+            {
+            { 0,  0,  0,  0,  0,  0,  0,  0 },
+            { 50, 50, 50, 50, 50, 50, 50, 50},
+            { 10, 10, 20, 30, 30, 20, 10, 10},
+            { 5,  5, 10, 25, 25, 10,  5,  5},
+            { 0,  0,  0, 20, 20,  0,  0,  0},
+            { 5, -5,-10,  0,  0,-10, -5,  5},
+            { 5, 10, 10,-20,-20, 10, 10,  5},
+            { 0,  0,  0,  0,  0,  0,  0,  0 }
+            };
+
         }
 
         private string MillisecondsSinceStart(DateTime startDate)
@@ -187,6 +209,5 @@ namespace CHEP
 
             return value;
         }
-
     }
 }
