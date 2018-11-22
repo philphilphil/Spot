@@ -67,16 +67,27 @@ namespace CHEP
             // pawn
             this.pawnWhite = new int[,]
             {
-            { 0,  0,  0,  0,  0,  0,  0,  0 },
-            { 50, 50, 50, 50, 50, 50, 50, 50},
-            { 10, 10, 20, 30, 30, 20, 10, 10},
-            { 5,  5, 10, 25, 25, 10,  5,  5},
-            { 0,  0,  0, 20, 20,  0,  0,  0},
-            { 5, -5,-10,  0,  0,-10, -5,  5},
-            { 5, 10, 10,-20,-20, 10, 10,  5},
-            { 0,  0,  0,  0,  0,  0,  0,  0 }
+                { 0,  0,  0,  0,  0,  0,  0,  0 },
+                { 50, 50, 50, 50, 50, 50, 50, 50},
+                { 10, 10, 20, 30, 30, 20, 10, 10},
+                { 5,  5, 10, 25, 25, 10,  5,  5},
+                { 0,  0,  0, 20, 20,  0,  0,  0},
+                { 5, -5,-10,  0,  0,-10, -5,  5},
+                { 5, 10, 10,-20,-20, 10, 10,  5},
+                { 0,  0,  0,  0,  0,  0,  0,  0 }
             };
 
+            this.pawnBlack = new int[,]
+            {
+                { 0,  0,  0,  0,  0,  0,  0,  0 },
+                { 5, 10, 10,-20,-20, 10, 10,  5},
+                { 5, -5,-10,  0,  0,-10, -5,  5},
+                { 0,  0,  0, 20, 20,  0,  0,  0},
+                { 5,  5, 10, 25, 25, 10,  5,  5},
+                { 10, 10, 20, 30, 30, 20, 10, 10},
+                { 50, 50, 50, 50, 50, 50, 50, 50},
+                { 0,  0,  0,  0,  0,  0,  0,  0 }
+            };
         }
 
         private string MillisecondsSinceStart(DateTime startDate)
@@ -193,7 +204,7 @@ namespace CHEP
             switch (piece.GetFenCharacter().ToString().ToLower())
             {
                 case "p":
-                    value = 100 + piece.Owner == Player.White ? this.pawnWhite[row - 1, column - 1] : 0;
+                    value = 100 + (piece.Owner == Player.White ? this.pawnWhite[row - 1, column - 1] : this.pawnBlack[row - 1, column - 1]);
                     break;
                 case "n":
                     value = 320;
