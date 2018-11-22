@@ -150,17 +150,24 @@ namespace CHEP
         private int GetBoardRating(Piece[][] board)
         {
             int rating = 0;
+            int counterRow = 0;
+            int counterColumn = 0;
 
             foreach (var row in board)
             {
+                counterRow++;
+                counterColumn = 0;
+
                 foreach (var piece in row)
                 {
+                    counterColumn++;
+
                     if (piece == null)
                     {
                         continue;
                     }
 
-                    int pieceValue = GetPieceValue(piece);
+                    int pieceValue = GetPieceValue(piece, counterRow, counterColumn);
                     if (piece.Owner == Player.Black)
                     {
                         pieceValue = -pieceValue;
@@ -179,14 +186,14 @@ namespace CHEP
         /// </summary>
         /// <param name="piece"></param>
         /// <returns></returns>
-        private int GetPieceValue(Piece piece)
+        private int GetPieceValue(Piece piece, int row, int column)
         {
             int value = 0;
 
             switch (piece.GetFenCharacter().ToString().ToLower())
             {
                 case "p":
-                    value = 100;
+                    value = 100 + piece.Owner == Player.White ? this.pawnWhite[row - 1, column - 1] : 0;
                     break;
                 case "n":
                     value = 320;
