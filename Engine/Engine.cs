@@ -51,7 +51,7 @@ namespace CHEP
                 }
 
                 //check if higher than currently best rating, if yes set to current best
-                if (boardRating > bestRating)
+                if (boardRating >= bestRating)
                 {
                     bestRating = boardRating;
                     bestMove = move;
