@@ -86,7 +86,8 @@ namespace CHEP
         private void Debug()
         {
             //this.game = new ChessGame(@"6r1/7p/1r6/2P3bk/2p3p1/1P1Q4/P4PPP/R5K1 w - - 0 1");
-            this.Position("position startpos moves b2b3 d7d5 b1c3 b8c6 a1b1 e7e5 b1a1 f8c5 a1b1 c8g4 b1a1 d8h4 g2g3 h4f6 g1f3 a8d8 a1b1 h7h5 b1a1 g8e7 a1b1 e7f5 b1a1 f6h6 d2d4 h6d6 d4c5 d6c5 c1b2 f7f6 h2h3 g4f3 e2f3 f5d4 h3h4 c5b4 a1b1 e8g8 a2a3 b4e7 b1a1 f8e8 a3a4 c6b4 a1b1 d4c2 e1d2 e7c5 d1e2 c7c6 d2d1 d8d6 f1g2 a7a5 h1f1 g7g6 f1g1 d6d7 g2h3 f6f5 g1f1 b7b6 f1g1 d7d8 g1f1 d5d4 c3e4 c2e3 f2e3 d4e3 e4d6 b6b5 d1e1 b4c2 e1d1 c2b4 d1e1 b4c2 e1d1 d8d6 b2d4 d6d4 d1c1 c2b4 c1b2 d4d2 e2d2 e3d2 b1a1 b5a4 a1a4 c5c2");
+            // this.Position("position startpos moves g2g3 d7d6 h2h4 e7e5 h4h5 g8e7 e2e4 b8d7 g3g4 d7c5 d2d4 e5d4 d1d4 c8d7 d4b4 a7a5 b4d2 c5e4 d2f4 d7c6 f2f3 e4f6 f4g5 h7h6 g5e3 f6g4 e3f4 d8d7 f1h3 e7f5 f4g4 d7e6 g1e2 c6b5 h1h2 f5e7 g4e6 f7e6 h3e6 e7c6 e6h3 c6b4 h3f5 a5a4 f5g6 e8d7 g6f5 d7c6 e2d4 c6b6 d4b5 a8b8 f5d7 c7c5 b5c3 b6a5 a2a3 b4c2 h2c2 b7b5 d7b5 b8b5 c3b5 f8e7 b5c3 h8b8 f3f4 e7f6 f4f5 b8b6 c3e2 b6b7 e2c3 b7c7 c3e2 c7d7 e2c3 f6e7 c3e2 d6d5 f5f6 e7d6 f6g7 d7g7 c1h6 g7g2 h6e3 d6e7 h5h6 a5b6 h6h7 e7f6 e3c5 b6a5 c5b4 a5a6 c2c6 a6b5 c6f6 g2f2 f6f2 d5d4");
+            this.Position("position startpos moves e2e3 g7g6 d2d4 g8h6 g1f3 f8g7 g2g3 h8g8 b1c3 g8h8 e3e4 h8g8 c1g5 g8h8 e4e5 h8g8 f1b5 g8h8 e1g1 h8g8 d4d5 g8h8 c3e4 h8g8 c2c3 g8h8 d5d6 b8c6 b5c6 d7c6 d1c1 c8h3 d6e7 d8d3 f1d1 h3f1 c1f4 d3d1 a1d1 f7f5 e5f6 f1e2 d1d8 a8d8 e7d8q");
             this.Go("");
         }
 
@@ -119,7 +120,21 @@ namespace CHEP
                         continue;
                     }
 
-                    Move m = new Move(move.Substring(0, 2), move.Substring(2, 2), this.game.WhoseTurn);
+                    Move m;
+                    string from = move.Substring(0, 2);
+                    string to = move.Substring(2, 2);
+
+                    //check for promotion
+                    if (move.Length > 4)
+                    {
+                        char promotion = Char.Parse(move.Substring(4, 1));
+                        m = new Move(from, to, this.game.WhoseTurn, promotion);
+                    }
+                    else
+                    {
+                        m = new Move(from, to, this.game.WhoseTurn);
+                    }
+
                     game.ApplyMove(m, false);
                 }
 
