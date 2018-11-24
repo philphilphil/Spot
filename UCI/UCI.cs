@@ -107,7 +107,7 @@ namespace CHEP
         //cmd: position fen N7/P3pk1p/3p2p1/r4p2/8/4b2B/4P1KP/1R6 w - - 0 34
         private void Position(string uciCommand)
         {
-            //add propper command parsing here
+            //using startpos command
             if (uciCommand.Contains("startpos"))
             {
                 String[] moves = uciCommand.Split(" ");
