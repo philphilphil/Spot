@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using CHEP.Helpers;
-using ChessDotNet;
 
 namespace CHEP
 {
@@ -10,8 +9,15 @@ namespace CHEP
     {
         static void Main(string[] args)
         {
-            UCI uci = new UCI();
-            uci.Start();
+            try
+            {
+                UCI uci = new UCI();
+                uci.Start();
+            }
+            catch (Exception e)
+            {
+                CLITools.WriteAndLog("Error: " + e.Message + " Inner: " + e.InnerException);
+            }
 
             //used to play in console
             //PlayInConsole local = new PlayInConsole();
