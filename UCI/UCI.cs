@@ -1,6 +1,7 @@
 ﻿using ChessDotNet;
 using Serilog;
 using System;
+using System.Diagnostics;
 using System.Reflection;
 
 namespace CHEP
@@ -77,10 +78,39 @@ namespace CHEP
                 case "debug":
                     Debug();
                     break;
+                case "perft":
+                    PerftScore(commandParts);
+                    break;
                 default:
                     return true;
             }
             return true;
+        }
+
+        private void PerftScore(string[] uciCommand)
+        {
+            int depth = int.Parse(uciCommand[1]);
+
+            Engine engine = new Engine();
+
+            //for testing purposes
+            string setPostition = this.game.GetFen();
+
+            for (int i = 1; i <= depth; i++)
+            {
+                //https://stackoverflow.com/questions/13767561/timer-c-start-stop-and-get-the-amount-of-time-between-the-calls
+                Stopwatch stopWatch = new Stopwatch();
+                stopWatch.Start();
+
+                this.game = new ChessGame(setPostition);
+                long nodes = engine.GetNodesForPosition(this.game, i);
+                stopWatch.Stop();
+
+                TimeSpan ts = stopWatch.Elapsed;
+                string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
+
+                Console.WriteLine(String.Format("Depth: {0} Nodes: {1} Time: {2}", i.ToString(), nodes.ToString(), elapsedTime));
+            }
         }
 
         private void Debug()

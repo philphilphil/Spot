@@ -66,6 +66,23 @@ namespace CHEP
 
             return bestMove;
         }
+        public long GetNodesForPosition(ChessGame game, int depth)
+        {
+            long nodes = 0;
+            if (depth == 0) return 1;
+            List<Move> moves = game.GetValidMoves(game.WhoseTurn).ToList();
+
+            foreach (var move in moves)
+            {
+                //Console.WriteLine(move.ToString());
+                String originalPositionFen = game.GetFen();
+                MoveType type = game.ApplyMove(move, true);
+                nodes += GetNodesForPosition(game, depth - 1);
+                game = new ChessGame(originalPositionFen);
+            }
+
+            return nodes;
+        }
 
         /// <summary>
         /// MiniMax - https://en.wikipedia.org/wiki/Minimax#Pseudocode
