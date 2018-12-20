@@ -27,11 +27,11 @@ namespace CHEP.Helpers
                     //Random move
                     //IEnumerable<Move> validMoves = game.GetValidMoves(Player.Black);
                     //Move randomMove = validMoves.OrderBy(t => Guid.NewGuid()).FirstOrDefault();
-                    //MoveType type = game.ApplyMove(randomMove, true);
+                    //MoveType type = game.MakeMove(randomMove, true);
 
                     //calculate move
                     Move bestMove = engine.CalculateBestMove(game);
-                    MoveType type = game.ApplyMove(bestMove, true);
+                    MoveType type = game.MakeMove(bestMove, true);
                 }
                 else
                 {
@@ -43,7 +43,7 @@ namespace CHEP.Helpers
                     {
                         continue;
                     }
-                    MoveType type = game.ApplyMove(playerMove, true);
+                    MoveType type = game.MakeMove(playerMove, true);
 
                 }
             }

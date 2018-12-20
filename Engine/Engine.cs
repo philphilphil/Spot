@@ -44,7 +44,7 @@ namespace CHEP
 
                 //do the move
                 var turnMadeBy = game.WhoseTurn;
-                MoveType type = game.ApplyMove(move, true);
+                MoveType type = game.MakeMove(move, true);
 
                 //get best board rating after depth 4
                 bool maximisingPlayer = turnMadeBy == Player.White ? true : false;
@@ -74,11 +74,10 @@ namespace CHEP
 
             foreach (var move in moves)
             {
-                //Console.WriteLine(move.ToString());
-                String originalPositionFen = game.GetFen();
-                MoveType type = game.ApplyMove(move, true);
+                GameCreationData gcd = game.GetGameCreationData();
+                game.MakeMove(move, true);
                 nodes += GetNodesForPosition(game, depth - 1);
-                game = new ChessGame(originalPositionFen);
+                game = new ChessGame(gcd);
             }
 
             return nodes;
@@ -112,7 +111,7 @@ namespace CHEP
                 {
                     String originalPositionFen = game.GetFen();
                     var turnMadeBy = game.WhoseTurn;
-                    MoveType type = game.ApplyMove(move, true);
+                    MoveType type = game.MakeMove(move, true);
                     bestMove = Math.Max(bestMove, MiniMaxBestMove(game, depth - 1, alpha, beta, true));
                     game = new ChessGame(originalPositionFen);
 
@@ -132,7 +131,7 @@ namespace CHEP
                 {
                     String originalPositionFen = game.GetFen();
                     var turnMadeBy = game.WhoseTurn;
-                    MoveType type = game.ApplyMove(move, true);
+                    MoveType type = game.MakeMove(move, true);
                     bestMove = Math.Min(bestMove, MiniMaxBestMove(game, depth - 1, alpha, beta, false));
                     game = new ChessGame(originalPositionFen);
 

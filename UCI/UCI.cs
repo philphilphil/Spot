@@ -93,7 +93,10 @@ namespace CHEP
 
             Engine engine = new Engine();
 
-            //for testing purposes
+            //debug
+            this.game = new ChessGame("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+            depth = 6;
+
             string setPostition = this.game.GetFen();
 
             for (int i = 1; i <= depth; i++)
@@ -165,7 +168,7 @@ namespace CHEP
                         m = new Move(from, to, this.game.WhoseTurn);
                     }
 
-                    game.ApplyMove(m, false);
+                    game.MakeMove(m, false);
                 }
 
                 return;
