@@ -1,44 +1,44 @@
-using ChessDotNet;
-using Serilog;
-using System;
+// using ChessDotNet;
+// using Serilog;
+// using System;
 
-namespace CHEP
-{
-    static class CLITools
-    {
-        public static void DrawBoard(ChessGame game)
-        {
-            Piece[][] board = game.GetBoard();
+// namespace CHEP
+// {
+//     static class CLITools
+//     {
+//         public static void DrawBoard(ChessGame game)
+//         {
+//             Piece[][] board = game.GetBoard();
 
-            foreach (Piece[] row in board)
-            {
-                Console.WriteLine(Print(row));
-            }
-        }
+//             foreach (Piece[] row in board)
+//             {
+//                 Console.WriteLine(Print(row));
+//             }
+//         }
 
-        private static string Print(Piece[] row)
-        {
-            var rowString = "";
+//         private static string Print(Piece[] row)
+//         {
+//             var rowString = "";
 
-            foreach (Piece piece in row)
-            {
-                if (piece == null)
-                {
-                    rowString += "x ";
-                }
-                else
-                {
-                    rowString += piece.GetFenCharacter() + " ";
-                }
-            }
+//             foreach (Piece piece in row)
+//             {
+//                 if (piece == null)
+//                 {
+//                     rowString += "x ";
+//                 }
+//                 else
+//                 {
+//                     rowString += piece.GetFenCharacter() + " ";
+//                 }
+//             }
 
-            return rowString;
-        }
+//             return rowString;
+//         }
 
-        public static void WriteAndLog(string message)
-        {
-            Log.Debug(message);
-            Console.WriteLine(message);
-        }
-    }
-}
+//         public static void WriteAndLog(string message)
+//         {
+//             Log.Debug(message);
+//             Console.WriteLine(message);
+//         }
+//     }
+// }
