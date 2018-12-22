@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 // using CHEP.Helpers;
 
 namespace CHEP
@@ -27,31 +28,39 @@ namespace CHEP
             //testing new selfbuild chess game rules
 
             ChessGame game = new ChessGame();
+            PrintGame(game);
+            Console.WriteLine("Possible Moves: " + game.GetAllMoves(Player.White).Count.ToString() + "\n");
+
+            //get a move
+            Move m = game.GetAllMoves(Player.White)[4];
+            game.MakeMove(m);
+
+            PrintGame(game);
+            Console.Write("Possible Moves: " + game.GetAllMoves(Player.White).Count.ToString() + "\n");
 
 
+            Console.Read();
+        }
+
+        private static void PrintGame(ChessGame game)
+        {
             for (int i = 0; i < 8; i++)
             {
+                StringBuilder row = new StringBuilder();
                 for (int j = 0; j < 8; j++)
                 {
                     var piece = game.Board[i, j];
-
                     if (piece == null)
                     {
-                        Console.Write(" ");
+                        row.Append("..");
                     }
                     else
                     {
-                        Console.Write(piece.Type + " ");
-
+                        row.Append(piece.Type + ".");
                     }
                 }
-                Console.WriteLine();
+                Console.WriteLine(row);
             }
-
-            Console.WriteLine("Moves: ");
-            Console.WriteLine(game.GetAllMoves(Player.White).Count.ToString());
-
-            Console.Read();
         }
     }
 }

@@ -15,6 +15,15 @@ namespace CHEP
             BuildBoard();
         }
 
+        public bool MakeMove(Move move)
+        {
+            Board[move.RowTo, move.ColumnTo] = Board[move.RowFrom, move.ColumFrom];
+            Board[move.RowFrom, move.ColumFrom] = null;
+
+            this.WhoseTurn = GetOppositePlayer(this.WhoseTurn);
+            return true;
+        }
+
         public List<Move> GetAllMoves(Player forPlayer)
         {
             List<Move> possibleMoves = new List<Move>();
@@ -33,17 +42,19 @@ namespace CHEP
                     {
                         if (piece.Type == 'P')
                         {
+                            //TODO: PAWN MOVES FOR BLACK
+
                             //move 1 up
-                            var targetSquare = GetTargetSquare(i - 1, j);
+                            Piece targetSquare = GetTargetSquare(i - 1, j);
                             if (targetSquare == null)
-                                possibleMoves.Add(new Move(piece, i, j, i + 1, j));
+                                possibleMoves.Add(new Move(piece, i, j, i - 1, j));
 
                             //move 2 up only when pawns still in row 2 for white and 7 for black
-                            if (!piece.MadeFirstMove)
+                            if ((forPlayer == Player.White && i == 6) || (forPlayer == Player.Black && i == 1))
                             {
                                 targetSquare = GetTargetSquare(i - 2, j);
                                 if (targetSquare == null)
-                                    possibleMoves.Add(new Move(piece, i, j, i + 2, j));
+                                    possibleMoves.Add(new Move(piece, i, j, i - 2, j));
                             }
 
                             ////capture left
@@ -56,8 +67,7 @@ namespace CHEP
                             //if (targetSquare == null)
                             //    possibleMoves.Add(new Move(piece, i, j, i - 1, j + 1));
                         }
-
-                        if (piece.Type == 'N')
+                        else if (piece.Type == 'N')
                         {
 
                             Tuple<int, int>[] possibleKnightMoves =
@@ -74,20 +84,97 @@ namespace CHEP
 
                             for (int t = 0; t < possibleKnightMoves.Length; t++)
                             {
-                                if (TargetSquareOutOfBounce(possibleKnightMoves[t].Item1, possibleKnightMoves[t].Item2))
+                                if (CheckSquares(i, j, possibleKnightMoves[t].Item1, possibleKnightMoves[t].Item2, piece, ref possibleMoves, forPlayer))
                                     continue;
-
-                                var targetSquare = GetTargetSquare(possibleKnightMoves[t].Item1, possibleKnightMoves[t].Item2);
-                                if (targetSquare == null || targetSquare.Player == GetOppositePlayer(forPlayer))
-                                    possibleMoves.Add(new Move(piece, i, j, possibleKnightMoves[t].Item1, possibleKnightMoves[t].Item2));
                             }
                         }
+                        else if (piece.Type == 'B')
+                        {
+                            //top left
+                            int currR = i, currC = j;
+
+                            while (true)
+                            {
+                                currR++;
+                                currC--;
+
+                                if (CheckSquares(i, j, currR, currC, piece, ref possibleMoves, forPlayer))
+                                    break;
+                            }
+
+                            //top right
+                            currR = i;
+                            currC = j;
+
+                            while (true)
+                            {
+                                currR++;
+                                currC++;
+
+                                if (CheckSquares(i, j, currR, currC, piece, ref possibleMoves, forPlayer))
+                                    break;
+                            }
+
+                            //bottom right
+                            currR = i;
+                            currC = j;
+
+                            while (true)
+                            {
+                                currR--;
+                                currC++;
+
+                                if (CheckSquares(i, j, currR, currC, piece, ref possibleMoves, forPlayer))
+                                    break;
+                            }
+
+                            //bottom left
+                            currR = i;
+                            currC = j;
+
+                            while (true)
+                            {
+                                currR--;
+                                currC--;
+
+                                if (CheckSquares(i, j, currR, currC, piece, ref possibleMoves, forPlayer))
+                                    break;
+                            }
+
+                        }
+                        else if (piece.Type == 'R') { }
+                        else if (piece.Type == 'Q') { }
+                        else if (piece.Type == 'K') { }
 
                     }
                 }
-                Console.WriteLine();
             }
             return possibleMoves;
+        }
+
+        private bool CheckSquares(int i, int j, int currR, int currC, Piece piece, ref List<Move> possibleMoves, Player forPlayer)
+        {
+            if (TargetSquareOutOfBounce(currR, currC))
+                return true;
+
+            Piece targetSquare = GetTargetSquare(currR, currC);
+
+            if (targetSquare == null)
+            {
+                possibleMoves.Add(new Move(piece, i, j, currR, currC));
+                return false;
+            }
+            else if (targetSquare.Player == GetOppositePlayer(forPlayer))
+            {
+                possibleMoves.Add(new Move(piece, i, j, currR, currC));
+                //if enemypiece, no further possible
+                return true;
+            }
+            else
+            {
+                //its his own piece blocking
+                return true;
+            }
         }
 
         /// <summary>
@@ -172,4 +259,5 @@ namespace CHEP
     }
 
     public enum Player { White, Black };
+    public enum Type { Pawn, Bishop, Knight, Rook, Queen, King };
 }
