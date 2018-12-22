@@ -6,6 +6,7 @@ namespace CHEP
     class ChessGame
     {
         public Piece[,] Board { get; set; }
+        private Piece PieceBackup { get; set; }
         public Player WhoseTurn { get; protected set; }
         public bool WhiteCanCastleKingSide { get; protected set; }
         public bool WhiteCanCastleQueenSide { get; protected set; }
@@ -21,6 +22,7 @@ namespace CHEP
 
         public bool MakeMove(Move move)
         {
+            PieceBackup = Board[move.RowTo, move.ColumnTo];
             Board[move.RowTo, move.ColumnTo] = Board[move.RowFrom, move.ColumFrom];
             Board[move.RowFrom, move.ColumFrom] = null;
 
@@ -28,6 +30,14 @@ namespace CHEP
             return true;
         }
 
+
+        public bool UndoMove(Move move)
+        {
+            Board[move.RowFrom, move.ColumFrom] = Board[move.RowTo, move.ColumnTo];
+            Board[move.RowTo, move.ColumnTo] = PieceBackup;
+            this.WhoseTurn = GetOppositePlayer(this.WhoseTurn);
+            return true;
+        }
         public List<Move> GetAllMoves(Player forPlayer)
         {
             List<Move> possibleMoves = new List<Move>();
@@ -46,30 +56,39 @@ namespace CHEP
                     {
                         if (piece.Type == 'P')
                         {
-                            //TODO: PAWN MOVES FOR BLACK
-
-                            //move 1 up
-                            Piece targetSquare = GetTargetSquare(i - 1, j);
-                            if (targetSquare == null)
-                                ValidateAndAddMove(piece, i, j, i - 1, j, ref possibleMoves);
-
-                            //move 2 up only when pawns still in row 2 for white and 7 for black
-                            if ((forPlayer == Player.White && i == 6) || (forPlayer == Player.Black && i == 1))
+                            if (forPlayer == Player.White)
                             {
-                                targetSquare = GetTargetSquare(i - 2, j);
+                                //1 up
+                                int targetRow = i - 1, targetCol = j;
+
+                                //if (!TargetSquareOutOfBounce(targetRow, targetCol))
+                                //    continue;
+
+                                Piece targetSquare = GetTargetSquare(targetRow, targetCol);
                                 if (targetSquare == null)
-                                    ValidateAndAddMove(piece, i, j, i - 2, j, ref possibleMoves);
+                                    ValidateAndAddMove(piece, i, j, targetRow, targetCol, ref possibleMoves);
+
+                                //move 2 up only when pawns still in row 2 for white and 7 for black
+                                if ((forPlayer == Player.White && i == 6) || (forPlayer == Player.Black && i == 1))
+                                {
+                                    targetRow = i - 2;
+                                    //if (!TargetSquareOutOfBounce(targetRow, targetCol))
+                                    //    continue;
+
+                                    targetSquare = GetTargetSquare(targetRow, targetCol);
+                                    if (targetSquare == null)
+                                        ValidateAndAddMove(piece, i, j, targetRow, targetCol, ref possibleMoves);
+                                }
+
+                                //capture left
+
+                                //capture right
+
+                                //enpassant
+                                
+                                //promotion
                             }
 
-                            ////capture left
-                            //targetSquare = Board[i - 1, j - 1];
-                            //if (targetSquare == null)
-                            //    possibleMoves.Add(new Move(piece, i, j, i - 1, j - 1));
-
-                            ////capture right
-                            //targetSquare = Board[i - 1, j + 1];
-                            //if (targetSquare == null)
-                            //    possibleMoves.Add(new Move(piece, i, j, i - 1, j + 1));
                         }
                         else if (piece.Type == 'N')
                         {
@@ -220,6 +239,8 @@ namespace CHEP
             return possibleMoves;
         }
 
+
+
         /// <summary>
         /// Checks for B,N,R,Q if move is possible
         /// </summary>
@@ -266,7 +287,7 @@ namespace CHEP
 
         private bool KingIsInCheckNow(Piece piece, int i, int j, int targetRow, int targetCol)
         {
-            throw new NotImplementedException();
+            return false;
         }
 
         /// <summary>
