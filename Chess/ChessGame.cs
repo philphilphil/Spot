@@ -7,6 +7,10 @@ namespace CHEP
     {
         public Piece[,] Board { get; set; }
         public Player WhoseTurn { get; protected set; }
+        public bool WhiteCanCastleKingSide { get; protected set; }
+        public bool WhiteCanCastleQueenSide { get; protected set; }
+        public bool BlackCanCastleKingSide { get; protected set; }
+        public bool BlackCanCastleQueenSide { get; protected set; }
 
         public ChessGame()
         {
@@ -47,14 +51,14 @@ namespace CHEP
                             //move 1 up
                             Piece targetSquare = GetTargetSquare(i - 1, j);
                             if (targetSquare == null)
-                                possibleMoves.Add(new Move(piece, i, j, i - 1, j));
+                                ValidateAndAddMove(piece, i, j, i - 1, j, ref possibleMoves);
 
                             //move 2 up only when pawns still in row 2 for white and 7 for black
                             if ((forPlayer == Player.White && i == 6) || (forPlayer == Player.Black && i == 1))
                             {
                                 targetSquare = GetTargetSquare(i - 2, j);
                                 if (targetSquare == null)
-                                    possibleMoves.Add(new Move(piece, i, j, i - 2, j));
+                                    ValidateAndAddMove(piece, i, j, i - 2, j, ref possibleMoves);
                             }
 
                             ////capture left
@@ -88,227 +92,160 @@ namespace CHEP
                                     continue;
                             }
                         }
-                        else if (piece.Type == 'B')
+                        else if (piece.Type == 'K')
+                        {
+                            Tuple<int, int>[] possibleKingMoves =
+{
+                            Tuple.Create(i+1, j+1),
+                            Tuple.Create(i+1, j-1),
+                            Tuple.Create(i+1, j),
+                            Tuple.Create(i, j-1),
+                            Tuple.Create(i, j+1),
+                            Tuple.Create(i-1, j-1),
+                            Tuple.Create(i-1, j+1),
+                            Tuple.Create(i-1, j),
+                            };
+
+                            for (int t = 0; t < possibleKingMoves.Length; t++)
+                            {
+                                if (CheckSquares(i, j, possibleKingMoves[t].Item1, possibleKingMoves[t].Item2, piece, ref possibleMoves, forPlayer))
+                                    continue;
+                            }
+                        }
+
+
+                        if (piece.Type == 'B' || piece.Type == 'Q')
                         {
                             //top left
-                            int currR = i, currC = j;
+                            int targetRow = i, targetCol = j;
 
                             while (true)
                             {
-                                currR++;
-                                currC--;
+                                targetRow++;
+                                targetCol--;
 
-                                if (CheckSquares(i, j, currR, currC, piece, ref possibleMoves, forPlayer))
+                                if (CheckSquares(i, j, targetRow, targetCol, piece, ref possibleMoves, forPlayer))
                                     break;
                             }
 
                             //top right
-                            currR = i;
-                            currC = j;
+                            targetRow = i;
+                            targetCol = j;
 
                             while (true)
                             {
-                                currR++;
-                                currC++;
+                                targetRow++;
+                                targetCol++;
 
-                                if (CheckSquares(i, j, currR, currC, piece, ref possibleMoves, forPlayer))
+                                if (CheckSquares(i, j, targetRow, targetCol, piece, ref possibleMoves, forPlayer))
                                     break;
                             }
 
                             //bottom right
-                            currR = i;
-                            currC = j;
+                            targetRow = i;
+                            targetCol = j;
 
                             while (true)
                             {
-                                currR--;
-                                currC++;
+                                targetRow--;
+                                targetCol++;
 
-                                if (CheckSquares(i, j, currR, currC, piece, ref possibleMoves, forPlayer))
+                                if (CheckSquares(i, j, targetRow, targetCol, piece, ref possibleMoves, forPlayer))
                                     break;
                             }
 
                             //bottom left
-                            currR = i;
-                            currC = j;
+                            targetRow = i;
+                            targetCol = j;
 
                             while (true)
                             {
-                                currR--;
-                                currC--;
+                                targetRow--;
+                                targetCol--;
 
-                                if (CheckSquares(i, j, currR, currC, piece, ref possibleMoves, forPlayer))
+                                if (CheckSquares(i, j, targetRow, targetCol, piece, ref possibleMoves, forPlayer))
                                     break;
                             }
 
                         }
-                        else if (piece.Type == 'R')
+                        if (piece.Type == 'R' || piece.Type == 'Q')
                         {
 
                             //up
-                            int currR = i, currC = j;
+                            int targetRow = i, targetCol = j;
                             while (true)
                             {
-                                currR++;
+                                targetRow++;
 
-                                if (CheckSquares(i, j, currR, currC, piece, ref possibleMoves, forPlayer))
+                                if (CheckSquares(i, j, targetRow, targetCol, piece, ref possibleMoves, forPlayer))
                                     break;
                             }
 
                             //down
-                            currR = i;
-                            currC = j;
+                            targetRow = i;
+                            targetCol = j;
                             while (true)
                             {
-                                currR--;
+                                targetRow--;
 
-                                if (CheckSquares(i, j, currR, currC, piece, ref possibleMoves, forPlayer))
+                                if (CheckSquares(i, j, targetRow, targetCol, piece, ref possibleMoves, forPlayer))
                                     break;
                             }
 
                             //left
-                            currR = i;
-                            currC = j;
+                            targetRow = i;
+                            targetCol = j;
                             while (true)
                             {
-                                currC--;
+                                targetCol--;
 
-                                if (CheckSquares(i, j, currR, currC, piece, ref possibleMoves, forPlayer))
+                                if (CheckSquares(i, j, targetRow, targetCol, piece, ref possibleMoves, forPlayer))
                                     break;
                             }
 
                             //right
-                            currR = i;
-                            currC = j;
+                            targetRow = i;
+                            targetCol = j;
                             while (true)
                             {
-                                currC--;
+                                targetCol--;
 
-                                if (CheckSquares(i, j, currR, currC, piece, ref possibleMoves, forPlayer))
+                                if (CheckSquares(i, j, targetRow, targetCol, piece, ref possibleMoves, forPlayer))
                                     break;
                             }
                         }
-                        else if (piece.Type == 'Q')
-                        {
-                            //up
-                            int currR = i, currC = j;
-                            while (true)
-                            {
-                                currR++;
-
-                                if (CheckSquares(i, j, currR, currC, piece, ref possibleMoves, forPlayer))
-                                    break;
-                            }
-
-                            //down
-                            currR = i;
-                            currC = j;
-                            while (true)
-                            {
-                                currR--;
-
-                                if (CheckSquares(i, j, currR, currC, piece, ref possibleMoves, forPlayer))
-                                    break;
-                            }
-
-                            //left
-                            currR = i;
-                            currC = j;
-                            while (true)
-                            {
-                                currC--;
-
-                                if (CheckSquares(i, j, currR, currC, piece, ref possibleMoves, forPlayer))
-                                    break;
-                            }
-
-                            //right
-                            currR = i;
-                            currC = j;
-                            while (true)
-                            {
-                                currC--;
-
-                                if (CheckSquares(i, j, currR, currC, piece, ref possibleMoves, forPlayer))
-                                    break;
-                            }
-
-                            //top left
-                            currR = i;
-                            currC = j;
-
-                            while (true)
-                            {
-                                currR++;
-                                currC--;
-
-                                if (CheckSquares(i, j, currR, currC, piece, ref possibleMoves, forPlayer))
-                                    break;
-                            }
-
-                            //top right
-                            currR = i;
-                            currC = j;
-
-                            while (true)
-                            {
-                                currR++;
-                                currC++;
-
-                                if (CheckSquares(i, j, currR, currC, piece, ref possibleMoves, forPlayer))
-                                    break;
-                            }
-
-                            //bottom right
-                            currR = i;
-                            currC = j;
-
-                            while (true)
-                            {
-                                currR--;
-                                currC++;
-
-                                if (CheckSquares(i, j, currR, currC, piece, ref possibleMoves, forPlayer))
-                                    break;
-                            }
-
-                            //bottom left
-                            currR = i;
-                            currC = j;
-
-                            while (true)
-                            {
-                                currR--;
-                                currC--;
-
-                                if (CheckSquares(i, j, currR, currC, piece, ref possibleMoves, forPlayer))
-                                    break;
-                            }
-
-                        }
-                        else if (piece.Type == 'K') { }
-
                     }
                 }
             }
             return possibleMoves;
         }
 
-        private bool CheckSquares(int i, int j, int currR, int currC, Piece piece, ref List<Move> possibleMoves, Player forPlayer)
+        /// <summary>
+        /// Checks for B,N,R,Q if move is possible
+        /// </summary>
+        /// <param name="i">Current row in array</param>
+        /// <param name="j"> Current column in array</param>
+        /// <param name="targetRow">Target row</param>
+        /// <param name="targetCol">Target col</param>
+        /// <param name="piece">tThe Piece</param>
+        /// <param name="possibleMoves">Ref list</param>
+        /// <param name="forPlayer">Players turn</param>
+        /// <returns></returns>
+        private bool CheckSquares(int i, int j, int targetRow, int targetCol, Piece piece, ref List<Move> possibleMoves, Player forPlayer)
         {
-            if (TargetSquareOutOfBounce(currR, currC))
+            if (TargetSquareOutOfBounce(targetRow, targetCol))
                 return true;
 
-            Piece targetSquare = GetTargetSquare(currR, currC);
+            Piece targetSquare = GetTargetSquare(targetRow, targetCol);
 
             if (targetSquare == null)
             {
-                possibleMoves.Add(new Move(piece, i, j, currR, currC));
+                ValidateAndAddMove(piece, i, j, targetRow, targetCol, ref possibleMoves);
                 return false;
             }
             else if (targetSquare.Player == GetOppositePlayer(forPlayer))
             {
-                possibleMoves.Add(new Move(piece, i, j, currR, currC));
+                ValidateAndAddMove(piece, i, j, targetRow, targetCol, ref possibleMoves);
                 //if enemypiece, no further possible
                 return true;
             }
@@ -317,6 +254,19 @@ namespace CHEP
                 //its his own piece blocking
                 return true;
             }
+        }
+
+        private void ValidateAndAddMove(Piece piece, int i, int j, int targetRow, int targetCol, ref List<Move> possibleMoves)
+        {
+            if (KingIsInCheckNow(Piece piece, int i, int j, int targetRow, int targetCol))
+                return;
+
+            possibleMoves.Add(new Move(piece, i, j, i - 1, j));
+        }
+
+        private bool KingIsInCheckNow(Piece piece1, Piece piece2, int v1, int i, int v2, int j, int v3, int targetRow, int v4, int targetCol)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
