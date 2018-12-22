@@ -1,44 +1,37 @@
-// using ChessDotNet;
-// using Serilog;
-// using System;
+using ChessDotNet;
+using Serilog;
+using System;
+using System.Text;
 
-// namespace CHEP
-// {
-//     static class CLITools
-//     {
-//         public static void DrawBoard(ChessGame game)
-//         {
-//             Piece[][] board = game.GetBoard();
+namespace CHEP
+{
+    static class CLITools
+    {
+        public static void PrintGame(ChessGame game)
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                StringBuilder row = new StringBuilder();
+                for (int j = 0; j < 8; j++)
+                {
+                    var piece = game.Board[i, j];
+                    if (piece == null)
+                    {
+                        row.Append("x ");
+                    }
+                    else
+                    {
+                        row.Append(piece.Type + " ");
+                    }
+                }
+                Console.WriteLine(row);
+            }
+        }
 
-//             foreach (Piece[] row in board)
-//             {
-//                 Console.WriteLine(Print(row));
-//             }
-//         }
-
-//         private static string Print(Piece[] row)
-//         {
-//             var rowString = "";
-
-//             foreach (Piece piece in row)
-//             {
-//                 if (piece == null)
-//                 {
-//                     rowString += "x ";
-//                 }
-//                 else
-//                 {
-//                     rowString += piece.GetFenCharacter() + " ";
-//                 }
-//             }
-
-//             return rowString;
-//         }
-
-//         public static void WriteAndLog(string message)
-//         {
-//             Log.Debug(message);
-//             Console.WriteLine(message);
-//         }
-//     }
-// }
+        public static void WriteAndLog(string message)
+        {
+            Log.Debug(message);
+            Console.WriteLine(message);
+        }
+    }
+}
