@@ -1,7 +1,5 @@
 # CHEP
 Work in Progress Chess engine written in .NET Core.
-
-I decided to not write my own Chess implementation since there is already a nice one: [Chess.NET](https://github.com/ProgramFOX/Chess.NET)
 ## Testing vs Stockfish
 With [cutechess-cli](https://github.com/cutechess/cutechess) I ran automated tests after development milestones with 20 games against [Stockfish 9](https://github.com/official-stockfish/Stockfish) on a certain level. Result is winsChep-winsSF-draws. PGN for the games in Testgames-Folder.
 
