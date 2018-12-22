@@ -6,14 +6,17 @@ namespace CHEP
     class ChessGame
     {
         public Piece[,] Board { get; set; }
+        public Player WhoseTurn { get; protected set; }
+
         public ChessGame()
         {
+            //Init new game from startpos
+            this.WhoseTurn = Player.White;
             BuildBoard();
         }
 
         public List<Move> GetAllMoves(Player forPlayer)
         {
-            //for now white only...
             List<Move> possibleMoves = new List<Move>();
 
             for (int i = 0; i < 8; i++)
@@ -31,14 +34,14 @@ namespace CHEP
                         if (piece.Type == 'P')
                         {
                             //move 1 up
-                            var targetSquare = Board[i - 1, j];
+                            var targetSquare = GetTargetSquare(i - 1, j);
                             if (targetSquare == null)
                                 possibleMoves.Add(new Move(piece, i, j, i + 1, j));
 
                             //move 2 up only when pawns still in row 2 for white and 7 for black
                             if (!piece.MadeFirstMove)
                             {
-                                targetSquare = Board[i - 2, j];
+                                targetSquare = GetTargetSquare(i - 2, j);
                                 if (targetSquare == null)
                                     possibleMoves.Add(new Move(piece, i, j, i + 2, j));
                             }
@@ -54,15 +57,30 @@ namespace CHEP
                             //    possibleMoves.Add(new Move(piece, i, j, i - 1, j + 1));
                         }
 
-                        if(piece.Type == 'N')
+                        if (piece.Type == 'N')
                         {
-                            //top left
 
-                        // top right
+                            Tuple<int, int>[] possibleKnightMoves =
+                            {
+                            Tuple.Create(i-2, j-1), //top left 1
+                            Tuple.Create(i-1, j-2), //top left 2
+                            Tuple.Create(i+2, j+1), //top right 1
+                            Tuple.Create(i+1, j+2), //top right 2
+                            Tuple.Create(i-2, j+1), //bottom left 1
+                            Tuple.Create(i-1, j+2), //bottom left 2
+                            Tuple.Create(i+2, j+1), //bottom right 1
+                            Tuple.Create(i+1, j+2), //bottom right 2
+                            };
 
-                        // bottom right
+                            for (int t = 0; t < possibleKnightMoves.Length; t++)
+                            {
+                                if (TargetSquareOutOfBounce(possibleKnightMoves[t].Item1, possibleKnightMoves[t].Item2))
+                                    continue;
 
-                        //bottom left
+                                var targetSquare = GetTargetSquare(possibleKnightMoves[t].Item1, possibleKnightMoves[t].Item2);
+                                if (targetSquare == null || targetSquare.Player == GetOppositePlayer(forPlayer))
+                                    possibleMoves.Add(new Move(piece, i, j, possibleKnightMoves[t].Item1, possibleKnightMoves[t].Item2));
+                            }
                         }
 
                     }
@@ -70,6 +88,45 @@ namespace CHEP
                 Console.WriteLine();
             }
             return possibleMoves;
+        }
+
+        /// <summary>
+        /// Just gets the opposite player
+        /// </summary>
+        /// <param name="forPlayer"></param>
+        /// <returns></returns>
+        private Player GetOppositePlayer(Player forPlayer)
+        {
+            if (forPlayer == Player.White)
+            {
+                return Player.Black;
+            }
+            return Player.White;
+        }
+
+        /// <summary>
+        ///  Checks if square requested is outside the board boundaries
+        /// </summary>
+        /// <param name="r"></param>
+        /// <param name="c"></param>
+        /// <returns></returns>
+        private bool TargetSquareOutOfBounce(int r, int c)
+        {
+            if (r > 7 || r < 0 || c > 7 || c < 0)
+                return true;
+
+            return false;
+        }
+
+        /// <summary>
+        /// Gets the target square piece object
+        /// </summary>
+        /// <param name="r"></param>
+        /// <param name="c"></param>
+        /// <returns></returns>
+        private Piece GetTargetSquare(int r, int c)
+        {
+            return Board[r, c];
         }
 
         private void BuildBoard()
