@@ -142,8 +142,150 @@ namespace CHEP
                             }
 
                         }
-                        else if (piece.Type == 'R') { }
-                        else if (piece.Type == 'Q') { }
+                        else if (piece.Type == 'R')
+                        {
+
+                            //up
+                            int currR = i, currC = j;
+                            while (true)
+                            {
+                                currR++;
+
+                                if (CheckSquares(i, j, currR, currC, piece, ref possibleMoves, forPlayer))
+                                    break;
+                            }
+
+                            //down
+                            currR = i;
+                            currC = j;
+                            while (true)
+                            {
+                                currR--;
+
+                                if (CheckSquares(i, j, currR, currC, piece, ref possibleMoves, forPlayer))
+                                    break;
+                            }
+
+                            //left
+                            currR = i;
+                            currC = j;
+                            while (true)
+                            {
+                                currC--;
+
+                                if (CheckSquares(i, j, currR, currC, piece, ref possibleMoves, forPlayer))
+                                    break;
+                            }
+
+                            //right
+                            currR = i;
+                            currC = j;
+                            while (true)
+                            {
+                                currC--;
+
+                                if (CheckSquares(i, j, currR, currC, piece, ref possibleMoves, forPlayer))
+                                    break;
+                            }
+                        }
+                        else if (piece.Type == 'Q')
+                        {
+                            //up
+                            int currR = i, currC = j;
+                            while (true)
+                            {
+                                currR++;
+
+                                if (CheckSquares(i, j, currR, currC, piece, ref possibleMoves, forPlayer))
+                                    break;
+                            }
+
+                            //down
+                            currR = i;
+                            currC = j;
+                            while (true)
+                            {
+                                currR--;
+
+                                if (CheckSquares(i, j, currR, currC, piece, ref possibleMoves, forPlayer))
+                                    break;
+                            }
+
+                            //left
+                            currR = i;
+                            currC = j;
+                            while (true)
+                            {
+                                currC--;
+
+                                if (CheckSquares(i, j, currR, currC, piece, ref possibleMoves, forPlayer))
+                                    break;
+                            }
+
+                            //right
+                            currR = i;
+                            currC = j;
+                            while (true)
+                            {
+                                currC--;
+
+                                if (CheckSquares(i, j, currR, currC, piece, ref possibleMoves, forPlayer))
+                                    break;
+                            }
+
+                            //top left
+                            currR = i;
+                            currC = j;
+
+                            while (true)
+                            {
+                                currR++;
+                                currC--;
+
+                                if (CheckSquares(i, j, currR, currC, piece, ref possibleMoves, forPlayer))
+                                    break;
+                            }
+
+                            //top right
+                            currR = i;
+                            currC = j;
+
+                            while (true)
+                            {
+                                currR++;
+                                currC++;
+
+                                if (CheckSquares(i, j, currR, currC, piece, ref possibleMoves, forPlayer))
+                                    break;
+                            }
+
+                            //bottom right
+                            currR = i;
+                            currC = j;
+
+                            while (true)
+                            {
+                                currR--;
+                                currC++;
+
+                                if (CheckSquares(i, j, currR, currC, piece, ref possibleMoves, forPlayer))
+                                    break;
+                            }
+
+                            //bottom left
+                            currR = i;
+                            currC = j;
+
+                            while (true)
+                            {
+                                currR--;
+                                currC--;
+
+                                if (CheckSquares(i, j, currR, currC, piece, ref possibleMoves, forPlayer))
+                                    break;
+                            }
+
+                        }
                         else if (piece.Type == 'K') { }
 
                     }

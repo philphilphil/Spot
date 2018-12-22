@@ -29,14 +29,22 @@ namespace CHEP
 
             ChessGame game = new ChessGame();
             PrintGame(game);
-            Console.WriteLine("Possible Moves: " + game.GetAllMoves(Player.White).Count.ToString() + "\n");
+            Console.WriteLine("Possible Moves: " + game.GetAllMoves(Player.White).Count.ToString() + "\n\n");
 
             //get a move
             Move m = game.GetAllMoves(Player.White)[4];
             game.MakeMove(m);
 
             PrintGame(game);
-            Console.Write("Possible Moves: " + game.GetAllMoves(Player.White).Count.ToString() + "\n");
+            Console.Write("Possible Moves: " + game.GetAllMoves(Player.White).Count.ToString() + "\n\n");
+
+            //get a move
+            Move m2 = game.GetAllMoves(Player.White)[6];
+            game.MakeMove(m2);
+
+            PrintGame(game);
+            Console.Write("Possible Moves: " + game.GetAllMoves(Player.White).Count.ToString() + "\n\n");
+
 
 
             Console.Read();
