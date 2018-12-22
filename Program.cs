@@ -45,9 +45,13 @@ namespace CHEP
 
                     }
                 }
-                Console.WriteLine("Moves: ");
-                Console.Write(game.GetAllMoves(Player.White).Count.ToString());
+                Console.WriteLine();
             }
+
+            Console.WriteLine("Moves: ");
+            Console.WriteLine(game.GetAllMoves(Player.White).Count.ToString());
+
+            Console.Read();
         }
     }
 }
