@@ -258,13 +258,13 @@ namespace CHEP
 
         private void ValidateAndAddMove(Piece piece, int i, int j, int targetRow, int targetCol, ref List<Move> possibleMoves)
         {
-            if (KingIsInCheckNow(Piece piece, int i, int j, int targetRow, int targetCol))
+            if (KingIsInCheckNow(piece, i, j, targetRow, targetCol))
                 return;
 
             possibleMoves.Add(new Move(piece, i, j, i - 1, j));
         }
 
-        private bool KingIsInCheckNow(Piece piece1, Piece piece2, int v1, int i, int v2, int j, int v3, int targetRow, int v4, int targetCol)
+        private bool KingIsInCheckNow(Piece piece, int i, int j, int targetRow, int targetCol)
         {
             throw new NotImplementedException();
         }
