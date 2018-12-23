@@ -60,32 +60,103 @@ namespace CHEP
                             {
                                 //1 up
                                 int targetRow = i - 1, targetCol = j;
+                                Piece targetSquare = null;
 
-                                //if (!TargetSquareOutOfBounce(targetRow, targetCol))
-                                //    continue;
-
-                                Piece targetSquare = GetTargetSquare(targetRow, targetCol);
-                                if (targetSquare == null)
-                                    ValidateAndAddMove(piece, i, j, targetRow, targetCol, ref possibleMoves);
-
-                                //move 2 up only when pawns still in row 2 for white and 7 for black
-                                if ((forPlayer == Player.White && i == 6) || (forPlayer == Player.Black && i == 1))
+                                if (!TargetSquareOutOfBounce(targetRow, targetCol))
                                 {
-                                    targetRow = i - 2;
-                                    //if (!TargetSquareOutOfBounce(targetRow, targetCol))
-                                    //    continue;
-
                                     targetSquare = GetTargetSquare(targetRow, targetCol);
                                     if (targetSquare == null)
                                         ValidateAndAddMove(piece, i, j, targetRow, targetCol, ref possibleMoves);
                                 }
 
-                                //capture left
+                                //move 2 up only when pawns still in row 2 for white and 7 for black
+                                if (i == 6)
+                                {
 
+                                    targetRow = i - 2;
+                                    //if (!TargetSquareOutOfBounce(targetRow, targetCol))
+                                    //    continue;
+                                    if (!TargetSquareOutOfBounce(targetRow, targetCol))
+                                    {
+                                        targetSquare = GetTargetSquare(targetRow, targetCol);
+                                        if (targetSquare == null)
+                                            ValidateAndAddMove(piece, i, j, targetRow, targetCol, ref possibleMoves);
+                                    }
+                                }
+
+                                //capture left
+                                targetRow = i - 1;
+                                targetCol = j + 1;
+                                if (!TargetSquareOutOfBounce(targetRow, targetCol))
+                                {
+                                    targetSquare = GetTargetSquare(targetRow, targetCol);
+                                    if (targetSquare != null && targetSquare.Player == Player.Black)
+                                        ValidateAndAddMove(piece, i, j, targetRow, targetCol, ref possibleMoves);
+                                }
                                 //capture right
+                                targetRow = i + 1;
+                                targetCol = j + 1;
+
+                                if (!TargetSquareOutOfBounce(targetRow, targetCol))
+                                {
+                                    targetSquare = GetTargetSquare(targetRow, targetCol);
+                                    if (targetSquare != null && targetSquare.Player == Player.Black)
+                                        ValidateAndAddMove(piece, i, j, targetRow, targetCol, ref possibleMoves);
+                                }
 
                                 //enpassant
-                                
+
+                                //promotion
+                            }
+                            else if (forPlayer == Player.Black)
+                            {
+                                //1 up
+                                int targetRow = i + 1, targetCol = j;
+                                Piece targetSquare = null;
+
+                                if (!TargetSquareOutOfBounce(targetRow, targetCol))
+                                {
+                                    targetSquare = GetTargetSquare(targetRow, targetCol);
+                                    if (targetSquare == null)
+                                        ValidateAndAddMove(piece, i, j, targetRow, targetCol, ref possibleMoves);
+                                }
+
+                                //move 2 up only when pawns still in row 2 for white and 7 for black
+                                if (i == 1)
+                                {
+                                    targetRow = i + 2;
+                                    if (!TargetSquareOutOfBounce(targetRow, targetCol))
+                                    {
+                                        targetSquare = GetTargetSquare(targetRow, targetCol);
+                                        if (targetSquare == null)
+                                            ValidateAndAddMove(piece, i, j, targetRow, targetCol, ref possibleMoves);
+                                    }
+                                }
+
+                                //capture left
+                                targetRow = i + 1;
+                                targetCol = j - 1;
+
+                                if (!TargetSquareOutOfBounce(targetRow, targetCol))
+                                {
+                                    targetSquare = GetTargetSquare(targetRow, targetCol);
+                                    if (targetSquare != null && targetSquare.Player == Player.Black)
+                                        ValidateAndAddMove(piece, i, j, targetRow, targetCol, ref possibleMoves);
+                                }
+
+                                //capture right
+                                targetRow = i - 1;
+                                targetCol = j - 1;
+
+                                if (!TargetSquareOutOfBounce(targetRow, targetCol))
+                                {
+                                    targetSquare = GetTargetSquare(targetRow, targetCol);
+                                    if (targetSquare != null && targetSquare.Player == Player.Black)
+                                        ValidateAndAddMove(piece, i, j, targetRow, targetCol, ref possibleMoves);
+                                }
+
+                                //enpassant
+
                                 //promotion
                             }
 

@@ -10,15 +10,15 @@ namespace CHEP
     {
         static void Main(string[] args)
         {
-            //try
-            //{
-            //    UCI uci = new UCI();
-            //    uci.Start();
-            //}
-            //catch (Exception e)
-            //{
-            //    CLITools.WriteAndLog("Error: " + e.Message + " Inner: " + e.InnerException);
-            //}
+            try
+            {
+                UCI uci = new UCI();
+                uci.Start();
+            }
+            catch (Exception e)
+            {
+                CLITools.WriteAndLog("Error: " + e.Message + " Inner: " + e.InnerException);
+            }
 
             //used to play in console
             //PlayInConsole local = new PlayInConsole();
