@@ -80,7 +80,7 @@ namespace CHEP
                 Stopwatch stopWatch = new Stopwatch();
                 stopWatch.Start();
 
-
+                game = new ChessGame();
                 long nodes = engine.GetNodesForPosition(game, i);
                 stopWatch.Stop();
 
