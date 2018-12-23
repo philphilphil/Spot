@@ -353,7 +353,7 @@ namespace CHEP
             if (KingIsInCheckNow(piece, i, j, targetRow, targetCol))
                 return;
 
-            possibleMoves.Add(new Move(piece, i, j, i - 1, j));
+            possibleMoves.Add(new Move(piece, i, j, targetRow, targetCol));
         }
 
         private bool KingIsInCheckNow(Piece piece, int i, int j, int targetRow, int targetCol)
