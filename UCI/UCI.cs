@@ -90,29 +90,10 @@ namespace CHEP
         private void PerftScore(string[] uciCommand)
         {
             int depth = int.Parse(uciCommand[1]);
-
-
-            //debug
-            this.game = new ChessGame();
-            depth = 6;
-            for (int i = 1; i <= depth; i++)
-            {
-                Engine engine = new Engine();
-
-                //https://stackoverflow.com/questions/13767561/timer-c-start-stop-and-get-the-amount-of-time-between-the-calls
-                Stopwatch stopWatch = new Stopwatch();
-                stopWatch.Start();
-
-
-                long nodes = engine.GetNodesForPosition(this.game, i);
-                stopWatch.Stop();
-
-                TimeSpan ts = stopWatch.Elapsed;
-                string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
-
-                Console.WriteLine(String.Format("Depth: {0} Nodes: {1} Time: {2}", i.ToString(), nodes.ToString(), elapsedTime));
-            }
+            Engine e = new Engine();
+            e.Perft(depth);
         }
+
 
         private void Debug()
         {
