@@ -12,6 +12,8 @@ namespace CHEP
         public bool WhiteCanCastleQueenSide { get; protected set; }
         public bool BlackCanCastleKingSide { get; protected set; }
         public bool BlackCanCastleQueenSide { get; protected set; }
+        private Tuple<int, int> WhiteKingPosition { get; set; }
+        private Tuple<int, int> BlackKingPosition { get; set; }
 
         public ChessGame()
         {
@@ -27,6 +29,21 @@ namespace CHEP
             Board[move.RowFrom, move.ColumFrom] = null;
 
             this.WhoseTurn = GetOppositePlayer(this.WhoseTurn);
+
+            //if move was a king move, save new king positions
+            if (move.Piece.Type == 'K')
+            {
+                if (move.Piece.Player == Player.White)
+                {
+                    WhiteKingPosition = Tuple.Create(move.RowTo, move.RowFrom);
+                }
+                else
+                {
+                    BlackKingPosition = Tuple.Create(move.RowTo, move.RowFrom);
+
+                }
+            }
+
             return true;
         }
 
@@ -439,6 +456,9 @@ namespace CHEP
             this.Board[6, 5] = new Piece('P', Player.White);
             this.Board[6, 6] = new Piece('P', Player.White);
             this.Board[6, 7] = new Piece('P', Player.White);
+
+            WhiteKingPosition = Tuple.Create(7, 4);
+            BlackKingPosition = Tuple.Create(0, 4);
         }
     }
 
