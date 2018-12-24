@@ -91,8 +91,6 @@ namespace CHEP
                                 {
 
                                     targetRow = i - 2;
-                                    //if (!TargetSquareOutOfBounce(targetRow, targetCol))
-                                    //    continue;
                                     if (!TargetSquareOutOfBounce(targetRow, targetCol))
                                     {
                                         targetSquare = GetTargetSquare(targetRow, targetCol);
