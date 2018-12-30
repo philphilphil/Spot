@@ -381,6 +381,49 @@ namespace CHEP
             //Check in all directions
 
             //Check for knights
+            Tuple<int, int>[] possibleKnightLocations =
+                            {
+                            Tuple.Create(kingRow-2, kingCol-1), //top left 1
+                            Tuple.Create(kingRow-1, kingCol-2), //top left 2
+                            Tuple.Create(kingRow+2, kingCol+1), //top right 1
+                            Tuple.Create(kingRow+1, kingCol+2), //top right 2
+                            Tuple.Create(kingRow-2, kingCol+1), //bottom left 1
+                            Tuple.Create(kingRow-1, kingCol+2), //bottom left 2
+                            Tuple.Create(kingRow+2, kingCol+1), //bottom right 1
+                            Tuple.Create(kingRow+1, kingCol+2), //bottom right 2
+                            };
+
+            for (int t = 0; t < possibleKnightLocations.Length; t++)
+            {
+                if (CheckSquaresForEnemiePieces(possibleKnightLocations[t].Item1, possibleKnightLocations[t].Item2, GetOppositePlayer(WhoseTurn)))
+                    return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// If piece was found at this location king is in check
+        /// </summary>
+        /// <param name="item1"></param>
+        /// <param name="item2"></param>
+        /// <param name="player"></param>
+        /// <returns></returns>
+        private bool CheckSquaresForEnemiePieces(int r, int c, Player player)
+        {
+            if (TargetSquareOutOfBounce(r, c))
+                return false;
+
+            Piece targetSquare = GetTargetSquare(r, c);
+
+            if (targetSquare == null)
+                return false;
+
+            if (targetSquare.Player == player)
+            {
+                //its an enemy piece, king is in check
+                return true;
+            }
 
 
             return false;
