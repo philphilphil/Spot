@@ -373,6 +373,16 @@ namespace CHEP
 
         private bool KingIsInCheckNow(Piece piece, int i, int j, int targetRow, int targetCol)
         {
+
+            //TODO: maybe putting into one if faster?
+            int kingRow = WhoseTurn == Player.White ? WhiteKingPosition.Item1 : BlackKingPosition.Item1;
+            int kingCol = WhoseTurn == Player.White ? WhiteKingPosition.Item2 : BlackKingPosition.Item2;
+
+            //Check in all directions
+
+            //Check for knights
+
+
             return false;
         }
 
