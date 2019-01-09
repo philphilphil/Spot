@@ -69,6 +69,102 @@ namespace CHEP
         //    return bestMove;
         //}
 
+        public void SplitPerft(int depth)
+        {
+            ChessGame game = new ChessGame();
+            Engine engine = new Engine();
+            long allNodes = 0;
+            List<Move> moves = game.GetAllMoves(game.WhoseTurn).ToList();
+
+            foreach (var move in moves)
+            {
+                game.MakeMove(move);
+                long nodes = engine.GetNodesForPosition(game, depth);
+                allNodes += nodes;
+                Console.WriteLine(String.Format("{0}:  {1}", ConvCordsToText(move.ColumFrom, move.RowFrom) + ConvCordsToText(move.ColumnTo, move.RowTo), nodes));
+                game.UndoMove(move);
+            }
+
+            Console.WriteLine("Nodes searched: " + allNodes.ToString());
+
+        }
+
+        private string ConvCordsToText(int c, int r)
+        {
+            string cords = "";
+
+            if (c == 0)
+            {
+                cords = "a";
+            }
+            else if (c == 1)
+            {
+                cords = "b";
+            }
+            else if (c == 2)
+            {
+                cords = "c";
+            }
+            else if (c == 3)
+            {
+                cords = "d";
+            }
+            else if (c == 4)
+            {
+                cords = "e";
+            }
+            else if (c == 5)
+            {
+                cords = "f";
+            }
+            else if (c == 6)
+            {
+                cords = "g";
+            }
+            else if (c == 7)
+            {
+                cords = "h";
+            }
+            
+            if(r == 0)
+            {
+                cords += "8";
+            }
+            else if (r == 1)
+            {
+                cords += "7";
+            }
+            else if (r == 2)
+            {
+                cords += "6";
+            }
+            else if (r == 3)
+            {
+                cords += "5";
+            }
+            else if (r == 4)
+            {
+                cords += "4";
+            }
+            else if (r == 5)
+            {
+                cords += "3";
+            }
+            else if (r == 6)
+            {
+                cords += "2";
+            }
+            else if (r == 7)
+            {
+                cords += "1";
+            }
+
+
+            ///cords += (r + 1).ToString();
+
+            return cords;
+        }
+
         public void Perft(int depth)
         {
             ChessGame game = new ChessGame();
@@ -99,6 +195,7 @@ namespace CHEP
             long nodes = 0;
             if (depth == 0) return 1;
             List<Move> moves = game.GetAllMoves(game.WhoseTurn).ToList();
+
 
             foreach (var move in moves)
             {

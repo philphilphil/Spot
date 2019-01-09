@@ -25,7 +25,7 @@ namespace CHEP
             //local.Play();
 
             Engine e = new Engine();
-            e.Perft(6);
+            e.SplitPerft(2);
 
 
             //testing new selfbuild chess game rules
