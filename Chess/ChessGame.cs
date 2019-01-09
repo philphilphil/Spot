@@ -200,7 +200,7 @@ namespace CHEP
                         else if (piece.Type == 'K')
                         {
                             Tuple<int, int>[] possibleKingMoves =
-{
+                            {
                             Tuple.Create(i+1, j+1),
                             Tuple.Create(i+1, j-1),
                             Tuple.Create(i+1, j),
@@ -365,13 +365,13 @@ namespace CHEP
 
         private void ValidateAndAddMove(Piece piece, int i, int j, int targetRow, int targetCol, ref List<Move> possibleMoves)
         {
-            if (KingIsInCheckNow(piece, i, j, targetRow, targetCol))
+            if (KingIsInCheckNow(piece, i, j))
                 return;
 
             possibleMoves.Add(new Move(piece, i, j, targetRow, targetCol));
         }
 
-        private bool KingIsInCheckNow(Piece piece, int i, int j, int targetRow, int targetCol)
+        private bool KingIsInCheckNow(Piece piece, int i, int j)
         {
 
             //TODO: maybe putting into one if faster?
@@ -421,6 +421,187 @@ namespace CHEP
                     return true;
             }
 
+            //Check in all directions, this should also obsolete the check for pawns above
+            int targetRow = kingRow;
+            int targetCol = kingCol;
+
+            //top left
+            while (true)
+            {
+                targetRow++;
+                targetCol--;
+
+                if (CheckIfEnemyPieceAndIfKingInCheck(targetRow, targetCol, kingRow, kingCol, SearchType.Diagnoal))
+                {
+                    return true;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            //top right
+            targetRow = kingRow;
+            targetCol = kingCol;
+
+            while (true)
+            {
+                targetRow++;
+                targetCol++;
+
+                if (CheckIfEnemyPieceAndIfKingInCheck(targetRow, targetCol, kingRow, kingCol, SearchType.Diagnoal))
+                {
+                    return true;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            //bottom right
+            targetRow = kingRow;
+            targetCol = kingCol;
+
+            while (true)
+            {
+                targetRow--;
+                targetCol++;
+
+                if (CheckIfEnemyPieceAndIfKingInCheck(targetRow, targetCol, kingRow, kingCol, SearchType.Diagnoal))
+                {
+                    return true;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            //bottom left
+            targetRow = kingRow;
+            targetCol = kingCol;
+
+            while (true)
+            {
+                targetRow--;
+                targetCol--;
+
+                if (CheckIfEnemyPieceAndIfKingInCheck(targetRow, targetCol, kingRow, kingCol, SearchType.Diagnoal))
+                {
+                    return true;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            //up
+            targetRow = kingRow;
+            targetCol = kingCol;
+            while (true)
+            {
+                targetRow++;
+
+                if (CheckIfEnemyPieceAndIfKingInCheck(targetRow, targetCol, kingRow, kingCol, SearchType.Horizontal))
+                {
+                    return true;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            //down
+            targetRow = kingRow;
+            targetCol = kingCol;
+            while (true)
+            {
+                targetRow--;
+
+                if (CheckIfEnemyPieceAndIfKingInCheck(targetRow, targetCol, kingRow, kingCol, SearchType.Horizontal))
+                {
+                    return true;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            //left
+            targetRow = kingRow;
+            targetCol = kingCol;
+            while (true)
+            {
+                targetCol--;
+
+                if (CheckIfEnemyPieceAndIfKingInCheck(targetRow, targetCol, kingRow, kingCol, SearchType.Horizontal))
+                {
+                    return true;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            //right
+            targetRow = kingRow;
+            targetCol = kingCol;
+            while (true)
+            {
+                targetCol--;
+
+                if (CheckIfEnemyPieceAndIfKingInCheck(targetRow, targetCol, kingRow, kingCol, SearchType.Horizontal))
+                {
+                    return true;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            return false;
+        }
+
+        private bool CheckIfEnemyPieceAndIfKingInCheck(int targetRow, int targetCol, int kingRow, int kingCol, SearchType type)
+        {
+
+            if (TargetSquareOutOfBounce(targetRow, targetCol))
+                return false;
+
+            //no piece or own piece
+            Piece piece = GetTargetSquare(targetRow, targetCol);
+            if (piece == null || piece.Player == WhoseTurn)
+                return false;
+
+            if (piece.Type == 'P')
+            {
+                //its a pawn, if the pawn is infront of me for white and behind me for black, king is in check.
+            }
+            else if (piece.Type == 'B' && type == SearchType.Diagnoal)
+            {
+                //its an enemy bishop, he gives me check
+                return true;
+            }
+            else if (piece.Type == 'R' && type == SearchType.Horizontal)
+            {
+                return true;
+            }
+            else if (piece.Type == 'Q')
+            {
+                return true;
+            }
+            else if (piece.Type == 'K')
+            {
+                //TODO: only if arround the king
+            }
+
             return false;
         }
 
@@ -446,7 +627,6 @@ namespace CHEP
                 //its an enemy piece
                 return true;
             }
-
 
             return false;
         }
@@ -537,4 +717,5 @@ namespace CHEP
 
     public enum Player { White, Black };
     public enum Type { Pawn, Bishop, Knight, Rook, Queen, King };
+    public enum SearchType { Pawns, Diagnoal, Horizontal }
 }

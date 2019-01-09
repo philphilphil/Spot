@@ -15,6 +15,7 @@ namespace CHEP
         int[,] PawnBlack, KnightBlack, BishopBlack, RookBlack, QueenBlack, KingBlack;
         int nodeCounter = 0;
 
+        //DEBUGGING
 
         public Engine()
         {
@@ -81,17 +82,23 @@ namespace CHEP
                 stopWatch.Start();
 
                 game = new ChessGame();
-                long nodes = engine.GetNodesForPosition(game, i);
+                int pMoves = 0, nMoves = 0, bMoves = 0, rMoves = 0, qMoves = 0, kMoves = 0;
+
+                long nodes = engine.GetNodesForPosition(game, i, ref pMoves, ref nMoves, ref qMoves, ref kMoves, ref bMoves, ref rMoves);
                 stopWatch.Stop();
 
                 TimeSpan ts = stopWatch.Elapsed;
                 string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
 
                 Console.WriteLine(String.Format("Depth: {0} Nodes: {1} Time: {2}", i.ToString(), nodes.ToString(), elapsedTime));
+                Console.WriteLine(String.Format("P:{0} N:{1} B:{2} R:{3} Q:{4} K:{5}", pMoves, nMoves, bMoves, rMoves, qMoves, kMoves));
+                pMoves = nMoves = bMoves = rMoves = qMoves = kMoves = 0;
+
+                Console.WriteLine("");
             }
         }
 
-        private long GetNodesForPosition(ChessGame game, int depth)
+        private long GetNodesForPosition(ChessGame game, int depth, ref int pMoves, ref int nMoves, ref int qMoves, ref int kMoves, ref int bMoves, ref int rMoves)
         {
             long nodes = 0;
             if (depth == 0) return 1;
@@ -100,8 +107,28 @@ namespace CHEP
             foreach (var move in moves)
             {
                 game.MakeMove(move);
-                nodes += GetNodesForPosition(game, depth - 1);
+                nodes += GetNodesForPosition(game, depth - 1, ref pMoves,ref nMoves, ref qMoves, ref kMoves, ref bMoves, ref rMoves);
                 game.UndoMove(move);
+
+                //DEBUGGING
+                if (move.Piece.Type == 'P')
+                    pMoves++;
+
+                if (move.Piece.Type == 'R')
+                    rMoves++;
+
+                if (move.Piece.Type == 'N')
+                    nMoves++;
+
+                if (move.Piece.Type == 'Q')
+                    qMoves++;
+
+                if (move.Piece.Type == 'K')
+                    kMoves++;
+
+                if (move.Piece.Type == 'B')
+                    bMoves++;
+                //END DEBUGGING
             }
 
             return nodes;
