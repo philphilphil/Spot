@@ -378,8 +378,6 @@ namespace CHEP
             int kingRow = WhoseTurn == Player.White ? WhiteKingPosition.Item1 : BlackKingPosition.Item1;
             int kingCol = WhoseTurn == Player.White ? WhiteKingPosition.Item2 : BlackKingPosition.Item2;
 
-
-
             //Check for Pawns
             int pawn1Row, pawnCol, pawn2Row;
             if (WhoseTurn == Player.White)
@@ -398,10 +396,10 @@ namespace CHEP
                 pawn2Row = kingRow - 1;
             }
 
-            if (CheckSquareForEnemiePieces(pawn1Row, pawnCol, GetOppositePlayer(WhoseTurn)))
+            if (CheckSquareForEnemiePieces(pawn1Row, pawnCol))
                 return true;
 
-            if (CheckSquareForEnemiePieces(pawn2Row, pawnCol, GetOppositePlayer(WhoseTurn)))
+            if (CheckSquareForEnemiePieces(pawn2Row, pawnCol))
                 return true;
 
             //Check for knights
@@ -419,7 +417,7 @@ namespace CHEP
 
             for (int t = 0; t < possibleKnightLocations.Length; t++)
             {
-                if (CheckSquareForEnemiePieces(possibleKnightLocations[t].Item1, possibleKnightLocations[t].Item2, GetOppositePlayer(WhoseTurn)))
+                if (CheckSquareForEnemiePieces(possibleKnightLocations[t].Item1, possibleKnightLocations[t].Item2))
                     return true;
             }
 
@@ -433,7 +431,7 @@ namespace CHEP
         /// <param name="item2"></param>
         /// <param name="player"></param>
         /// <returns></returns>
-        private bool CheckSquareForEnemiePieces(int r, int c, Player player)
+        private bool CheckSquareForEnemiePieces(int r, int c)
         {
             if (TargetSquareOutOfBounce(r, c))
                 return false;
@@ -443,7 +441,7 @@ namespace CHEP
             if (targetSquare == null)
                 return false;
 
-            if (targetSquare.Player == player)
+            if (targetSquare.Player == GetOppositePlayer(WhoseTurn))
             {
                 //its an enemy piece
                 return true;
