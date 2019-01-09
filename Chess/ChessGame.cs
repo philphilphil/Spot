@@ -155,7 +155,7 @@ namespace CHEP
                                 if (!TargetSquareOutOfBounce(targetRow, targetCol))
                                 {
                                     targetSquare = GetTargetSquare(targetRow, targetCol);
-                                    if (targetSquare != null && targetSquare.Player == Player.Black)
+                                    if (targetSquare != null && targetSquare.Player == Player.White)
                                         ValidateAndAddMove(piece, i, j, targetRow, targetCol, ref possibleMoves);
                                 }
 
@@ -166,7 +166,7 @@ namespace CHEP
                                 if (!TargetSquareOutOfBounce(targetRow, targetCol))
                                 {
                                     targetSquare = GetTargetSquare(targetRow, targetCol);
-                                    if (targetSquare != null && targetSquare.Player == Player.Black)
+                                    if (targetSquare != null && targetSquare.Player == Player.White)
                                         ValidateAndAddMove(piece, i, j, targetRow, targetCol, ref possibleMoves);
                                 }
 
