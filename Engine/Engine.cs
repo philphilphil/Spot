@@ -1,5 +1,8 @@
 ﻿using Rudz.Chess;
 using Rudz.Chess.Factories;
+using Rudz.Chess.Fen;
+using Rudz.Chess.MoveGeneration;
+using Rudz.Chess.Types;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -16,59 +19,59 @@ namespace CHEP
         int[,] PawnBlack, KnightBlack, BishopBlack, RookBlack, QueenBlack, KingBlack;
         int nodeCounter = 0;
 
-        //DEBUGGING
-
         public Engine()
         {
             SetupPieceSquareEvals();
         }
 
         ///// <summary>
-        ///// Calculation starting point. itterate through all legal moves and start the minimax calculation 
+        ///// Calculation starting point. Itterate through all legal moves and start the minimax calculation 
         ///// </summary>
         ///// <param name="game"></param>
         ///// <returns></returns>
-        //public Move CalculateBestMove(ChessGame game)
-        //{
-        //    Move bestMove = null;
-        //    int bestRating = -9999;
-        //    this.StartTime = DateTime.Now;
-        //    String originalPositionFen = game.GetFen();
+        public Move CalculateBestMove(Position pos, State state)
+        {
+            Move bestMove = null;
+            int bestRating = -9999;
+            this.StartTime = DateTime.Now;
+            String originalPositionFen = pos.FenNotation;
+            FenData originalFenData = pos.GenerateFen();
 
-        //    List<Move> validMoves = game.GetValidMoves(game.WhoseTurn).ToList();
+            MoveList validMoves = pos.GenerateMoves();
 
-        //    foreach (var move in validMoves)
-        //    {
-        //        //UCI Info output
-        //        Console.WriteLine("info depth 1 score cp 1 time " + MillisecondsSinceStart(this.StartTime) + " nodes " + nodeCounter.ToString());
+            foreach (var move in validMoves)
+            {
+                //UCI Info output
+                Console.WriteLine("info depth 1 score cp 1 time " + MillisecondsSinceStart(this.StartTime) + " nodes " + nodeCounter.ToString());
 
-        //        //set fen back to original position
-        //        game = new ChessGame(originalPositionFen);
+                //set fen back to original position
+                pos.SetFen(originalFenData);
 
-        //        //do the move
-        //        var turnMadeBy = game.WhoseTurn;
-        //        MoveType type = game.MakeMove(move, true);
+                //do the move
+                var turnMadeBy = 
+                pos.MakeMove(move, state);
+               // pos.
 
-        //        //get best board rating after depth 4
-        //        bool maximisingPlayer = turnMadeBy == Player.White ? true : false;
-        //        var boardRating = MiniMaxBestMove(game, 4, -9999, 9999, maximisingPlayer);
+                //get best board rating after depth 4
+                bool maximisingPlayer = turnMadeBy == Player.White ? true : false;
+                var boardRating = MiniMaxBestMove(pos, 4, -9999, 9999, maximisingPlayer);
 
-        //        //if its blacks turn, take negative of the rating because blacks wants to minimize
-        //        if (turnMadeBy == Player.Black)
-        //        {
-        //            boardRating = -boardRating; //maybe: -Math.Abs(boardRating);
-        //        }
+                //if its blacks turn, take negative of the rating because blacks wants to minimize
+                if (turnMadeBy == Player.Black)
+                {
+                    boardRating = -boardRating; //maybe: -Math.Abs(boardRating);
+                }
 
-        //        //check if higher than currently best rating, if yes set to current best
-        //        if (boardRating >= bestRating)
-        //        {
-        //            bestRating = boardRating;
-        //            bestMove = move;
-        //        }
-        //    }
+                //check if higher than currently best rating, if yes set to current best
+                if (boardRating >= bestRating)
+                {
+                    bestRating = boardRating;
+                    bestMove = move;
+                }
+            }
 
-        //    return bestMove;
-        //}
+            return bestMove;
+        }
 
         //public void SplitPerft(int depth)
         //{
@@ -218,59 +221,59 @@ namespace CHEP
         /// <param name="beta"></param>
         /// <param name="maximizingPlayer"></param>
         /// <returns></returns>
-        //public int MiniMaxBestMove(ChessGame game, int depth, int alpha, int beta, bool maximizingPlayer)
-        //{
-        //    nodeCounter++;
-        //    //when final depth is found, return found mov
-        //    if (depth == 0)
-        //    {
-        //        return GetBoardRating(game.GetBoard());
-        //    }
+        public int MiniMaxBestMove(Position pos, int depth, int alpha, int beta, bool maximizingPlayer)
+        {
+            nodeCounter++;
+            //when final depth is found, return found mov
+            if (depth == 0)
+            {
+                return GetBoardRating(game.GetBoard());
+            }
 
-        //    List<Move> validMoves = game.GetValidMoves(game.WhoseTurn).ToList();
+            List<Move> validMoves = game.GetValidMoves(game.WhoseTurn).ToList();
 
 
-        //    if (!maximizingPlayer)
-        //    {
-        //        int bestMove = -9999;
-        //        foreach (var move in validMoves)
-        //        {
-        //            String originalPositionFen = game.GetFen();
-        //            var turnMadeBy = game.WhoseTurn;
-        //            MoveType type = game.MakeMove(move, true);
-        //            bestMove = Math.Max(bestMove, MiniMaxBestMove(game, depth - 1, alpha, beta, true));
-        //            game = new ChessGame(originalPositionFen);
+            if (!maximizingPlayer)
+            {
+                int bestMove = -9999;
+                foreach (var move in validMoves)
+                {
+                    String originalPositionFen = game.GetFen();
+                    var turnMadeBy = game.WhoseTurn;
+                    MoveType type = game.MakeMove(move, true);
+                    bestMove = Math.Max(bestMove, MiniMaxBestMove(game, depth - 1, alpha, beta, true));
+                    game = new ChessGame(originalPositionFen);
 
-        //            alpha = Math.Max(alpha, bestMove);
-        //            if (beta <= alpha)
-        //            {
-        //                return bestMove;
-        //            }
-        //        }
+                    alpha = Math.Max(alpha, bestMove);
+                    if (beta <= alpha)
+                    {
+                        return bestMove;
+                    }
+                }
 
-        //        return bestMove;
-        //    }
-        //    else //minimizing player
-        //    {
-        //        int bestMove = 9999;
-        //        foreach (var move in validMoves)
-        //        {
-        //            String originalPositionFen = game.GetFen();
-        //            var turnMadeBy = game.WhoseTurn;
-        //            MoveType type = game.MakeMove(move, true);
-        //            bestMove = Math.Min(bestMove, MiniMaxBestMove(game, depth - 1, alpha, beta, false));
-        //            game = new ChessGame(originalPositionFen);
+                return bestMove;
+            }
+            else //minimizing player
+            {
+                int bestMove = 9999;
+                foreach (var move in validMoves)
+                {
+                    String originalPositionFen = game.GetFen();
+                    var turnMadeBy = game.WhoseTurn;
+                    MoveType type = game.MakeMove(move, true);
+                    bestMove = Math.Min(bestMove, MiniMaxBestMove(game, depth - 1, alpha, beta, false));
+                    game = new ChessGame(originalPositionFen);
 
-        //            beta = Math.Min(beta, bestMove);
-        //            if (beta <= alpha)
-        //            {
-        //                return bestMove;
-        //            }
-        //        }
+                    beta = Math.Min(beta, bestMove);
+                    if (beta <= alpha)
+                    {
+                        return bestMove;
+                    }
+                }
 
-        //        return bestMove;
-        //    }
-        //}
+                return bestMove;
+            }
+        }
 
 
         /// <summary>
@@ -278,39 +281,39 @@ namespace CHEP
         /// </summary>
         /// <param name="board"></param>
         /// <returns></returns>
-        //private int GetBoardRating(Piece[][] board)
-        //{
-        //    int rating = 0;
-        //    int counterRow = 0;
-        //    int counterColumn = 0;
+        private int GetBoardRating(Piece[][] board)
+        {
+            int rating = 0;
+            int counterRow = 0;
+            int counterColumn = 0;
 
-        //    foreach (var row in board)
-        //    {
-        //        counterRow++;
-        //        counterColumn = 0;
+            foreach (var row in board)
+            {
+                counterRow++;
+                counterColumn = 0;
 
-        //        foreach (var piece in row)
-        //        {
-        //            counterColumn++;
+                foreach (var piece in row)
+                {
+                    counterColumn++;
 
-        //            if (piece == null)
-        //            {
-        //                continue;
-        //            }
+                    if (piece == null)
+                    {
+                        continue;
+                    }
 
-        //            int pieceValue = GetPieceValue(piece, counterRow, counterColumn);
-        //            if (piece.Owner == Player.Black)
-        //            {
-        //                pieceValue = -pieceValue;
-        //            }
+                    int pieceValue = GetPieceValue(piece, counterRow, counterColumn);
+                    if (piece.Owner == Player.Black)
+                    {
+                        pieceValue = -pieceValue;
+                    }
 
-        //            rating += pieceValue;
-        //        }
+                    rating += pieceValue;
+                }
 
-        //    }
+            }
 
-        //    return rating;
-        //}
+            return rating;
+        }
 
         /// <summary>
         /// Calculates ms between the startDate and now
@@ -329,36 +332,36 @@ namespace CHEP
         /// </summary>
         /// <param name="piece"></param>
         /// <returns></returns>
-        //private int GetPieceValue(Piece piece, int row, int column)
-        //{
-        //    int value = 0;
+        private int GetPieceValue(Piece piece, int row, int column)
+        {
+            int value = 0;
 
-        //    switch (piece.GetFenCharacter().ToString().ToLower())
-        //    {
-        //        case "p":
-        //            value = 100 + (piece.Owner == Player.White ? this.PawnWhite[row - 1, column - 1] : this.PawnBlack[row - 1, column - 1]);
-        //            break;
-        //        case "n":
-        //            value = 320 + (piece.Owner == Player.White ? this.KnightWhite[row - 1, column - 1] : this.KnightBlack[row - 1, column - 1]);
-        //            break;
-        //        case "b":
-        //            value = 330 + (piece.Owner == Player.White ? this.BishopWhite[row - 1, column - 1] : this.BishopBlack[row - 1, column - 1]);
-        //            break;
-        //        case "r":
-        //            value = 500 + (piece.Owner == Player.White ? this.RookWhite[row - 1, column - 1] : this.RookBlack[row - 1, column - 1]);
-        //            break;
-        //        case "q":
-        //            value = 900 + (piece.Owner == Player.White ? this.QueenWhite[row - 1, column - 1] : this.QueenBlack[row - 1, column - 1]);
-        //            break;
-        //        case "k":
-        //            value = 2000 + (piece.Owner == Player.White ? this.KingWhite[row - 1, column - 1] : this.KingBlack[row - 1, column - 1]);
-        //            break;
-        //        default:
-        //            break;
-        //    }
+            switch (piece.GetFenCharacter().ToString().ToLower())
+            {
+                case "p":
+                    value = 100 + (piece.Owner == Player.White ? this.PawnWhite[row - 1, column - 1] : this.PawnBlack[row - 1, column - 1]);
+                    break;
+                case "n":
+                    value = 320 + (piece.Owner == Player.White ? this.KnightWhite[row - 1, column - 1] : this.KnightBlack[row - 1, column - 1]);
+                    break;
+                case "b":
+                    value = 330 + (piece.Owner == Player.White ? this.BishopWhite[row - 1, column - 1] : this.BishopBlack[row - 1, column - 1]);
+                    break;
+                case "r":
+                    value = 500 + (piece.Owner == Player.White ? this.RookWhite[row - 1, column - 1] : this.RookBlack[row - 1, column - 1]);
+                    break;
+                case "q":
+                    value = 900 + (piece.Owner == Player.White ? this.QueenWhite[row - 1, column - 1] : this.QueenBlack[row - 1, column - 1]);
+                    break;
+                case "k":
+                    value = 2000 + (piece.Owner == Player.White ? this.KingWhite[row - 1, column - 1] : this.KingBlack[row - 1, column - 1]);
+                    break;
+                default:
+                    break;
+            }
 
-        //    return value;
-        //}
+            return value;
+        }
 
         /// <summary>
         /// Piece-Square Tables https://www.chessprogramming.org/Simplified_Evaluation_Function
