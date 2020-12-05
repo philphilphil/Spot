@@ -1,8 +1,4 @@
-﻿using Rudz.Chess;
-using Rudz.Chess.Enums;
-using Rudz.Chess.Factories;
-using Rudz.Chess.MoveGeneration;
-using Rudz.Chess.Types;
+﻿using ChessDotNet;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -26,12 +22,12 @@ namespace CHEP
             SetupPieceSquareEvals();
         }
 
-        /// <summary>
-        /// Calculation starting point. itterate through all legal moves and start the minimax calculation 
-        /// </summary>
-        /// <param name="game"></param>
-        /// <returns></returns>
-        //public Move CalculateBestMove(Position pos)
+        ///// <summary>
+        ///// Calculation starting point. itterate through all legal moves and start the minimax calculation 
+        ///// </summary>
+        ///// <param name="game"></param>
+        ///// <returns></returns>
+        //public Move CalculateBestMove(ChessGame game)
         //{
         //    Move bestMove = null;
         //    int bestRating = -9999;
@@ -73,25 +69,25 @@ namespace CHEP
         //    return bestMove;
         //}
 
-        //public void SplitPerft(int depth)
-        //{
-        //    ChessGame game = new ChessGame();
-        //    Engine engine = new Engine();
-        //    long allNodes = 0;
-        //    List<Move> moves = game.GetAllMoves(game.WhoseTurn).ToList();
+        public void SplitPerft(int depth)
+        {
+            ChessGame game = new ChessGame();
+            Engine engine = new Engine();
+            long allNodes = 0;
+            List<Move> moves = game.GetAllMoves(game.WhoseTurn).ToList();
 
-        //    foreach (var move in moves)
-        //    {
-        //        game.MakeMove(move);
-        //        long nodes = engine.GetNodesForPosition(game, depth);
-        //        allNodes += nodes;
-        //        Console.WriteLine(String.Format("{0}:  {1}", ConvCordsToText(move.ColumFrom, move.RowFrom) + ConvCordsToText(move.ColumnTo, move.RowTo), nodes));
-        //        game.UndoMove(move);
-        //    }
+            foreach (var move in moves)
+            {
+                game.MakeMove(move);
+                long nodes = engine.GetNodesForPosition(game, depth);
+                allNodes += nodes;
+                Console.WriteLine(String.Format("{0}:  {1}", ConvCordsToText(move.ColumFrom, move.RowFrom) + ConvCordsToText(move.ColumnTo, move.RowTo), nodes));
+                game.UndoMove(move);
+            }
 
-        //    Console.WriteLine("Nodes searched: " + allNodes.ToString());
+            Console.WriteLine("Nodes searched: " + allNodes.ToString());
 
-        //}
+        }
 
         private string ConvCordsToText(int c, int r)
         {
@@ -171,7 +167,7 @@ namespace CHEP
 
         public void Perft(int depth)
         {
-   
+            ChessGame game = new ChessGame();
 
             for (int i = 1; i <= depth; i++)
             {
@@ -181,14 +177,9 @@ namespace CHEP
                 Stopwatch stopWatch = new Stopwatch();
                 stopWatch.Start();
 
-                // construct game and start a new game
-                var board = new Board();
-                var pieceValue = new PieceValue();
-                var position = new Position(board, pieceValue);
-                var game = GameFactory.Create(position);
-                game.NewGame();
-                var nodes = game.Perft(i, true);
+                game = new ChessGame();
 
+                long nodes = engine.GetNodesForPosition(game, i);
                 stopWatch.Stop();
 
                 TimeSpan ts = stopWatch.Elapsed;
@@ -199,22 +190,22 @@ namespace CHEP
             }
         }
 
-        //private long GetNodesForPosition(ChessGame game, int depth)
-        //{
-        //    long nodes = 0;
-        //    if (depth == 0) return 1;
-        //    List<Move> moves = game.GetAllMoves(game.WhoseTurn).ToList();
+        private long GetNodesForPosition(ChessGame game, int depth)
+        {
+            long nodes = 0;
+            if (depth == 0) return 1;
+            List<Move> moves = game.GetAllMoves(game.WhoseTurn).ToList();
 
 
-        //    foreach (var move in moves)
-        //    {
-        //        game.MakeMove(move);
-        //        nodes += GetNodesForPosition(game, depth - 1);
-        //        game.UndoMove(move);
-        //    }
+            foreach (var move in moves)
+            {
+                game.MakeMove(move);
+                nodes += GetNodesForPosition(game, depth - 1);
+                game.UndoMove(move);
+            }
 
-        //    return nodes;
-        //}
+            return nodes;
+        }
 
         /// <summary>
         /// MiniMax - https://en.wikipedia.org/wiki/Minimax#Pseudocode

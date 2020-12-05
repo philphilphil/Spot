@@ -8,14 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.ObjectPool" Version="5.0.0" />
+    <PackageReference Include="ChessDotNet" Version="0.12.0" />
     <PackageReference Include="Serilog" Version="2.10.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Rudz.Chess">
-      <HintPath>Lib\Rudz.Chess.dll</HintPath>
-    </Reference>
   </ItemGroup>
 </Project>

@@ -1,4 +1,4 @@
-﻿using Rudz.Chess;
+﻿using ChessDotNet;
 using Serilog;
 using System;
 using System.Diagnostics;
@@ -9,7 +9,7 @@ namespace CHEP
     public class UCI
     {
 
-        Game game;
+        ChessGame game;
         public UCI()
         {
             SendId();
