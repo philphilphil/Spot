@@ -48,16 +48,15 @@ namespace CHEP
                 pos.SetFen(originalFenData);
 
                 //do the move
-                var turnMadeBy = 
                 pos.MakeMove(move, state);
-               // pos.
+                // pos.
 
                 //get best board rating after depth 4
-                bool maximisingPlayer = turnMadeBy == Player.White ? true : false;
+                bool maximisingPlayer = pos._sideToMove.IsWhite ? true : false;
                 var boardRating = MiniMaxBestMove(pos, 4, -9999, 9999, maximisingPlayer);
 
                 //if its blacks turn, take negative of the rating because blacks wants to minimize
-                if (turnMadeBy == Player.Black)
+                if (pos._sideToMove.IsBlack == Player.Black)
                 {
                     boardRating = -boardRating; //maybe: -Math.Abs(boardRating);
                 }
@@ -227,7 +226,7 @@ namespace CHEP
             //when final depth is found, return found mov
             if (depth == 0)
             {
-                return GetBoardRating(game.GetBoard());
+                return GetBoardRating(pos.GetBoard());
             }
 
             List<Move> validMoves = game.GetValidMoves(game.WhoseTurn).ToList();
@@ -302,7 +301,7 @@ namespace CHEP
                     }
 
                     int pieceValue = GetPieceValue(piece, counterRow, counterColumn);
-                    if (piece.Owner == Player.Black)
+                    if (piece.IsBlack)
                     {
                         pieceValue = -pieceValue;
                     }
@@ -336,25 +335,25 @@ namespace CHEP
         {
             int value = 0;
 
-            switch (piece.GetFenCharacter().ToString().ToLower())
+            switch (piece.GetPieceChar().ToString().ToLower())
             {
                 case "p":
-                    value = 100 + (piece.Owner == Player.White ? this.PawnWhite[row - 1, column - 1] : this.PawnBlack[row - 1, column - 1]);
+                    value = 100 + (piece.IsWhite ? this.PawnWhite[row - 1, column - 1] : this.PawnBlack[row - 1, column - 1]);
                     break;
                 case "n":
-                    value = 320 + (piece.Owner == Player.White ? this.KnightWhite[row - 1, column - 1] : this.KnightBlack[row - 1, column - 1]);
+                    value = 320 + (piece.IsWhite ? this.KnightWhite[row - 1, column - 1] : this.KnightBlack[row - 1, column - 1]);
                     break;
                 case "b":
-                    value = 330 + (piece.Owner == Player.White ? this.BishopWhite[row - 1, column - 1] : this.BishopBlack[row - 1, column - 1]);
+                    value = 330 + (piece.IsWhite ? this.BishopWhite[row - 1, column - 1] : this.BishopBlack[row - 1, column - 1]);
                     break;
                 case "r":
-                    value = 500 + (piece.Owner == Player.White ? this.RookWhite[row - 1, column - 1] : this.RookBlack[row - 1, column - 1]);
+                    value = 500 + (piece.IsWhite ? this.RookWhite[row - 1, column - 1] : this.RookBlack[row - 1, column - 1]);
                     break;
                 case "q":
-                    value = 900 + (piece.Owner == Player.White ? this.QueenWhite[row - 1, column - 1] : this.QueenBlack[row - 1, column - 1]);
+                    value = 900 + (piece.IsWhite ? this.QueenWhite[row - 1, column - 1] : this.QueenBlack[row - 1, column - 1]);
                     break;
                 case "k":
-                    value = 2000 + (piece.Owner == Player.White ? this.KingWhite[row - 1, column - 1] : this.KingBlack[row - 1, column - 1]);
+                    value = 2000 + (piece.IsWhite ? this.KingWhite[row - 1, column - 1] : this.KingBlack[row - 1, column - 1]);
                     break;
                 default:
                     break;
