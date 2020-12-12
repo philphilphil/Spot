@@ -2,7 +2,7 @@ import chess
 import random
 
 
-class Spot:
+class Engine:
 
     def get_piece_value(self, piece):
         value = 0
@@ -28,8 +28,10 @@ class Spot:
         value = 0
 
         for (piece) in pieces:
-            value += len(board.pieces(piece, color)) * self.get_piece_value(piece)
-            value -= len(board.pieces(piece, not color)) * self.get_piece_value(piece)
+            value += len(board.pieces(piece, color)) * \
+                self.get_piece_value(piece)
+            value -= len(board.pieces(piece, not color)) * \
+                self.get_piece_value(piece)
 
         return value
 

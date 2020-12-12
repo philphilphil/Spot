@@ -1,8 +1,12 @@
-import Engine
+import engine
+import uci
+
 
 def main():
-    e = Engine.Spot()
-    e.run_some_random_game()
+    # e = engine.Engine()
+    # e.run_some_random_game()
+    u = uci.UCI()
+    u.start()
 
 if __name__ == '__main__':
     main()
