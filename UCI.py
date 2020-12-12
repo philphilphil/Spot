@@ -30,7 +30,7 @@ class UCI:
         elif cmd_parts[0] == "isready":
             self.is_ready()
         elif cmd_parts[0] == "uci":
-            self.is_ready
+            self.is_ready()
         elif cmd_parts[0] == "position":
             pass # TODO
         elif cmd_parts[0] == "go":
@@ -40,7 +40,7 @@ class UCI:
         elif cmd_parts[0] == "perft":
             pass # TODO
 
-        return False
+        return True
 
     def start(self):
 
