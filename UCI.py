@@ -22,6 +22,10 @@ class UCI:
         # TODO
         return True
 
+    def perft(self, depth):
+        e = engine.Engine()
+        e.start_perft(depth)
+
     def parse_uci_command(self, uci_command):
         cmd_parts = uci_command.split()
 
@@ -38,7 +42,7 @@ class UCI:
         elif cmd_parts[0] == "debug":
             pass # TODO
         elif cmd_parts[0] == "perft":
-            pass # TODO
+            self.perft(int(cmd_parts[1]))
 
         return True
 

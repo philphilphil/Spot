@@ -69,5 +69,23 @@ class Engine:
         print("game end")
         print(board)
 
+    def start_perft(self, depth):
+        board = chess.Board()
+        count = self.perft(depth, board)
+        print("Found moves: " + str(count) + " in perft " + str(depth))
+
+    def perft(self, depth, board):
+        if depth == 0:
+            return 1
+
+        count = 0
+
+        for move in board.legal_moves:
+            board.push(move)
+            count += self.perft(depth - 1, board)
+            board.pop()
+
+        return count
+
     def __init__(self):
         pass
