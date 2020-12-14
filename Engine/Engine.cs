@@ -1,5 +1,4 @@
-﻿using Serilog;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -177,15 +176,12 @@ namespace CHEP
                 stopWatch.Start();
 
                 game = new ChessGame();
-
                 long nodes = engine.GetNodesForPosition(game, i);
                 stopWatch.Stop();
 
                 TimeSpan ts = stopWatch.Elapsed;
                 string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
-                Console.WriteLine(String.Format("Depth: {0} Nodes: {1} Time: {2}", i.ToString(), nodes.ToString(), elapsedTime));
-
-                Console.WriteLine("");
+                Console.WriteLine(String.Format("Perft Depth: {0} found moves: {1} time: {2}", i.ToString(), nodes.ToString(), ts.ToString()));
             }
         }
 
