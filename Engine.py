@@ -1,6 +1,6 @@
 import chess
 import random
-
+import time
 
 class Engine:
 
@@ -70,9 +70,11 @@ class Engine:
         print(board)
 
     def start_perft(self, depth):
+        start = time.time()
         board = chess.Board()
         count = self.perft(depth, board)
-        print("Found moves: " + str(count) + " in perft " + str(depth))
+        end = time.time()
+        print("Perft Depth: "+ str(depth) + " found moves: " + str(count) + " time: " + str(end-start) + "sec")
 
     def perft(self, depth, board):
         if depth == 0:
