@@ -12,8 +12,8 @@ func main() {
 	StartPerft(5)
 	StartPerft(6)
 	StartPerft(7)
-	StartPerft(8)
-	StartPerft(9)
+	//StartPerft(8)
+	//StartPerft(9)
 	}
 
 	func StartPerft(n int) {

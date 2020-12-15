@@ -5,32 +5,31 @@ import "bufio"
 import "os"
 import "strings"
 
+// http://page.mi.fu-berlin.de/block/uci.htm
+// Implements the universal chess interface
 type UCI interface { //all functions called by chess gui or engine tester
 	uci()
 	stop()
-	go2([]string)
+	gouci([]string)
 	isReady()
 	sendId()
-	sendReady()
 	sendOptions()
 	perft([]string)
 	parseUciCommand([]string)
 	validateUciCommand([]string)
 }
 
-// http://page.mi.fu-berlin.de/block/uci.htm
 type UCIs struct {
 }
 
+// Starts the UCI process, waiting for command line input from other software
 func (u *UCIs) Start() {
-	u.sendId()
-	u.sendOptions()
+	u.uci() //TODO maybe not here
 
 	for {
 		scanner := bufio.NewScanner(os.Stdin)
 		if scanner.Scan() {
 			line := scanner.Text()
-
 			args := strings.Fields(line)
 
 			if !u.validateUciCommand(args) {
@@ -45,15 +44,32 @@ func (u *UCIs) Start() {
 	}
 }
 
+// Validates input from the CLI
 func (u *UCIs) validateUciCommand(args []string) bool {
 	return true //TODO
 }
 
+// Parses UCI command and excecutes
 func (u *UCIs) parseUciCommand(args []string) bool {
 
 	switch args[0] {
 	case "quit":
 		return false
+	case "uci":
+		u.sendId()
+		u.sendOptions()
+	case "debug":
+		//TODO turn debug move on or off
+	case "setoption":
+		//TODO as soon as options are avaibale
+	case "position":
+		//set position for engine
+	case "go":
+		//start engine here
+	case "stop":
+		//stop engine search, return bestmove
+	case "ponderhit":
+		//TODO, maybe?
 	case "isready":
 		u.isReady()
 	}
@@ -75,16 +91,13 @@ func (u *UCIs) sendOptions() {
 	fmt.Println("uciok")
 }
 
-func (u *UCIs) sendReady() {
-	fmt.Println("isready")
-}
-
 func (u *UCIs) debug() {
 	fmt.Println("debug")
 }
 
 func (u *UCIs) uci() {
-	fmt.Println("uci")
+	u.sendId()
+	u.sendOptions()
 }
 
 func (u *UCIs) isReady() {
