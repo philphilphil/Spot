@@ -5,9 +5,43 @@ import "fmt"
 import "math/bits"
 
 func main() {
-	board := dragontoothmg.ParseFen("rnbqk1nr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
-	val := getBoardValue(&board)
-	fmt.Println(val)
+	board := dragontoothmg.ParseFen("rnb1kbnr/pppp1ppp/8/P7/8/4qP2/1PPPBPPP/RNBQK2R w KQkq - 3 6")
+	
+	move :=calculateBestMove(&board)
+	fmt.Println(move.String())
+
+	// val := getBoardValue(&board)
+	// fmt.Println(val)
+}
+
+func calculateBestMove(b *dragontoothmg.Board) dragontoothmg.Move {
+
+	moves := b.GenerateLegalMoves()
+	bestBoardVal := 0
+	var bestMove = moves[0]
+	fmt.Printf("White Move: %t\r\n", b.Wtomove)
+
+	for _, move := range moves {
+		unapply := b.Apply(move)
+		boardVal := getBoardValue(b)
+		unapply()
+
+		// fmt.Printf("White Move: %t Move: %v Eval: %v\r\n", b.Wtomove, move.String(), boardVal)
+
+		if b.Wtomove {
+			if boardVal >= bestBoardVal {
+				bestMove = move
+				bestBoardVal = boardVal
+			}
+		} else {
+			if boardVal <= bestBoardVal {
+				bestBoardVal = boardVal
+				bestMove = move
+			}
+		}
+	}
+
+	return bestMove
 }
 
 func getBoardValue(b *dragontoothmg.Board) int {
