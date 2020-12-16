@@ -7,7 +7,7 @@ import (
 	"github.com/dylhunn/dragontoothmg"
 )
 
-var nodesSearcht uint64
+var nodesSearched uint64
 
 func main() {
 	board := dragontoothmg.ParseFen("r1b1k2r/pppp1pp1/2nbqn1p/3Pp3/4P2P/2N2N2/PPP2PP1/R1BQKB1R w KQkq - 1 8")
@@ -28,7 +28,7 @@ func calculateBestMove(b *dragontoothmg.Board) dragontoothmg.Move {
 
 	for _, move := range moves {
 		unapply := b.Apply(move)
-		nodesSearcht++
+		nodesSearched++
 		boardVal := maxi(b, 0)
 		unapply()
 
@@ -46,7 +46,7 @@ func calculateBestMove(b *dragontoothmg.Board) dragontoothmg.Move {
 			}
 		}
 	}
-	fmt.Println(nodesSearcht)
+	fmt.Println(nodesSearched)
 	return bestMove
 }
 
@@ -61,7 +61,7 @@ func maxi(b *dragontoothmg.Board, depth int) int {
 	moves := b.GenerateLegalMoves()
 	for _, move := range moves {
 		unapply := b.Apply(move)
-		nodesSearcht++
+		nodesSearched++
 		score := maxi(b, depth-1)
 		unapply()
 		if score >= max {
@@ -84,7 +84,7 @@ func mini(b *dragontoothmg.Board, depth int) int {
 	moves := b.GenerateLegalMoves()
 	for _, move := range moves {
 		unapply := b.Apply(move)
-		nodesSearcht++
+		nodesSearched++
 		score := maxi(b, depth-1)
 		unapply()
 		if score <= min {
