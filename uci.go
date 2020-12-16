@@ -4,6 +4,7 @@ import "fmt"
 import "bufio"
 import "os"
 import "strings"
+import "github.com/dylhunn/dragontoothmg"
 
 // http://page.mi.fu-berlin.de/block/uci.htm
 // Implements the universal chess interface
@@ -20,6 +21,7 @@ type UCI interface { //all functions called by chess gui or engine tester
 }
 
 type UCIs struct {
+	//game dragontoothmg.Board
 }
 
 // Starts the UCI process, waiting for command line input from other software
@@ -63,9 +65,12 @@ func (u *UCIs) parseUciCommand(args []string) bool {
 	case "setoption":
 		//TODO as soon as options are avaibale
 	case "position":
+		//TODO: implement better
+		setGamePosition(&game, args[1:])
 		//set position for engine
 	case "go":
-		//start engine here
+		bestMove := calculateBestMove(&game)
+		fmt.Println("bestmove ", bestMove.String())
 	case "stop":
 		//stop engine search, return bestmove
 	case "ponderhit":
@@ -75,6 +80,34 @@ func (u *UCIs) parseUciCommand(args []string) bool {
 	}
 
 	return true
+}
+
+func setGamePosition(g *dragontoothmg.Board, args []string) {
+
+	if args[0] == "fen" {
+		//TODO parse fen here if not startpos
+	} else if args[0] == "startpos" {
+		game = dragontoothmg.ParseFen("rnb1kbnr/pppp2pp/8/4ppq1/3PP3/5N2/PPP2PPP/RNBQKB1R w KQkq - 1 4")
+	} else {
+		panic("Invalid command, fen or startpos needed.")
+	}
+
+	if args[1] != "moves" {
+		panic("Invalid command, moves required.") //TODO: maybe check this in validateUciCommand?
+	}
+
+	// get moves and apply to board
+	for _, m := range args[2:] {
+		fmt.Println("debug move string:", m)
+		move, err := dragontoothmg.ParseMove(m)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Println("debug move:", move)
+		game.Apply(move)
+		fmt.Println("debug fen:", game.ToFen())
+	}
+
 }
 
 func (u *UCIs) quit() {

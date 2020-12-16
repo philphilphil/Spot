@@ -3,20 +3,23 @@ package main
 import (
 	"fmt"
 	"math/bits"
-
 	"github.com/dylhunn/dragontoothmg"
 )
 
 var nodesSearched uint64
+var game dragontoothmg.Board
 
 func main() {
-	board := dragontoothmg.ParseFen("r1b1k2r/pppp1pp1/2nbqn1p/3Pp3/4P2P/2N2N2/PPP2PP1/R1BQKB1R w KQkq - 1 8")
+	// board := dragontoothmg.ParseFen("r1b1k2r/pppp1pp1/2nbqn1p/3Pp3/4P2P/2N2N2/PPP2PP1/R1BQKB1R w KQkq - 1 8")
 
-	move := calculateBestMove(&board)
-	fmt.Println(move.String())
+	// move := calculateBestMove(&board)
+	// fmt.Println(move.String())
 
 	// val := getBoardValue(&board)
 	// fmt.Println(val)
+
+	uci := UCIs{}
+	uci.Start()
 }
 
 func calculateBestMove(b *dragontoothmg.Board) dragontoothmg.Move {
