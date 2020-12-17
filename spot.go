@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
-	"math/bits"
 	"github.com/dylhunn/dragontoothmg"
+	"log"
+	"math/bits"
+	"os"
 )
 
 var nodesSearched uint64
-var game dragontoothmg.Board
 
 func main() {
 	// board := dragontoothmg.ParseFen("r1b1k2r/pppp1pp1/2nbqn1p/3Pp3/4P2P/2N2N2/PPP2PP1/R1BQKB1R w KQkq - 1 8")
@@ -17,25 +18,38 @@ func main() {
 
 	// val := getBoardValue(&board)
 	// fmt.Println(val)
+	file, err := os.OpenFile("info.log", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
+	log.SetOutput(file)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+	
+	defer file.Close()
 
 	uci := UCIs{}
 	uci.Start()
+
 }
 
 func calculateBestMove(b *dragontoothmg.Board) dragontoothmg.Move {
-
+	defer func() {
+		if err := recover(); err != nil {
+			fmt.Println("panic occurred:", err)
+		}
+	}()
 	moves := b.GenerateLegalMoves()
 	bestBoardVal := 0
 	var bestMove = moves[0]
-	fmt.Printf("White Move: %t\r\n", b.Wtomove)
+	log.Printf("White Move: %t\r\n", b.Wtomove)
 
 	for _, move := range moves {
 		unapply := b.Apply(move)
 		nodesSearched++
-		boardVal := maxi(b, 0)
+		boardVal := maxi(b, 4)
 		unapply()
 
-		// fmt.Printf("White Move: %t Move: %v Eval: %v\r\n", b.Wtomove, move.String(), boardVal)
+		fmt.Printf("White Move: %t Move: %v Eval: %v\r\n", b.Wtomove, move.String(), boardVal)
 
 		if b.Wtomove {
 			if boardVal >= bestBoardVal {
@@ -49,7 +63,7 @@ func calculateBestMove(b *dragontoothmg.Board) dragontoothmg.Move {
 			}
 		}
 	}
-	fmt.Println(nodesSearched)
+	log.Println(nodesSearched)
 	return bestMove
 }
 

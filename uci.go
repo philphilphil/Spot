@@ -3,8 +3,12 @@ package main
 import "fmt"
 import "bufio"
 import "os"
+import "log"
 import "strings"
+//import "time"
 import "github.com/dylhunn/dragontoothmg"
+
+var game dragontoothmg.Board
 
 // http://page.mi.fu-berlin.de/block/uci.htm
 // Implements the universal chess interface
@@ -32,6 +36,7 @@ func (u *UCIs) Start() {
 		scanner := bufio.NewScanner(os.Stdin)
 		if scanner.Scan() {
 			line := scanner.Text()
+			printLog("SCANNER:"+line)
 			args := strings.Fields(line)
 
 			if !u.validateUciCommand(args) {
@@ -53,6 +58,7 @@ func (u *UCIs) validateUciCommand(args []string) bool {
 
 // Parses UCI command and excecutes
 func (u *UCIs) parseUciCommand(args []string) bool {
+	log.Println("<- ", args)
 
 	switch args[0] {
 	case "quit":
@@ -66,11 +72,17 @@ func (u *UCIs) parseUciCommand(args []string) bool {
 		//TODO as soon as options are avaibale
 	case "position":
 		//TODO: implement better
+		printLog("pos set start")
 		setGamePosition(&game, args[1:])
+		printMessage("readyok", true)
+		printLog("pos set done")
 		//set position for engine
 	case "go":
+		printLog("go start")
 		bestMove := calculateBestMove(&game)
-		fmt.Println("bestmove ", bestMove.String())
+		printLog("go done bestmove: " + bestMove.String())
+		printMessage("bestmove "+bestMove.String(), true)
+		printMessage("readyok", true)
 	case "stop":
 		//stop engine search, return bestmove
 	case "ponderhit":
@@ -82,50 +94,58 @@ func (u *UCIs) parseUciCommand(args []string) bool {
 	return true
 }
 
+// GUI/Runner sends information about the position and moves played from that position
+// position can be sent via "startpos" or fen string
+// for game setup position is sent without moves
 func setGamePosition(g *dragontoothmg.Board, args []string) {
 
-	if args[0] == "fen" {
-		//TODO parse fen here if not startpos
-	} else if args[0] == "startpos" {
-		game = dragontoothmg.ParseFen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
+	movesLocation := getMovesLocation(args)
+
+	if movesLocation == -1 { //no moves sent just set position
+		game = getGameFromFen(args)
 	} else {
-		panic("Invalid command, fen or startpos needed.")
-	}
+		game = getGameFromFen(args[:movesLocation])
 
-	if args[1] != "moves" {
-		panic("Invalid command, moves required.") //TODO: maybe check this in validateUciCommand?
-	}
-
-	// get moves and apply to board
-	for _, m := range args[2:] {
-		fmt.Println("debug move string:", m)
-		move, err := dragontoothmg.ParseMove(m)
-		if err != nil {
-			panic(err)
+		// get moves and apply to board
+		for _, m := range args[movesLocation+1:] {
+			move, err := dragontoothmg.ParseMove(m)
+			if err != nil {
+				panic(err)
+			}
+			game.Apply(move)
 		}
-		fmt.Println("debug move:", move)
-		game.Apply(move)
-		fmt.Println("debug fen:", game.ToFen())
 	}
+	//log.Println("debug", game.ToFen())
+}
 
+func getGameFromFen(args []string) dragontoothmg.Board {
+	if args[0] == "fen" {
+		fen := strings.Join(args[1:], " ")
+		return dragontoothmg.ParseFen(fen)
+	} else if args[0] == "startpos" {
+		return dragontoothmg.ParseFen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
+	} else {
+		printMessage("ERROR: Invalid command, fen or startpos needed.", true) //TODO: maybe check this in validateUciCommand?
+	}
+	panic("s")
 }
 
 func (u *UCIs) quit() {
-	fmt.Println("Exiting")
+	printMessage("Exiting", true)
 }
 
 func (u *UCIs) sendId() {
-	fmt.Println("id name Spot 0.1 alpha")
-	fmt.Println("id author Phil Baum")
+	printMessage("id name Spot 0.1 alpha", true)
+	printMessage("id author Phil Baum", true)
 }
 
 func (u *UCIs) sendOptions() {
 	//TODO: sent options which can be changed eg. hashsize
-	fmt.Println("uciok")
+	printMessage("uciok", true)
 }
 
 func (u *UCIs) debug() {
-	fmt.Println("debug")
+	printMessage("debug", true)
 }
 
 func (u *UCIs) uci() {
@@ -134,5 +154,25 @@ func (u *UCIs) uci() {
 }
 
 func (u *UCIs) isReady() {
-	fmt.Println("readyok")
+	printMessage("readyok", true)
+}
+
+func printMessage(cmd string, logOutput bool) {
+	if logOutput {
+		log.Println("-> ", cmd)
+	}
+	fmt.Println(cmd)
+}
+
+func printLog(msg string) {
+	log.Println("::DBG:: ", msg)
+}
+
+func getMovesLocation(args []string) int {
+	for i, a := range args {
+		if a == "moves" {
+			return i
+		}
+	}
+	return -1
 }
