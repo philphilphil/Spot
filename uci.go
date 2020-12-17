@@ -87,7 +87,7 @@ func setGamePosition(g *dragontoothmg.Board, args []string) {
 	if args[0] == "fen" {
 		//TODO parse fen here if not startpos
 	} else if args[0] == "startpos" {
-		game = dragontoothmg.ParseFen("rnb1kbnr/pppp2pp/8/4ppq1/3PP3/5N2/PPP2PPP/RNBQKB1R w KQkq - 1 4")
+		game = dragontoothmg.ParseFen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
 	} else {
 		panic("Invalid command, fen or startpos needed.")
 	}
