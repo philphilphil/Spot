@@ -5,6 +5,7 @@ import "bufio"
 import "os"
 import "log"
 import "strings"
+
 //import "time"
 import "github.com/dylhunn/dragontoothmg"
 
@@ -31,22 +32,25 @@ type UCIs struct {
 // Starts the UCI process, waiting for command line input from other software
 func (u *UCIs) Start() {
 	u.uci() //TODO maybe not here
+	reader := bufio.NewReader(os.Stdin)
 
 	for {
-		scanner := bufio.NewScanner(os.Stdin)
-		if scanner.Scan() {
-			line := scanner.Text()
-			printLog("SCANNER:"+line)
-			args := strings.Fields(line)
 
-			if !u.validateUciCommand(args) {
-				panic("Error in UCI command")
-			}
+		line, err := reader.ReadString('\n')
+		if err!=nil {
+			printLog("Error in UCI command")
+		}
 
-			if !u.parseUciCommand(args) {
-				u.quit()
-				break
-			}
+		printLog("SCANNER:" + line)
+		args := strings.Fields(line)
+
+		if !u.validateUciCommand(args) {
+			printLog("Error in UCI command")
+		}
+
+		if !u.parseUciCommand(args) {
+			u.quit()
+			break
 		}
 	}
 }
