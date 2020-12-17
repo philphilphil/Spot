@@ -24,7 +24,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	
+
 	defer file.Close()
 
 	uci := UCIs{}
@@ -41,7 +41,6 @@ func calculateBestMove(b *dragontoothmg.Board) dragontoothmg.Move {
 	moves := b.GenerateLegalMoves()
 	bestBoardVal := 0
 	var bestMove = moves[0]
-	log.Printf("White Move: %t\r\n", b.Wtomove)
 
 	for _, move := range moves {
 		unapply := b.Apply(move)
@@ -63,7 +62,7 @@ func calculateBestMove(b *dragontoothmg.Board) dragontoothmg.Move {
 			}
 		}
 	}
-	log.Println(nodesSearched)
+	//log.Println(nodesSearched)
 	return bestMove
 }
 

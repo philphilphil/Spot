@@ -41,7 +41,7 @@ func (u *UCIs) Start() {
 			printLog("Error in UCI command")
 		}
 
-		printLog("SCANNER:" + line)
+		//printLog("SCANNER:" + line)
 		args := strings.Fields(line)
 
 		if !u.validateUciCommand(args) {
@@ -62,7 +62,7 @@ func (u *UCIs) validateUciCommand(args []string) bool {
 
 // Parses UCI command and excecutes
 func (u *UCIs) parseUciCommand(args []string) bool {
-	log.Println("<- ", args)
+	//log.Println("<- ", args)
 
 	switch args[0] {
 	case "quit":
@@ -78,7 +78,7 @@ func (u *UCIs) parseUciCommand(args []string) bool {
 		//TODO: implement better
 		printLog("pos set start")
 		setGamePosition(&game, args[1:])
-		printMessage("readyok", true)
+		//printMessage("readyok", true)
 		printLog("pos set done")
 		//set position for engine
 	case "go":
@@ -86,7 +86,7 @@ func (u *UCIs) parseUciCommand(args []string) bool {
 		bestMove := calculateBestMove(&game)
 		printLog("go done bestmove: " + bestMove.String())
 		printMessage("bestmove "+bestMove.String(), true)
-		printMessage("readyok", true)
+		//printMessage("readyok", true)
 	case "stop":
 		//stop engine search, return bestmove
 	case "ponderhit":
@@ -162,14 +162,14 @@ func (u *UCIs) isReady() {
 }
 
 func printMessage(cmd string, logOutput bool) {
-	if logOutput {
-		log.Println("-> ", cmd)
-	}
+	// if logOutput {
+	// 	log.Println("-> ", cmd)
+	// }
 	fmt.Println(cmd)
 }
 
 func printLog(msg string) {
-	log.Println("::DBG:: ", msg)
+	//log.Println("::DBG:: ", msg)
 }
 
 func getMovesLocation(args []string) int {

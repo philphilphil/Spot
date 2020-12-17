@@ -16,3 +16,5 @@
 .DS_Store
 Spot
 info.log
+Tests _vs_SF/c-chess-cli.1.log
+Tests _vs_SF/out.pgn
