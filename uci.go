@@ -3,7 +3,7 @@ package main
 import "fmt"
 import "bufio"
 import "os"
-import "log"
+//import "log"
 import "strings"
 
 //import "time"
