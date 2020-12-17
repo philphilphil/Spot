@@ -33,14 +33,16 @@ func main() {
 }
 
 func calculateBestMove(b *dragontoothmg.Board) dragontoothmg.Move {
-	defer func() {
-		if err := recover(); err != nil {
-			fmt.Println("panic occurred:", err)
-		}
-	}()
+
+	var bestBoardVal int = 0
 	moves := b.GenerateLegalMoves()
-	bestBoardVal := 0
 	var bestMove = moves[0]
+
+	if b.Wtomove {
+		bestBoardVal = -9999
+	} else {
+		bestBoardVal = 9999
+	}
 
 	for _, move := range moves {
 		unapply := b.Apply(move)
@@ -48,7 +50,9 @@ func calculateBestMove(b *dragontoothmg.Board) dragontoothmg.Move {
 		boardVal := maxi(b, 4)
 		unapply()
 
-		fmt.Printf("White Move: %t Move: %v Eval: %v\r\n", b.Wtomove, move.String(), boardVal)
+		if debug {
+			printLog(fmt.Sprintf("White Move: %t Move: %v Eval: %v Nodes: %v", b.Wtomove, move.String(), boardVal, nodesSearched))
+		}
 
 		if b.Wtomove {
 			if boardVal >= bestBoardVal {

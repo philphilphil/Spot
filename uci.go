@@ -3,13 +3,14 @@ package main
 import "fmt"
 import "bufio"
 import "os"
-//import "log"
+import "log"
 import "strings"
 
 //import "time"
 import "github.com/dylhunn/dragontoothmg"
 
 var game dragontoothmg.Board
+var debug bool = false
 
 // http://page.mi.fu-berlin.de/block/uci.htm
 // Implements the universal chess interface
@@ -37,7 +38,7 @@ func (u *UCIs) Start() {
 	for {
 
 		line, err := reader.ReadString('\n')
-		if err!=nil {
+		if err != nil {
 			printLog("Error in UCI command")
 		}
 
@@ -46,6 +47,10 @@ func (u *UCIs) Start() {
 
 		if !u.validateUciCommand(args) {
 			printLog("Error in UCI command")
+		}
+
+		if debug {
+			log.Println("<- ", args)
 		}
 
 		if !u.parseUciCommand(args) {
@@ -62,7 +67,6 @@ func (u *UCIs) validateUciCommand(args []string) bool {
 
 // Parses UCI command and excecutes
 func (u *UCIs) parseUciCommand(args []string) bool {
-	//log.Println("<- ", args)
 
 	switch args[0] {
 	case "quit":
@@ -71,22 +75,19 @@ func (u *UCIs) parseUciCommand(args []string) bool {
 		u.sendId()
 		u.sendOptions()
 	case "debug":
-		//TODO turn debug move on or off
+		debug = true
 	case "setoption":
 		//TODO as soon as options are avaibale
 	case "position":
 		//TODO: implement better
 		printLog("pos set start")
 		setGamePosition(&game, args[1:])
-		//printMessage("readyok", true)
 		printLog("pos set done")
-		//set position for engine
 	case "go":
 		printLog("go start")
 		bestMove := calculateBestMove(&game)
 		printLog("go done bestmove: " + bestMove.String())
-		printMessage("bestmove "+bestMove.String(), true)
-		//printMessage("readyok", true)
+		printMessage("bestmove "+bestMove.String())
 	case "stop":
 		//stop engine search, return bestmove
 	case "ponderhit":
@@ -129,27 +130,27 @@ func getGameFromFen(args []string) dragontoothmg.Board {
 	} else if args[0] == "startpos" {
 		return dragontoothmg.ParseFen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
 	} else {
-		printMessage("ERROR: Invalid command, fen or startpos needed.", true) //TODO: maybe check this in validateUciCommand?
+		printMessage("ERROR: Invalid command, fen or startpos needed.") //TODO: maybe check this in validateUciCommand?
 	}
 	panic("s")
 }
 
 func (u *UCIs) quit() {
-	printMessage("Exiting", true)
+	printMessage("Exiting")
 }
 
 func (u *UCIs) sendId() {
-	printMessage("id name Spot 0.1 alpha", true)
-	printMessage("id author Phil Baum", true)
+	printMessage("id name Spot 0.1 alpha")
+	printMessage("id author Phil Baum")
 }
 
 func (u *UCIs) sendOptions() {
 	//TODO: sent options which can be changed eg. hashsize
-	printMessage("uciok", true)
+	printMessage("uciok")
 }
 
 func (u *UCIs) debug() {
-	printMessage("debug", true)
+	printMessage("debug")
 }
 
 func (u *UCIs) uci() {
@@ -158,18 +159,20 @@ func (u *UCIs) uci() {
 }
 
 func (u *UCIs) isReady() {
-	printMessage("readyok", true)
+	printMessage("readyok")
 }
 
-func printMessage(cmd string, logOutput bool) {
-	// if logOutput {
-	// 	log.Println("-> ", cmd)
-	// }
+func printMessage(cmd string) {
+	if debug {
+		log.Println("-> ", cmd)
+	}
 	fmt.Println(cmd)
 }
 
 func printLog(msg string) {
-	//log.Println("::DBG:: ", msg)
+	if debug {
+		log.Println("::DBG:: ", msg)
+	}
 }
 
 func getMovesLocation(args []string) int {
