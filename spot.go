@@ -47,7 +47,7 @@ func calculateBestMove(b *dragontoothmg.Board) dragontoothmg.Move {
 	for _, move := range moves {
 		unapply := b.Apply(move)
 		nodesSearched++
-		boardVal := maxi(b, 4)
+		boardVal := minimax(b, 4)
 		unapply()
 
 		if debug {
@@ -70,48 +70,41 @@ func calculateBestMove(b *dragontoothmg.Board) dragontoothmg.Move {
 	return bestMove
 }
 
-func maxi(b *dragontoothmg.Board, depth int) int {
+func minimax(b *dragontoothmg.Board, depth int) int {
 	if depth == 0 {
-		//fmt.Println(b.ToFen())
 		return getBoardValue(b)
-	}
+	} else {
+		if b.Wtomove {
+			bestScore := -9999
 
-	max := 0
+			moves := b.GenerateLegalMoves()
+			for _, move := range moves {
+				unapply := b.Apply(move)
+				nodesSearched++
+				score := minimax(b, depth-1)
+				unapply()
+				if score > bestScore {
+					bestScore = score
+				}
+			}
+			return bestScore
+		} else {
+			bestScore := 9999
 
-	moves := b.GenerateLegalMoves()
-	for _, move := range moves {
-		unapply := b.Apply(move)
-		nodesSearched++
-		score := maxi(b, depth-1)
-		unapply()
-		if score >= max {
-			max = score
-			//fmt.Println(b.ToFen())
+			moves := b.GenerateLegalMoves()
+			for _, move := range moves {
+				unapply := b.Apply(move)
+				nodesSearched++
+				score := minimax(b, depth-1)
+				unapply()
+				if score < bestScore {
+					bestScore = score
+				}
+			}
+			return bestScore
 		}
 	}
-	return max
-}
 
-func mini(b *dragontoothmg.Board, depth int) int {
-	if depth == 0 {
-		debugVal := getBoardValue(b)
-		//fmt.Println(b.ToFen(), " ", debugVal)
-		return debugVal
-	}
-
-	min := 0
-
-	moves := b.GenerateLegalMoves()
-	for _, move := range moves {
-		unapply := b.Apply(move)
-		nodesSearched++
-		score := maxi(b, depth-1)
-		unapply()
-		if score <= min {
-			min = score
-		}
-	}
-	return min
 }
 
 func getBoardValue(b *dragontoothmg.Board) int {
