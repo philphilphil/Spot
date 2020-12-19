@@ -62,7 +62,7 @@ func (u *UCIs) Start() {
 
 // Validates input from the CLI
 func (u *UCIs) validateUciCommand(args []string) bool {
-	return true //TODO
+	return true //TODO validate, is this needed?
 }
 
 // Parses UCI command and excecutes
