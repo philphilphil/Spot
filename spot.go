@@ -1,16 +1,17 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"github.com/dylhunn/dragontoothmg"
 	"log"
 	"math/bits"
 	"os"
-	"runtime/pprof"
-	"flag"
 	"runtime"
+	"runtime/pprof"
 )
 
+var piecePositionMasks = [64]uint64{2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768, 65536, 131072, 262144, 524288, 1048576, 2097152, 4194304, 8388608, 16777216, 33554432, 67108864, 134217728, 268435456, 536870912, 1073741824, 2147483648, 4294967296, 8589934592, 17179869184, 34359738368, 68719476736, 137438953472, 274877906944, 549755813888, 1099511627776, 2199023255552, 4398046511104, 8796093022208, 17592186044416, 35184372088832, 70368744177664, 140737488355328, 281474976710656, 562949953421312, 1125899906842624, 2251799813685248, 4503599627370496, 9007199254740992, 18014398509481984, 36028797018963968, 72057594037927936, 144115188075855872, 288230376151711744, 576460752303423488, 1152921504606846976, 2305843009213693952, 4611686018427387904, 9223372036854775808}
 var nodesSearched uint64
 var cpuprofile = flag.String("cpuprofile", "", "write cpu profile to `file`")
 var memprofile = flag.String("memprofile", "", "write memory profile to `file`")
@@ -225,93 +226,24 @@ func getPiecePositionBonusValue(bb *uint64, values [64]int) int {
 
 // Get index of pieces starting down left = 0
 func getPieceSquareNumbers(bb *uint64) []int {
-	//TODO: add check for amount of pieces, if all pieces found stop looking
+	//TODO: reverse search for black? especially in the beginning 4 rows are for sure empty for black
+
 	var squareNumbers []int
-	piecePositionMasks := getPiecePositionMasks()
+	//piecePositionMasks := getPiecePositionMasks()
+	amount := bits.OnesCount64(*bb)
 	//log.Println("maskss",piecePositionMasks)
 
 	//Itterate all bit-masks, check if piece is on square, if yes add index of it
 	for i := 0; i <= 63; i++ {
 		if *bb&piecePositionMasks[i] != 0 {
 			squareNumbers = append(squareNumbers, i)
+			if i+1 == amount {
+				break
+			}
+			amount++
 		}
 	}
 
 	//fmt.Println(squareNumbers)
 	return squareNumbers
-}
-
-// Generate a bit-mask for each square to use for comparison
-func getPiecePositionMasks() [64]uint64 {
-	// this was VERY slow:
-	// for i := 1; i <= 63; i++ {
-	// 	positionMasks[i] = positionMasks[i-1] * 2
-	// }
-	var positionMasks [64]uint64
-	positionMasks[0] = 1
-	positionMasks[1] = 2
-	positionMasks[2] = 4
-	positionMasks[3] = 8
-	positionMasks[4] = 16
-	positionMasks[5] = 32
-	positionMasks[6] = 64
-	positionMasks[7] = 128
-	positionMasks[8] = 256
-	positionMasks[9] = 512
-	positionMasks[10] = 1024
-	positionMasks[11] = 2048
-	positionMasks[12] = 4096
-	positionMasks[13] = 8192
-	positionMasks[14] = 16384
-	positionMasks[15] = 32768
-	positionMasks[16] = 65536
-	positionMasks[17] = 131072
-	positionMasks[18] = 262144
-	positionMasks[19] = 524288
-	positionMasks[20] = 1048576
-	positionMasks[21] = 2097152
-	positionMasks[22] = 4194304
-	positionMasks[23] = 8388608
-	positionMasks[24] = 16777216
-	positionMasks[25] = 33554432
-	positionMasks[26] = 67108864
-	positionMasks[27] = 134217728
-	positionMasks[28] = 268435456
-	positionMasks[29] = 536870912
-	positionMasks[30] = 1073741824
-	positionMasks[31] = 2147483648
-	positionMasks[32] = 4294967296
-	positionMasks[33] = 8589934592
-	positionMasks[34] = 17179869184
-	positionMasks[35] = 34359738368
-	positionMasks[36] = 68719476736
-	positionMasks[37] = 137438953472
-	positionMasks[38] = 274877906944
-	positionMasks[39] = 549755813888
-	positionMasks[40] = 1099511627776
-	positionMasks[41] = 2199023255552
-	positionMasks[42] = 4398046511104
-	positionMasks[43] = 8796093022208
-	positionMasks[44] = 17592186044416
-	positionMasks[45] = 35184372088832
-	positionMasks[46] = 70368744177664
-	positionMasks[47] = 140737488355328
-	positionMasks[48] = 281474976710656
-	positionMasks[49] = 562949953421312
-	positionMasks[50] = 1125899906842624
-	positionMasks[51] = 2251799813685248
-	positionMasks[52] = 4503599627370496
-	positionMasks[53] = 9007199254740992
-	positionMasks[54] = 18014398509481984
-	positionMasks[55] = 36028797018963968
-	positionMasks[56] = 72057594037927936
-	positionMasks[57] = 144115188075855872
-	positionMasks[58] = 288230376151711744
-	positionMasks[59] = 576460752303423488
-	positionMasks[60] = 1152921504606846976
-	positionMasks[61] = 2305843009213693952
-	positionMasks[62] = 4611686018427387904
-	positionMasks[63] = 9223372036854775808
-
-	return positionMasks
 }
