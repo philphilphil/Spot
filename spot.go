@@ -11,7 +11,7 @@ import (
 	"runtime/pprof"
 )
 
-var piecePositionMasks = [64]uint64{2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768, 65536, 131072, 262144, 524288, 1048576, 2097152, 4194304, 8388608, 16777216, 33554432, 67108864, 134217728, 268435456, 536870912, 1073741824, 2147483648, 4294967296, 8589934592, 17179869184, 34359738368, 68719476736, 137438953472, 274877906944, 549755813888, 1099511627776, 2199023255552, 4398046511104, 8796093022208, 17592186044416, 35184372088832, 70368744177664, 140737488355328, 281474976710656, 562949953421312, 1125899906842624, 2251799813685248, 4503599627370496, 9007199254740992, 18014398509481984, 36028797018963968, 72057594037927936, 144115188075855872, 288230376151711744, 576460752303423488, 1152921504606846976, 2305843009213693952, 4611686018427387904, 9223372036854775808}
+var piecePositionMasks = [64]uint64{1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768, 65536, 131072, 262144, 524288, 1048576, 2097152, 4194304, 8388608, 16777216, 33554432, 67108864, 134217728, 268435456, 536870912, 1073741824, 2147483648, 4294967296, 8589934592, 17179869184, 34359738368, 68719476736, 137438953472, 274877906944, 549755813888, 1099511627776, 2199023255552, 4398046511104, 8796093022208, 17592186044416, 35184372088832, 70368744177664, 140737488355328, 281474976710656, 562949953421312, 1125899906842624, 2251799813685248, 4503599627370496, 9007199254740992, 18014398509481984, 36028797018963968, 72057594037927936, 144115188075855872, 288230376151711744, 576460752303423488, 1152921504606846976, 2305843009213693952, 4611686018427387904, 9223372036854775808}
 var nodesSearched uint64
 var cpuprofile = flag.String("cpuprofile", "", "write cpu profile to `file`")
 var memprofile = flag.String("memprofile", "", "write memory profile to `file`")
@@ -215,7 +215,7 @@ func getPiecePositionBonusValue(bb *uint64, values [64]int) int {
 		values[i], values[j] = values[j], values[i]
 	}
 
-	squares := getPieceSquareNumbers(bb)
+	squares := getPieceSquareNumbers(*bb)
 
 	for _, s := range squares {
 		value += values[s]
@@ -225,25 +225,24 @@ func getPiecePositionBonusValue(bb *uint64, values [64]int) int {
 }
 
 // Get index of pieces starting down left = 0
-func getPieceSquareNumbers(bb *uint64) []int {
-	//TODO: reverse search for black? especially in the beginning 4 rows are for sure empty for black
-
+// A first version iterrated over the piecePositionMasks-array until it found the square
+// but the other way around is faster.
+// TODO: reverse search for black? especially in the beginning 4 rows are for sure empty for black
+func getPieceSquareNumbers(bb uint64) []int {
 	var squareNumbers []int
-	//piecePositionMasks := getPiecePositionMasks()
-	amount := bits.OnesCount64(*bb)
-	//log.Println("maskss",piecePositionMasks)
+	var num uint64 = bb
 
-	//Itterate all bit-masks, check if piece is on square, if yes add index of it
-	for i := 0; i <= 63; i++ {
-		if *bb&piecePositionMasks[i] != 0 {
-			squareNumbers = append(squareNumbers, i)
-			if i+1 == amount {
+	for num != 0 {
+		m := num & -num
+
+		for i := 0; i <= 63; i++ {
+			if piecePositionMasks[i] == m {
+				squareNumbers = append(squareNumbers, i)
 				break
 			}
-			amount++
 		}
-	}
+		num &= num - 1
 
-	//fmt.Println(squareNumbers)
+	}
 	return squareNumbers
 }
