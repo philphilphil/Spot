@@ -7,5 +7,5 @@ Out of interest how the  engine strength grows, I ran automated tests after deve
 |---------|----------------------------------------------|-------|----------|--------|--------|
 | 8bd1439 | Core Engine with basic eval and minimax      | 4     | 0        | 40+15  | 2-2-16 |
 | 8bd1439 | ""                                           | 4     | 10       | 40+15  | 0-0-20 |
-|  | Alpha beta pruning and piece position eval   | 4     | 0        | 40+15  | 0-0-0  |
+|  todo   | Alpha beta pruning and piece position eval   | 4     | 0        | 40+15  |        |
 |         |                                              |       |          |        |        |
