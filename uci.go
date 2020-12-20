@@ -107,9 +107,9 @@ func setGamePosition(g *dragontoothmg.Board, args []string) {
 	movesLocation := getMovesLocation(args)
 
 	if movesLocation == -1 { //no moves sent just set position
-		game = getGameFromFen(args)
+		*g = getGameFromFen(args)
 	} else {
-		game = getGameFromFen(args[:movesLocation])
+		*g = getGameFromFen(args[:movesLocation])
 
 		// get moves and apply to board
 		for _, m := range args[movesLocation+1:] {
@@ -117,7 +117,7 @@ func setGamePosition(g *dragontoothmg.Board, args []string) {
 			if err != nil {
 				panic(err)
 			}
-			game.Apply(move)
+			g.Apply(move)
 		}
 	}
 	//log.Println("debug", game.ToFen())
