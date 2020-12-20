@@ -33,21 +33,14 @@ func TestGetGameFromFen(t *testing.T) {
 func TestSetGamePosition(t *testing.T) {
 	// https://lichess.org/analysis/standard/r1bqkbnr/pppp1ppp/2n5/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R_b_KQkq_-_3_3
 	var testGame dragontoothmg.Board
-	setGamePosition(&testGame, strings.Fields("startpos move e2e4 e7e5 g1f3 b8c6 f1b5"))
+	setGamePosition(&testGame, strings.Fields("startpos moves e2e4 e7e5 g1f3 b8c6 f1b5"))
 
-	var allWhite uint64 = 65535
-	var allBlack uint64 = 18446462598732840960
+	var allWhite uint64 = 8860528543
+	var allBlack uint64 = 18297848277795602432
 	var whiteRooks uint64 = 129
-	var blackPawns uint64 = 71776119061217280
+	var blackPawns uint64 = 67272588153323520
 	var blackKing uint64 = 1152921504606846976
-	var whiteBishops uint64 = 36
-
-	t.Log(testGame.White.All)
-	t.Log(testGame.Black.All)
-	t.Log(testGame.White.Rooks)
-	t.Log(testGame.Black.Pawns)
-	t.Log(testGame.Black.Kings)
-	t.Log(testGame.White.Bishops)
+	var whiteBishops uint64 = 8589934596
 
 	// dont think the detailed output is needed?
 	if testGame.White.All != allWhite && testGame.Black.All != allBlack && testGame.White.Rooks != whiteRooks &&
