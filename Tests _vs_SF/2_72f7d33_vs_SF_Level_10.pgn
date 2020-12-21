@@ -1,0 +1,270 @@
+[Round "1.1"]
+[White "Stockfish 12"]
+[Black "Spot 0.1 alpha"]
+[Result "1-0"]
+[Termination "checkmate"]
+[FEN "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"]
+[PlyCount "43"]
+
+1. e4 Nc6 2. d4 e6 3. f4 Nf6 4. Qd3 d5 5. e5 Ne4 6. Nf3 Be7 7. a3 Bh4+ 8. g3 Bxg3+
+9. hxg3 Nxg3 10. Rxh7 O-O 11. Ng5 Nf5 12. Qh3 Nh6 13. Rxh6 gxh6 14. Qxh6 Qxg5 15. Qxg5+ Kh8 16. Qf6+ Kg8
+17. Qg5+ Kh8 18. Qf6+ Kg8 19. Bd3 Nxd4 20. Qg5+ Kh8 21. Qh4+ Kg8 22. Qh7# 1-0
+
+[Round "1.2"]
+[White "Spot 0.1 alpha"]
+[Black "Stockfish 12"]
+[Result "0-1"]
+[Termination "checkmate"]
+[FEN "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"]
+[PlyCount "108"]
+
+1. e4 d6 2. Qh5 e5 3. Nf3 g6 4. Qg5 Nf6 5. Bb5+ c6 6. Bc4 h6 7. Qh4 Bg7 8. Nc3 g5
+9. Nxg5 hxg5 10. Qxg5 Bh6 11. Qg3 b5 12. Bd3 Bf4 13. Qg7 Rg8 14. Qxg8+ Nxg8 15. Ne2 Bh6 16. a3 Nd7
+17. Nc3 Ngf6 18. O-O a5 19. Be2 Bg7 20. d3 Kf8 21. Bg5 Qc7 22. Bh4 Qb6 23. Bg5 Kg8 24. Bf3 Nh7
+25. Be3 Qb7 26. Rfe1 Nhf6 27. Bg5 Ra7 28. Rad1 b4 29. Rb1 bxc3 30. bxc3 Nb6 31. Bxf6 Bxf6 32. d4 Qc7
+33. Bh5 Nc4 34. Rbd1 Be6 35. d5 cxd5 36. exd5 Bc8 37. Rd3 Qc5 38. Rf3 Bg7 39. a4 Rc7 40. Rg3 Qxd5
+41. Rf1 Qd2 42. Bg4 Bb7 43. Bf5 Nb2 44. Rb1 Nd1 45. Bh7+ Kxh7 46. h3 Qxf2+ 47. Kh2 Bh6 48. Rxd1 Rc5
+49. Rg4 Bf4+ 50. Kh1 Rxc3 51. Rh4+ Kg8 52. Rg4+ Kf8 53. Rg8+ Kxg8 54. Rxd6 Qf1# 0-1
+
+[Round "1.3"]
+[White "Stockfish 12"]
+[Black "Spot 0.1 alpha"]
+[Result "1-0"]
+[Termination "checkmate"]
+[FEN "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"]
+[PlyCount "61"]
+
+1. Nf3 e6 2. e4 Qf6 3. d4 Nc6 4. a3 Qg6 5. Nc3 Qh5 6. Nb5 Kd8 7. c4 Be7 8. Be2 Qg6
+9. d5 Qxg2 10. Rg1 Qh3 11. Rxg7 exd5 12. cxd5 Bf6 13. Rxf7 Qh5 14. Ng5 Qxh2 15. dxc6 Qg1+ 16. Bf1 Bxg5
+17. Rxd7+ Ke8 18. Nd6+ Kf8 19. Bxg5 Bxd7 20. Qf3+ Bf5 21. Qxf5+ Kg7 22. Qe5+ Kg6 23. Qf5+ Kg7 24. Rd1 cxd6
+25. Rxd6 Re8 26. c7 Qh2 27. Rd7+ Ne7 28. Rxe7+ Rxe7 29. Qf6+ Kg8 30. c8=Q+ Re8 31. Bc4# 1-0
+
+[Round "1.4"]
+[White "Spot 0.1 alpha"]
+[Black "Stockfish 12"]
+[Result "0-1"]
+[Termination "checkmate"]
+[FEN "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"]
+[PlyCount "38"]
+
+1. e4 e5 2. Nf3 Nf6 3. Nc3 Nc6 4. Bb5 Bd6 5. Nd5 Nxe4 6. Qe2 Ng5 7. Nxg5 Nd4 8. Qc4 Qxg5
+9. O-O c6 10. f4 Qg6 11. fxe5 Bxe5 12. Ne7 Qh5 13. Nxc8 Qxh2+ 14. Kf2 Qh4+ 15. Kg1 Bh2+ 16. Kh1 Bd6+
+17. Kg1 Bh2+ 18. Kh1 Bg3+ 19. Kg1 Qh2# 0-1
+
+[Round "1.5"]
+[White "Stockfish 12"]
+[Black "Spot 0.1 alpha"]
+[Result "1-0"]
+[Termination "checkmate"]
+[FEN "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"]
+[PlyCount "97"]
+
+1. e4 Nc6 2. d4 e6 3. Nf3 Qf6 4. e5 Qg6 5. a3 Qe4+ 6. Be3 Nxd4 7. Qxd4 Qxc2 8. Nc3 Qxb2
+9. Rb1 Qxa3 10. Nb5 Qa5+ 11. Bd2 c5 12. Bxa5 cxd4 13. Nc7+ Kd8 14. Nxe6+ Ke7 15. Nc7 Rb8 16. Bb4+ d6
+17. Bxd6+ Kd7 18. Bxf8 d3 19. Na6 Ra8 20. Nc5+ Kc6 21. Bxd3 Bf5 22. Bxf5 Rxf8 23. Be4+ Kxc5 24. O-O b5
+25. Rfc1+ Kb6 26. Rc6+ Ka5 27. Nd4 a6 28. Nb3+ Kb4 29. Nc5+ Ka5 30. Nb7+ Ka4 31. Rc3 Re8 32. g4 Rf8
+33. g5 Re8 34. h3 Rf8 35. e6 Re8 36. e7 Rf8 37. exf8=R Ne7 38. Rxh8 b4 39. Nc5+ Kb5 40. Nd3 a5
+41. Rc5+ Ka6 42. Ra8+ Kb6 43. Rxb4+ axb4 44. Rb8+ Ka6 45. Rc7 Nc8 46. Rcb7 Nb6 47. Rxb6+ Ka7 48. Nxb4 h5
+49. Nc6# 1-0
+
+[Round "1.6"]
+[White "Spot 0.1 alpha"]
+[Black "Stockfish 12"]
+[Result "0-1"]
+[Termination "checkmate"]
+[FEN "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"]
+[PlyCount "54"]
+
+1. e4 c5 2. Qh5 e6 3. Nf3 g6 4. Qe5 Qf6 5. Qc7 Qd8 6. Qf4 a6 7. Bc4 d6 8. Ng5 Nf6
+9. e5 dxe5 10. Qxe5 Nc6 11. Qc3 b5 12. Qf3 Bb7 13. Be2 Rb8 14. Ne4 Nxe4 15. Qxe4 Nd4 16. Qd3 c4
+17. Qc3 b4 18. Qxc4 Rc8 19. Qd3 Nxc2+ 20. Kf1 Ne3+ 21. fxe3 Rxc1+ 22. Kf2 Qh4+ 23. g3 Qf6+ 24. Qf5 Qxf5+
+25. Bf3 Rxh1 26. Ke2 Be4 27. Kf2 Qxf3# 0-1
+
+[Round "1.7"]
+[White "Stockfish 12"]
+[Black "Spot 0.1 alpha"]
+[Result "1-0"]
+[Termination "checkmate"]
+[FEN "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"]
+[PlyCount "71"]
+
+1. e4 Nc6 2. Nc3 Nf6 3. Nf3 e6 4. Qe2 Bd6 5. e5 Bb4 6. exf6 Bxc3 7. bxc3 Qxf6 8. Qe3 Nb4
+9. Qe4 Nc6 10. d4 d5 11. Qd3 h6 12. Rb1 O-O 13. Qe3 Qg6 14. Be2 Qxg2 15. Rg1 Qh3 16. Rg3 Qf5
+17. Bd3 Qf6 18. Qxh6 g6 19. Bxg6 Qxg6 20. Rxg6+ fxg6 21. Qxg6+ Kh8 22. Qh5+ Kg8 23. Qg6+ Kh8 24. Bf4 e5
+25. Qh6+ Kg8 26. Qg6+ Kh8 27. Kd2 Rxf4 28. Ng5 Rxf2+ 29. Ke1 Re2+ 30. Kd1 Bd7 31. Rxb7 Be8 32. Qh6+ Kg8
+33. Rxc7 Rd2+ 34. Kxd2 Bf7 35. Ne6 Be8 36. Qf8# 1-0
+
+[Round "1.8"]
+[White "Spot 0.1 alpha"]
+[Black "Stockfish 12"]
+[Result "0-1"]
+[Termination "checkmate"]
+[FEN "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"]
+[PlyCount "58"]
+
+1. e4 d6 2. Qh5 g6 3. Qd5 Nf6 4. Qd4 a6 5. Nf3 Nc6 6. Qa4 Bd7 7. Bc4 b5 8. Bxb5 axb5
+9. Qxb5 Nxe4 10. Qd5 Nc5 11. O-O Ra4 12. Nc3 e6 13. Qg5 Bg7 14. d4 Qxg5 15. Bxg5 Nxd4 16. Nxd4 Rxd4
+17. Rfe1 Rc4 18. Nd5 Bc6 19. Nxc7+ Kd7 20. b3 Rg4 21. b4 Rxg2+ 22. Kf1 Rxg5 23. h4 Rg4 24. bxc5 Rxh4
+25. Rad1 Bf3 26. Rxd6+ Kc8 27. Kg1 Re8 28. Kf1 Rh8 29. Kg1 Rh1# 0-1
+
+[Round "1.9"]
+[White "Stockfish 12"]
+[Black "Spot 0.1 alpha"]
+[Result "1-0"]
+[Termination "checkmate"]
+[FEN "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"]
+[PlyCount "47"]
+
+1. c4 d5 2. cxd5 Qxd5 3. e3 e5 4. Nc3 Qc5 5. d4 Qa5 6. Bd2 Bb4 7. a3 Bxa3 8. Nf3 Nc6
+9. Rxa3 Qb4 10. d5 Bg4 11. Ra4 Bxf3 12. Qxf3 Qxb2 13. dxc6 Rd8 14. Ra2 Qb6 15. cxb7 Nf6 16. Bb5+ Kf8
+17. O-O e4 18. Nxe4 Qxb5 19. Nxf6 Qb3 20. Qc6 gxf6 21. Qxf6 Qxa2 22. Qxd8+ Kg7 23. Qg5+ Kf8 24. b8=Q# 1-0
+
+[Round "1.10"]
+[White "Spot 0.1 alpha"]
+[Black "Stockfish 12"]
+[Result "0-1"]
+[Termination "checkmate"]
+[FEN "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"]
+[PlyCount "58"]
+
+1. e4 c5 2. Qh5 Nf6 3. Qe5 d6 4. Qg5 Nxe4 5. Qd5 f5 6. Bb5+ Nd7 7. Qxf5 Nf6 8. Nf3 a6
+9. Ba4 b5 10. Bxb5 axb5 11. Ng5 Ne5 12. Ne6 Qd7 13. Nxg7+ Bxg7 14. Qg5 Rg8 15. Nc3 Qc6 16. Rg1 Bf8
+17. Qf4 Rxg2 18. Rxg2 Qxg2 19. Nxb5 Qg1+ 20. Ke2 Bg4+ 21. f3 Qg2+ 22. Ke1 Qg1+ 23. Ke2 Bh6 24. Nxd6+ exd6
+25. Qxf6 Qg2+ 26. Ke1 Nxf3+ 27. Kd1 Ng5+ 28. Ke1 Nf3+ 29. Kd1 Qf1# 0-1
+
+[Round "1.11"]
+[White "Stockfish 12"]
+[Black "Spot 0.1 alpha"]
+[Result "1-0"]
+[Termination "checkmate"]
+[FEN "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"]
+[PlyCount "61"]
+
+1. Nf3 e6 2. e4 Qf6 3. d4 Nc6 4. a3 Qg6 5. Qe2 Nf6 6. Nc3 Qh5 7. d5 Ne5 8. Nxe5 Qxe5
+9. g3 g5 10. f4 gxf4 11. Bxf4 Qd4 12. Bg2 Be7 13. Nb5 Qxb2 14. O-O Bc5+ 15. Kh1 Nxd5 16. exd5 Kf8
+17. Bh6+ Ke7 18. Rxf7+ Kxf7 19. Qh5+ Ke7 20. Bg5+ Kf8 21. Rf1+ Bf2 22. Rxf2+ Kg8 23. a4 Qa1+ 24. Bc1 Qxc1+
+25. Bf1 Kg7 26. Nd6 Rf8 27. Ne8+ Kg8 28. Qg4+ Kh8 29. Qd4+ Kg8 30. Qg4+ Kh8 31. Qg7# 1-0
+
+[Round "1.12"]
+[White "Spot 0.1 alpha"]
+[Black "Stockfish 12"]
+[Result "0-1"]
+[Termination "checkmate"]
+[FEN "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"]
+[PlyCount "72"]
+
+1. e4 d6 2. Qh5 g6 3. Qd5 Bg7 4. Nf3 a6 5. Qa5 e5 6. Nc3 Nc6 7. Bb5 f5 8. d4 axb5
+9. Qxa8 exd4 10. Bg5 Nge7 11. Bxe7 Nxe7 12. Nxb5 fxe4 13. Ng5 c6 14. Ne6 Bxe6 15. Nc7+ Kd7 16. Qxd8+ Rxd8
+17. Nxe6 Kxe6 18. Rd1 d5 19. O-O c5 20. Rfe1 Kd6 21. c4 d3 22. cxd5 Kxd5 23. Re2 Bxb2 24. Rxb2 Kd4
+25. Rxb7 Nd5 26. Rxh7 c4 27. Rg7 c3 28. Rxg6 c2 29. Rf1 d2 30. Ra6 d1=Q 31. Ra4+ Kd3 32. Ra3+ Ke2
+33. Re3+ Nxe3 34. Kh1 c1=Q 35. Kg1 Qcd2 36. Kh1 Qxf1# 0-1
+
+[Round "1.13"]
+[White "Stockfish 12"]
+[Black "Spot 0.1 alpha"]
+[Result "1-0"]
+[Termination "checkmate"]
+[FEN "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"]
+[PlyCount "59"]
+
+1. e4 Nc6 2. Nf3 d5 3. exd5 Qxd5 4. Be2 Nf6 5. O-O Qf5 6. d4 a6 7. Re1 Nb4 8. a3 Nxc2
+9. Nh4 Qa5 10. b4 Qa4 11. Ra2 Be6 12. d5 Bxd5 13. Nc3 Qc6 14. Rxc2 Bb3 15. Bf3 Qc4 16. Bxb7 Rd8
+17. Qe2 Rd3 18. Bb2 Bxc2 19. Qxc2 e6 20. Qa4+ Rd7 21. Bc8 Qxh4 22. Nd5 c6 23. Qxc6 Bxb4 24. Bxd7+ Nxd7
+25. Nc7+ Kd8 26. Rd1 Bd6 27. Rxd6 Qxf2+ 28. Kxf2 Kc8 29. Rxd7 Kb8 30. Nxa6# 1-0
+
+[Round "1.14"]
+[White "Spot 0.1 alpha"]
+[Black "Stockfish 12"]
+[Result "0-1"]
+[Termination "checkmate"]
+[FEN "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"]
+[PlyCount "44"]
+
+1. e4 d6 2. Qh5 c5 3. Nf3 g6 4. Qd5 Nf6 5. Bb5+ Nbd7 6. Qd3 Bg7 7. e5 dxe5 8. Nxe5 O-O
+9. Bc4 Nxe5 10. Bxf7+ Kxf7 11. Qg3 Nh5 12. Qe3 Kg8 13. Qxc5 Ng4 14. Qc4+ Kh8 15. O-O Qd6 16. g3 Be6
+17. Qe2 Bd4 18. Nc3 Nxg3 19. Qxg4 Bxg4 20. Nb5 Ne2+ 21. Kg2 Qf4 22. Kh1 Qf3# 0-1
+
+[Round "1.15"]
+[White "Stockfish 12"]
+[Black "Spot 0.1 alpha"]
+[Result "1-0"]
+[Termination "checkmate"]
+[FEN "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"]
+[PlyCount "59"]
+
+1. c4 d5 2. cxd5 Qxd5 3. Nc3 Qc5 4. d4 Qc6 5. e3 Nd7 6. Nf3 a6 7. Bd3 Ngf6 8. e4 e5
+9. dxe5 Ng8 10. O-O Nc5 11. Nd4 Qd7 12. Be2 Ne7 13. Be3 Ng6 14. Qc2 Nxe5 15. Nd5 Rg8 16. b4 Ne6
+17. Nxe6 Bd6 18. Ndxc7+ Ke7 19. Nd5+ Kxe6 20. f4 Qc6 21. Qb3 Rb8 22. fxe5 Bxe5 23. Nc7+ Kd6 24. Rxf7 Bd7
+25. Rd1+ Kxc7 26. Rfxd7+ Qxd7 27. Qc4+ Qc6 28. Qf7+ Kc8 29. Bg4+ Qe6 30. Bxe6# 1-0
+
+[Round "1.16"]
+[White "Spot 0.1 alpha"]
+[Black "Stockfish 12"]
+[Result "0-1"]
+[Termination "checkmate"]
+[FEN "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"]
+[PlyCount "92"]
+
+1. e4 g6 2. Nc3 Bg7 3. d4 a6 4. Nf3 d6 5. Bd3 Bg4 6. Be3 Nd7 7. h3 Bxf3 8. Qxf3 c5
+9. e5 dxe5 10. Bc4 Ngf6 11. dxc5 Qc7 12. c6 bxc6 13. O-O O-O 14. Bg5 a5 15. Rfd1 Rfb8 16. Be2 e4
+17. Qf4 Qxf4 18. Bxf4 Rxb2 19. Rac1 e6 20. Bg5 h6 21. Be3 Nd5 22. Nxe4 a4 23. Bd4 Bxd4 24. Rxd4 a3
+25. Bg4 h5 26. Bf3 Rxa2 27. c4 Ne5 28. cxd5 cxd5 29. Nc3 Nxf3+ 30. gxf3 Rb2 31. Ra1 a2 32. Kg2 Ra3
+33. Rd3 Rbb3 34. Kg1 Rxc3 35. Rxc3 Rxc3 36. Kg2 Rc2 37. Kf1 Kg7 38. Kg2 d4 39. f4 d3 40. Kg3 f5
+41. Kf3 d2 42. Rh1 Rc1 43. Ke3 a1=Q 44. Ke2 Qd4 45. Rf1 d1=B+ 46. Ke1 Qb4# 0-1
+
+[Round "1.17"]
+[White "Stockfish 12"]
+[Black "Spot 0.1 alpha"]
+[Result "1-0"]
+[Termination "checkmate"]
+[FEN "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"]
+[PlyCount "53"]
+
+1. c4 d5 2. g3 dxc4 3. Bg2 Nf6 4. Qa4+ c6 5. Qxc4 Qa5 6. Nf3 Be6 7. Qf4 Bxa2 8. b4 Qh5
+9. Rxa2 Qd5 10. Rxa7 e5 11. Rxa8 exf4 12. Rxb8+ Ke7 13. O-O Nd7 14. Rxb7 c5 15. Ra7 Qf5 16. Nc3 fxg3
+17. fxg3 cxb4 18. Na4 Qd5 19. Bb2 b3 20. Ne5 Qe6 21. Rxf7+ Ke8 22. Ra8+ Nb8 23. Rxb8+ Qc8 24. Bc6+ Kd8
+25. Ra7 Bc5+ 26. Nxc5 Rg8 27. Ne6# 1-0
+
+[Round "1.18"]
+[White "Spot 0.1 alpha"]
+[Black "Stockfish 12"]
+[Result "0-1"]
+[Termination "checkmate"]
+[FEN "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"]
+[PlyCount "68"]
+
+1. e4 e5 2. Nf3 Nc6 3. Nc3 Nf6 4. Bb5 Bd6 5. Nd5 Nxd5 6. exd5 e4 7. Qe2 O-O 8. Qxe4 Re8
+9. Ng5 Nd4 10. Ba4 f5 11. Qe3 Rxe3+ 12. dxe3 Qxg5 13. Kf1 Qg4 14. Bd2 b6 15. c4 Ba6 16. exd4 Bxc4+
+17. Kg1 Bxd5 18. f3 Bxf3 19. Bb3+ Kh8 20. g3 Bxg3 21. hxg3 Qxd4+ 22. Kf1 Qd3+ 23. Kg1 Qd4+ 24. Kf1 Bxh1
+25. Bc3 Qd3+ 26. Kf2 Re8 27. Rxh1 Re2+ 28. Kg1 Qb1+ 29. Be1 g5 30. Bd1 Qxd1 31. Kf1 Kg8 32. Kg1 b5
+33. Kf1 c6 34. Kg1 Qxe1# 0-1
+
+[Round "1.19"]
+[White "Stockfish 12"]
+[Black "Spot 0.1 alpha"]
+[Result "1-0"]
+[Termination "checkmate"]
+[FEN "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"]
+[PlyCount "69"]
+
+1. Nf3 e6 2. e4 Qf6 3. d4 Nc6 4. Nc3 Bb4 5. Bb5 Nge7 6. O-O Nxd4 7. Qxd4 Qxd4 8. Nxd4 c6
+9. Bd3 e5 10. Nde2 d5 11. f4 dxe4 12. Nxe4 Bf5 13. a3 Bxe4 14. axb4 Bxd3 15. cxd3 Ng6 16. f5 Ne7
+17. d4 exd4 18. f6 gxf6 19. Nxd4 Nd5 20. Bd2 O-O-O 21. Rxa7 Nb6 22. Be3 Rhg8 23. Nxc6 bxc6 24. Bxb6 Rdf8
+25. Rfa1 f5 26. Re7 Kb8 27. Ba7+ Kc8 28. Bd4 Rxg2+ 29. Kxg2 Kd8 30. Bc5 Rg8+ 31. Kh1 Kc8 32. Bb6 Kb8
+33. Ba7+ Kc8 34. Bc5 Kd8 35. Ra8# 1-0
+
+[Round "1.20"]
+[White "Spot 0.1 alpha"]
+[Black "Stockfish 12"]
+[Result "0-1"]
+[Termination "checkmate"]
+[FEN "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"]
+[PlyCount "90"]
+
+1. e4 g6 2. Nc3 Nc6 3. Nf3 Bg7 4. d4 e6 5. Bb5 h6 6. O-O a6 7. Ba4 Nge7 8. Qd3 d6
+9. Qc4 b5 10. Nxb5 axb5 11. Bxb5 Bd7 12. Bf4 Na5 13. Qb4 Qb8 14. Bxd7+ Kxd7 15. Bxd6 cxd6 16. a3 Rc8
+17. Qa4+ Nac6 18. Qc4 Nxd4 19. Qd3 Qxb2 20. e5 Nxf3+ 21. Qxf3 Qxe5 22. Qb7+ Kd8 23. Qb6+ Kd7 24. Qb7+ Ke8
+25. Rfd1 Qg5 26. Ra2 Qc5 27. Qb3 Nd5 28. Re1 Nc3 29. Rxe6+ fxe6 30. Qxe6+ Kf8 31. Ra1 Re8 32. Qxg6 Ne2+
+33. Kh1 Bxa1 34. Qxh6+ Bg7 35. Qd2 Qxf2 36. Qxd6+ Re7 37. Qd1 Nf4 38. Qd8+ Rxd8 39. h4 Ne2 40. Kh2 Qg3+
+41. Kh1 Ra8 42. c4 Rxa3 43. h5 Qe1+ 44. Kh2 Rh3+ 45. Kxh3 Qg3# 0-1
+
