@@ -3,9 +3,22 @@ package main
 import (
 	"strings"
 	"testing"
+	"time"
 
 	//"github.com/dylhunn/dragontoothmg"
 )
+
+func TestCalculation(t *testing.T) {
+	start := time.Now()
+	testGame := getGameFromFen(strings.Fields("fen rnbqkbnr/5ppp/4p3/2PN2B1/1P2P3/p4N2/P1P1BPPP/1R1QK2R b Kkq - 0 1"))
+	bestMove := calculateBestMove(&testGame)
+   
+	if bestMove.String() != "f7f6" {
+		t.Errorf("Move wrong got: %v, want: %v", bestMove.String(), "f7f6")
+	}
+
+    t.Log(time.Since(start))
+}
 
 // Tests entire board eval process:
 // getBoardValue, getBoardValueForWhite, getBoardValueForBlack, getPiecesBaseValue
