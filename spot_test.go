@@ -9,7 +9,7 @@ import (
 )
 
 func TestCalculation(t *testing.T) {
-	debug = true
+	debug = false
 	start := time.Now()
 	testGame := getGameFromFen(strings.Fields("fen rnbqkbnr/5ppp/4p3/2PN2B1/1P2P3/p4N2/P1P1BPPP/1R1QK2R b Kkq - 0 1"))
 	bestMove := calculateBestMove(&testGame)
