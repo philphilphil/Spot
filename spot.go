@@ -68,34 +68,43 @@ func calculateBestMove(b *dragontoothmg.Board) dragontoothmg.Move {
 	moves := b.GenerateLegalMoves()
 	var bestMove = moves[0]
 
-	if b.Wtomove {
-		bestBoardVal = -9999
-	} else {
-		bestBoardVal = 9999
-	}
 
-	for _, move := range moves {
-		unapply := b.Apply(move)
-		nodesSearched++
-		boardVal := negaMaxAlphaBeta(b, 4, -9999, 9999)
-		unapply()
-
-		if debug {
-			printLog(fmt.Sprintf("White Move: %t Move: %v Eval: %v Nodes: %v", b.Wtomove, move.String(), boardVal, nodesSearched))
-		}
-
+	currDepth := 0 //iterative deepening
+	for  {
 		if b.Wtomove {
-			if boardVal >= bestBoardVal {
-				bestMove = move
-				bestBoardVal = boardVal
-			}
+			bestBoardVal = -9999
 		} else {
-			if boardVal <= bestBoardVal {
-				bestBoardVal = boardVal
-				bestMove = move
+			bestBoardVal = 9999
+		}
+		currDepth++;
+		for _, move := range moves {
+			unapply := b.Apply(move)
+			nodesSearched++
+			boardVal := negaMaxAlphaBeta(b, currDepth, -9999, 9999)
+			unapply()
+	
+			if debug {
+				printLog(fmt.Sprintf("White Move: %t Depth: %v Move: %v Eval: %v Nodes: %v", b.Wtomove, currDepth, move.String(), boardVal, nodesSearched))
+			}
+	
+			if b.Wtomove {
+				if boardVal >= bestBoardVal {
+					bestMove = move
+					bestBoardVal = boardVal
+				}
+			} else {
+				if boardVal <= bestBoardVal {
+					bestBoardVal = boardVal
+					bestMove = move
+				}
 			}
 		}
+		if currDepth == 4 {
+			break
+		}
+
 	}
+	
 	//log.Println(nodesSearched)
 	return bestMove
 }
