@@ -30,11 +30,12 @@ func main() {
 		}
 		defer pprof.StopCPUProfile()
 	}
-	// board := dragontoothmg.ParseFen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
-	// fmt.Println(getBoardValue(&board))
-	// move := calculateBestMove(&board)
-	// fmt.Println(move.String())
 
+	debug = true
+	board := dragontoothmg.ParseFen("rnbqkbnr/5ppp/4p3/2PN2B1/1P2P3/p4N2/P1P1BPPP/1R1QK2R b Kkq - 0 1")
+	move := calculateBestMove(&board)
+	fmt.Println(move.String())
+	//fmt.Println(transpoTable)
 	// val := getBoardValue(&board)
 	// fmt.Println(val)
 
@@ -66,6 +67,7 @@ func main() {
 func calculateBestMove(b *dragontoothmg.Board) dragontoothmg.Move {
 
 	var bestBoardVal int = 0
+	//var bestDepthVal int = 0
 	moves := b.GenerateLegalMoves()
 	var bestMove = moves[0]
 	start := time.Now()
@@ -76,18 +78,24 @@ func calculateBestMove(b *dragontoothmg.Board) dragontoothmg.Move {
 	} else {
 		bestBoardVal = 9999
 	}
+
 	for {
+
+		if b.Wtomove {
+			bestBoardVal = -9999
+		} else {
+			bestBoardVal = 9999
+		}
 
 		currDepth++
 		for _, move := range moves {
-			printLog(move.String())
 			unapply := b.Apply(move)
 			nodesSearched++
 			boardVal := negaMaxAlphaBeta(b, currDepth, -9999, 9999)
 			unapply()
 
 			if debug {
-				printLog(fmt.Sprintf("White Move: %t Depth: %v Move: %v Eval: %v Nodes: %v Time: %v", b.Wtomove, currDepth, move.String(), boardVal, nodesSearched, time.Since(start).Seconds()))
+				printLog(fmt.Sprintf("White Move: %t Depth: %v Move: %v Eval: %v CurBestEval: %v Nodes: %v Time: %v", b.Wtomove, currDepth, move.String(), boardVal, bestBoardVal, nodesSearched, time.Since(start).Seconds()))
 			}
 
 			if b.Wtomove {
@@ -97,15 +105,14 @@ func calculateBestMove(b *dragontoothmg.Board) dragontoothmg.Move {
 				}
 			} else {
 				if boardVal <= bestBoardVal {
-					printLog(fmt.Sprintf("old best: %v new best: %v", bestBoardVal, boardVal))
-					bestBoardVal = boardVal
 					bestMove = move
+					bestBoardVal = boardVal
 				}
 			}
+		}
 
-			if time.Since(start).Seconds() >= 25 { //haredcoded for now: take 10 seconds to find a move!
-				return bestMove
-			}
+		if currDepth == 5 { //time.Since(start).Seconds() >= 10 { //haredcoded for now: take 10 seconds to find a move!
+			return bestMove
 		}
 
 	}
@@ -115,6 +122,13 @@ func calculateBestMove(b *dragontoothmg.Board) dragontoothmg.Move {
 }
 
 func negaMaxAlphaBeta(b *dragontoothmg.Board, depth int, alpha int, beta int) int {
+
+	//check TT Table
+	tt, ok := transpoTable[b.Hash()]
+	if ok && tt.depth >= depth {
+		return tt.score
+	}
+
 	if depth == 0 {
 		return getBoardValue(b)
 	}
@@ -128,20 +142,27 @@ func negaMaxAlphaBeta(b *dragontoothmg.Board, depth int, alpha int, beta int) in
 		unapply()
 
 		if debug {
-			printLog(fmt.Sprintf("White Move: %t Depth: %v Move: %v Eval: %v Nodes: %v", b.Wtomove, depth, move.String(), score, nodesSearched))
+			//printLog(fmt.Sprintf("White Move: %t Depth: %v Move: %v Eval: %v Nodes: %v", b.Wtomove, depth, move.String(), score, nodesSearched))
 		}
 
 		if score >= beta {
 			if debug {
-				printLog("break")
+				//	printLog("break")
 			}
 			return score
 		}
 		if score > bestScore {
 			bestScore = score
-			if(score > alpha) {
+			if score > alpha {
 				alpha = score
 			}
+		}
+
+		if !ok || depth >= tt.depth && bestScore >= tt.score {
+			transpoTable[b.Hash()] = Hashtable{depth: depth, score: bestScore, move: move}
+			// if len(s.tp) > MaxTableSize {
+			// 	s.tp = map[Position]entry{}
+			// }
 		}
 	}
 	return alpha
