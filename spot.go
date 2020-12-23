@@ -31,7 +31,7 @@ func main() {
 		defer pprof.StopCPUProfile()
 	}
 
-	debug = true
+	//debug = true
 	board := dragontoothmg.ParseFen("rnbqkbnr/5ppp/4p3/2PN2B1/1P2P3/p4N2/P1P1BPPP/1R1QK2R b Kkq - 0 1")
 	move := calculateBestMove(&board)
 	fmt.Println(move.String())
@@ -67,10 +67,10 @@ func main() {
 func calculateBestMove(b *dragontoothmg.Board) dragontoothmg.Move {
 
 	var bestBoardVal int = 0
-	//var bestDepthVal int = 0
 	moves := b.GenerateLegalMoves()
 	var bestMove = moves[0]
 	start := time.Now()
+	window_size := 100
 
 	currDepth := 0 //iterative deepening
 	if b.Wtomove {
@@ -81,17 +81,26 @@ func calculateBestMove(b *dragontoothmg.Board) dragontoothmg.Move {
 
 	for {
 
-		if b.Wtomove {
-			bestBoardVal = -9999
-		} else {
-			bestBoardVal = 9999
-		}
+		// if b.Wtomove {
+		// 	bestBoardVal = -9999
+		// } else {
+		// 	bestBoardVal = 9999
+		// }
+		fmt.Printf("BestBoardVal: %v\r\n", bestBoardVal)
+		alpha := -bestBoardVal - window_size
+		beta := bestBoardVal + window_size
+	//		if b.Wtomove {
+		// 	bestBoardVal = -9999
+		// } else {
+		// 	bestBoardVal = 9999
+		// }
+		fmt.Printf("Alpha: %v   Beta: %v\r\n", alpha, beta)
 
 		currDepth++
 		for _, move := range moves {
 			unapply := b.Apply(move)
 			nodesSearched++
-			boardVal := negaMaxAlphaBeta(b, currDepth, -9999, 9999)
+			boardVal := negaMaxAlphaBeta(b, currDepth, alpha, beta)
 			unapply()
 
 			if debug {
@@ -107,11 +116,12 @@ func calculateBestMove(b *dragontoothmg.Board) dragontoothmg.Move {
 				if boardVal <= bestBoardVal {
 					bestMove = move
 					bestBoardVal = boardVal
+					//fmt.Println(bestBoardVal)
 				}
 			}
 		}
 
-		if currDepth == 5 { //time.Since(start).Seconds() >= 10 { //haredcoded for now: take 10 seconds to find a move!
+		if currDepth == 4 { //time.Since(start).Seconds() >= 10 { //haredcoded for now: take 10 seconds to find a move!
 			return bestMove
 		}
 
@@ -126,12 +136,16 @@ func negaMaxAlphaBeta(b *dragontoothmg.Board, depth int, alpha int, beta int) in
 	//check TT Table
 	tt, ok := transpoTable[b.Hash()]
 	if ok && tt.depth >= depth {
+		// fmt.Println("skipping")
+		// fmt.Println(b.Hash())
+		// fmt.Println(depth)
 		return tt.score
 	}
 
 	if depth == 0 {
 		return getBoardValue(b)
 	}
+
 	bestScore := -9999
 	moves := b.GenerateLegalMoves()
 
