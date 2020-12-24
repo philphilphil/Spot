@@ -33,9 +33,9 @@ func main() {
 	}
 
 	//debug = true
-	board := dragontoothmg.ParseFen("rnbqkbnr/5ppp/4p3/2PN2B1/1P2P3/p4N2/P1P1BPPP/1R1QK2R b Kkq - 0 1")
-	move := calculateBestMove(&board)
-	fmt.Println(move.String())
+	//board := dragontoothmg.ParseFen("rnbqkbnr/5ppp/4p3/2PN2B1/1P2P3/p4N2/P1P1BPPP/1R1QK2R b Kkq - 0 1")
+	//move := calculateBestMove(&board)
+	//fmt.Println(move.String())
 	//fmt.Println(transpoTable)
 	// val := getBoardValue(&board)
 	// fmt.Println(val)
@@ -98,7 +98,7 @@ func calculateBestMove(b *dragontoothmg.Board) dragontoothmg.Move {
 	var bestMove dragontoothmg.Move
 	var bestMoveGlobal dragontoothmg.Move
 	start := time.Now()
-	window_size := 300
+	window_size := 1000
 
 	currDepth := 0 //iterative deepening
 	if b.Wtomove {
@@ -108,13 +108,13 @@ func calculateBestMove(b *dragontoothmg.Board) dragontoothmg.Move {
 	}
 
 	for {
-
+		nodesSearched = 0
 		bestMoveGlobal = bestMove
 		moves := generateAndOrderMoves(b.GenerateLegalMoves(), bestMove)
 
 		alpha := -bestBoardVal - window_size
 		beta := bestBoardVal + window_size
-		fmt.Printf("BestBoardVal: %v Alpha: %v   Beta: %v\r\n", bestBoardVal, alpha, beta)
+		printLog(fmt.Sprintf("BestBoardVal: %v Alpha: %v   Beta: %v\r\n", bestBoardVal, alpha, beta))
 
 		currDepth++
 		for _, move := range moves {
