@@ -114,6 +114,13 @@ func calculateBestMove(b *dragontoothmg.Board) dragontoothmg.Move {
 
 		alpha := -bestBoardVal - window_size
 		beta := bestBoardVal + window_size
+
+		//reset to get best value of new depth? TODO: is this correct
+		if b.Wtomove {
+			bestBoardVal = -9999
+		} else {
+			bestBoardVal = 9999
+		}
 		printLog(fmt.Sprintf("BestBoardVal: %v Alpha: %v   Beta: %v\r\n", bestBoardVal, alpha, beta))
 
 		currDepth++
@@ -136,13 +143,13 @@ func calculateBestMove(b *dragontoothmg.Board) dragontoothmg.Move {
 					bestBoardVal = boardVal
 				}
 			}
-			if time.Since(start).Seconds() >= 15 { //haredcoded for now: take 15 seconds to find a move!
+			if time.Since(start).Seconds() >= 10 { //haredcoded for now: take 10 seconds to find a move!
 				return bestMoveGlobal
 			}
 		}
 	}
 
-	return bestMove
+	return bestMoveGlobal
 }
 
 func negaMaxAlphaBeta(b *dragontoothmg.Board, depth int, alpha int, beta int) int {
