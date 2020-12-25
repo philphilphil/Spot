@@ -8,7 +8,6 @@ import (
 	"os"
 	"runtime"
 	"runtime/pprof"
-	"time"
 
 	"github.com/dylhunn/dragontoothmg"
 )
@@ -97,39 +96,28 @@ func generateAndOrderMoves(moves []dragontoothmg.Move, bestMove dragontoothmg.Mo
 
 func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 
-	var bestBoardVal int = -9999
+	var bestBoardVal int = -99999
 	var bestMove dragontoothmg.Move
-	var bestMoveGlobal dragontoothmg.Move
 	var color int
-	start := time.Now()
-	//window_size := 1000
+	depth := 2
 
-	currDepth := 4
 	if b.Wtomove {
 		color = 1
 	} else {
 		color = -1
 	}
 
-	nodesSearched = 0
-	moves := generateAndOrderMoves(b.GenerateLegalMoves(), bestMoveGlobal)
+	moves := generateAndOrderMoves(b.GenerateLegalMoves(), bestMove)
 	printLog(fmt.Sprintf("Orderd Moves %v", MovesToString(moves)))
-
-	alpha := -99999 
-	beta := 99999 
-
-	printLog(fmt.Sprintf("BestBoardVal: %v Alpha: %v   Beta: %v Player: %v\r\n", bestBoardVal, alpha, beta, color))
 
 	for _, move := range moves {
 		unapply := b.Apply(move)
-		pv := make([]dragontoothmg.Move, 5)	
-		pv[currDepth] = move
-		nodesSearched++
-		boardVal := negaMaxAlphaBeta(b, currDepth, alpha, beta, color, pv)
+		nodesSearched = 0
+		boardVal := negaMaxAlphaBeta(b, depth, -9999, 9999, color)
 		unapply()
 
-		printLog(fmt.Sprintf("White Move: %t Color: %v Depth: %v Move: %v Eval: %v CurBestEval: %v Nodes: %v Time: %v", b.Wtomove, color, currDepth, move.String(), boardVal, bestBoardVal, nodesSearched, time.Since(start).Seconds()))
-		fmt.Println(pv)
+		printLog(fmt.Sprintf("White Move: %t Color: %v Depth: %v Move: %v Eval: %v CurBestEval: %v Nodes: %v", b.Wtomove, color, depth, move.String(), boardVal, bestBoardVal, nodesSearched))
+
 		if boardVal >= bestBoardVal {
 			bestMove = move
 			bestBoardVal = boardVal
@@ -139,53 +127,44 @@ func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 	return bestMove
 }
 
-func negaMaxAlphaBeta(b dragontoothmg.Board, depth int, alpha int, beta int, color int, pv []dragontoothmg.Move) int {
+func negaMaxAlphaBeta(b dragontoothmg.Board, depth int, alpha int, beta int, color int) int {
 
 	//check TT Table
 	// tt, ok := transpoTable[b.Hash()]
 	// if ok && tt.depth >= depth {
 	// 	// fmt.Println("skipping")
-	// 	// fmt.Println(b.Hash())
+	// 	// fmt.Println(b.Hash()f
 	// 	// fmt.Println(depth)
 	// 	return tt.score
 	// }
-
-	if depth == 0 {
-		//fmt.Printf("color: %v boardVal: %v return: %v\r\n", color, getBoardValue(b), getBoardValue(b) * color)
+	moves := b.GenerateLegalMoves()
+	if depth == 0 || len(moves) == 0 {
+		//fmt.Printf("color: %v boardVal: %v return: %v\r\n", color, getBoardValue(&b), getBoardValue(&b)*color)
 		return getBoardValue(&b) * color
 	}
 
-	maxScore := alpha
-	moves := b.GenerateLegalMoves()
+	//bestScore := -99999
 
 	for _, move := range moves {
 		unapply := b.Apply(move)
 		nodesSearched++
-		score := -negaMaxAlphaBeta(b, depth-1, -beta, -alpha, -color, pv)
+		score := -negaMaxAlphaBeta(b, depth-1, -beta, -alpha, -color)
 		//value = Max(value, -negaMaxAlphaBeta(b, depth-1, -beta, -alpha, -color))
 		unapply()
-		if score > maxScore {
-			pv[depth] = move
-			maxScore = score
-
-			if maxScore >= beta {
-				break
-			}
-
+		if score >= beta {
+			return beta
 		}
-		// alpha = Max(alpha, value)
-		// //printLog(fmt.Sprintf("White Move: %t Depth: %v Move: %v Eval: %v Nodes: %v", b.Wtomove, depth, move.String(), score, nodesSearched))
 
-		// if alpha >= beta {
-		// 	break
-		// }
+		if score > alpha {
+			alpha = score
+		}
 	}
 
 	// if !ok || depth >= tt.depth && bestScore >= tt.score {
 	// 	transpoTable[b.Hash()] = Hashtable{depth: depth, score: bestScore, move: move}
 	// }
 
-	return maxScore
+	return alpha
 }
 
 // Get value for entire board
