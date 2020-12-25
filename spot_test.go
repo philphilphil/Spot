@@ -1,11 +1,11 @@
 package main
 
 import (
+	"fmt"
+	"github.com/dylhunn/dragontoothmg"
 	"strings"
 	"testing"
 	"time"
-
-	//"github.com/dylhunn/dragontoothmg"
 )
 
 func TestCalculation(t *testing.T) {
@@ -13,12 +13,12 @@ func TestCalculation(t *testing.T) {
 	start := time.Now()
 	testGame := getGameFromFen(strings.Fields("fen rnbqkbnr/5ppp/4p3/2PN2B1/1P2P3/p4N2/P1P1BPPP/1R1QK2R b Kkq - 0 1"))
 	bestMove := calculateBestMove(&testGame)
-   
+
 	if bestMove.String() != "f7f6" {
 		t.Errorf("Move wrong got: %v, want: %v", bestMove.String(), "f7f6")
 	}
 
-    t.Log(time.Since(start))
+	t.Log(time.Since(start))
 }
 
 // Tests entire board eval process:
@@ -64,5 +64,21 @@ func TestGetBoardValue4(t *testing.T) {
 
 	if boardValue != 375 {
 		t.Errorf("Board value wrong got: %d, want: %d", boardValue, 375)
+	}
+}
+
+func TestMoveOrdering(t *testing.T) {
+	// https://lichess.org/editor/1qq4k/8/3r2p1/N7/2B1N3/8/8/K4QQ1_b_-_-_0_1
+	testGame := getGameFromFen(strings.Fields("fen 1qq4k/8/3r2p1/N7/2B1N3/8/8/K4QQ1 b - - 0 1"))
+
+	moves := testGame.GenerateLegalMoves()
+	var bestMove dragontoothmg.Move = 4087
+	orderedMoves := generateAndOrderMoves(moves, bestMove)
+
+	fmt.Println(moves)
+	fmt.Println(orderedMoves)
+
+	if orderedMoves[0] != bestMove {
+		t.Errorf("Move sort wrong got: %d, want: %d", orderedMoves[0], bestMove)
 	}
 }
