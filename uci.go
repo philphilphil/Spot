@@ -85,7 +85,7 @@ func (u *UCIs) parseUciCommand(args []string) bool {
 		printLog("pos set done")
 	case "go":
 		printLog("go start")
-		bestMove := calculateBestMove(&game)
+		bestMove := calculateBestMove(game)
 		printLog("go done bestmove: " + bestMove.String())
 		printMessage("bestmove "+bestMove.String())
 	case "stop":

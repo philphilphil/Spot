@@ -8,14 +8,41 @@ import (
 	"time"
 )
 
-func TestCalculation(t *testing.T) {
+//TODO: refactor all calc test functions into one and use engine test epd
+func TestCalculationBlack_1(t *testing.T) {
 	debug = true
 	start := time.Now()
 	testGame := getGameFromFen(strings.Fields("fen rnbqkbnr/5ppp/4p3/2PN2B1/1P2P3/p4N2/P1P1BPPP/1R1QK2R b Kkq - 0 1"))
-	bestMove := calculateBestMove(&testGame)
+	bestMove := calculateBestMove(testGame)
 
 	if bestMove.String() != "f7f6" {
 		t.Errorf("Move wrong got: %v, want: %v", bestMove.String(), "f7f6")
+	}
+
+	t.Log(time.Since(start))
+}
+
+func TestCalculationWhite_1(t *testing.T) {
+	debug = true
+	start := time.Now()
+	testGame := getGameFromFen(strings.Fields("fen rn1qk1nr/7p/5pp1/2PP1b2/7B/p2Q1N2/P1P1BPPP/1R2K2R w Kkq - 0 6"))
+	bestMove := calculateBestMove(testGame)
+
+	if bestMove.String() != "f7f6" {
+		t.Errorf("Move wrong got: %v, want: %v", bestMove.String(), "f7f6")
+	}
+
+	t.Log(time.Since(start))
+}
+
+func TestCalculationWhite_2(t *testing.T) {
+	debug = true
+	start := time.Now()
+	testGame := getGameFromFen(strings.Fields("fen rnb1kbnr/pppp1ppp/8/4p1q1/4P3/3P4/PPP2PPP/RNBQKBNR w KQkq - 1 3"))
+	bestMove := calculateBestMove(testGame)
+
+	if bestMove.String() != "c1g5" {
+		t.Errorf("Move wrong got: %v, want: %v", bestMove.String(), "c1g5")
 	}
 
 	t.Log(time.Since(start))

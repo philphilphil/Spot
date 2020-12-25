@@ -32,11 +32,11 @@ func main() {
 		defer pprof.StopCPUProfile()
 	}
 
-	//debug = true
-	//board := dragontoothmg.ParseFen("rnbqkbnr/5ppp/4p3/2PN2B1/1P2P3/p4N2/P1P1BPPP/1R1QK2R b Kkq - 0 1")
-	//move := calculateBestMove(&board)
-	//fmt.Println(move.String())
-	//fmt.Println(transpoTable)
+	debug = true
+	// board := dragontoothmg.ParseFen("rnbqkbnr/5ppp/4p3/2PN2B1/1P2P3/p4N2/P1P1BPPP/1R1QK2R b Kkq - 0 1")
+	// move := calculateBestMove(&board)
+	// fmt.Println(move.String())
+	// fmt.Println(transpoTable)
 	// val := getBoardValue(&board)
 	// fmt.Println(val)
 
@@ -89,71 +89,57 @@ func generateAndOrderMoves(moves []dragontoothmg.Move, bestMove dragontoothmg.Mo
 		orderedMoves = append(orderedMoves, m)
 	}
 
+	// fmt.Println(moves)
+	// fmt.Println(orderedMoves)
+
 	return orderedMoves
 }
 
-func calculateBestMove(b *dragontoothmg.Board) dragontoothmg.Move {
+func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 
-	var bestBoardVal int = 0
+	var bestBoardVal int = -9999
 	var bestMove dragontoothmg.Move
 	var bestMoveGlobal dragontoothmg.Move
 	var color int
 	start := time.Now()
-	window_size := 1000
+	//window_size := 1000
 
-	currDepth := 0 //iterative deepening
+	currDepth := 4
 	if b.Wtomove {
 		color = 1
 	} else {
 		color = -1
 	}
 
-	for {
-		nodesSearched = 0
-		bestMoveGlobal = bestMove
-		moves := generateAndOrderMoves(b.GenerateLegalMoves(), bestMove)
+	nodesSearched = 0
+	moves := generateAndOrderMoves(b.GenerateLegalMoves(), bestMoveGlobal)
+	printLog(fmt.Sprintf("Orderd Moves %v", MovesToString(moves)))
 
-		alpha := -bestBoardVal - window_size
-		beta := bestBoardVal + window_size
+	alpha := -99999 
+	beta := 99999 
 
-		//reset to get best value of new depth? TODO: is this correct
-		if b.Wtomove {
-			bestBoardVal = -9999
-		} else {
-			bestBoardVal = 9999
-		}
-		printLog(fmt.Sprintf("BestBoardVal: %v Alpha: %v   Beta: %v\r\n", bestBoardVal, alpha, beta))
+	printLog(fmt.Sprintf("BestBoardVal: %v Alpha: %v   Beta: %v Player: %v\r\n", bestBoardVal, alpha, beta, color))
 
-		currDepth++
-		for _, move := range moves {
-			unapply := b.Apply(move)
-			nodesSearched++
-			boardVal := negaMaxAlphaBeta(b, currDepth, alpha, beta, color)
-			unapply()
+	for _, move := range moves {
+		unapply := b.Apply(move)
+		pv := make([]dragontoothmg.Move, 5)	
+		pv[currDepth] = move
+		nodesSearched++
+		boardVal := negaMaxAlphaBeta(b, currDepth, alpha, beta, color, pv)
+		unapply()
 
-			printLog(fmt.Sprintf("White Move: %t Depth: %v Move: %v Eval: %v CurBestEval: %v Nodes: %v Time: %v", b.Wtomove, currDepth, move.String(), boardVal, bestBoardVal, nodesSearched, time.Since(start).Seconds()))
-
-			if b.Wtomove {
-				if boardVal >= bestBoardVal {
-					bestMove = move
-					bestBoardVal = boardVal
-				}
-			} else {
-				if boardVal <= bestBoardVal {
-					bestMove = move
-					bestBoardVal = boardVal
-				}
-			}
-			if time.Since(start).Seconds() >= 10 { //haredcoded for now: take 10 seconds to find a move!
-				return bestMoveGlobal
-			}
+		printLog(fmt.Sprintf("White Move: %t Color: %v Depth: %v Move: %v Eval: %v CurBestEval: %v Nodes: %v Time: %v", b.Wtomove, color, currDepth, move.String(), boardVal, bestBoardVal, nodesSearched, time.Since(start).Seconds()))
+		fmt.Println(pv)
+		if boardVal >= bestBoardVal {
+			bestMove = move
+			bestBoardVal = boardVal
 		}
 	}
 
-	return bestMoveGlobal
+	return bestMove
 }
 
-func negaMaxAlphaBeta(b *dragontoothmg.Board, depth int, alpha int, beta int, color int) int {
+func negaMaxAlphaBeta(b dragontoothmg.Board, depth int, alpha int, beta int, color int, pv []dragontoothmg.Move) int {
 
 	//check TT Table
 	// tt, ok := transpoTable[b.Hash()]
@@ -165,42 +151,46 @@ func negaMaxAlphaBeta(b *dragontoothmg.Board, depth int, alpha int, beta int, co
 	// }
 
 	if depth == 0 {
-		return getBoardValue(b) * color
+		//fmt.Printf("color: %v boardVal: %v return: %v\r\n", color, getBoardValue(b), getBoardValue(b) * color)
+		return getBoardValue(&b) * color
 	}
 
-	value := -99999
+	maxScore := alpha
 	moves := b.GenerateLegalMoves()
 
 	for _, move := range moves {
 		unapply := b.Apply(move)
 		nodesSearched++
-		value = Max(value, -negaMaxAlphaBeta(b, depth-1, -beta, -alpha, -color))
+		score := -negaMaxAlphaBeta(b, depth-1, -beta, -alpha, -color, pv)
+		//value = Max(value, -negaMaxAlphaBeta(b, depth-1, -beta, -alpha, -color))
 		unapply()
-		alpha = Max(alpha, value)
-		//printLog(fmt.Sprintf("White Move: %t Depth: %v Move: %v Eval: %v Nodes: %v", b.Wtomove, depth, move.String(), score, nodesSearched))
+		if score > maxScore {
+			pv[depth] = move
+			maxScore = score
 
-		if alpha >= beta {
-			break
+			if maxScore >= beta {
+				break
+			}
+
 		}
+		// alpha = Max(alpha, value)
+		// //printLog(fmt.Sprintf("White Move: %t Depth: %v Move: %v Eval: %v Nodes: %v", b.Wtomove, depth, move.String(), score, nodesSearched))
+
+		// if alpha >= beta {
+		// 	break
+		// }
 	}
 
 	// if !ok || depth >= tt.depth && bestScore >= tt.score {
 	// 	transpoTable[b.Hash()] = Hashtable{depth: depth, score: bestScore, move: move}
 	// }
 
-	return alpha
+	return maxScore
 }
 
 // Get value for entire board
 func getBoardValue(b *dragontoothmg.Board) int {
-
-	//fmt.Println("white", b.Wtomove)
 	boardValue := getBoardValueForWhite(&b.White) - getBoardValueForBlack(&b.Black)
-
-	// if !b.Wtomove {
-	// 	return -boardValue
-	// }
-
 	return boardValue
 }
 
@@ -208,12 +198,12 @@ func getBoardValue(b *dragontoothmg.Board) int {
 // TODO: Refactor getBoardValueForWhite and getBoardValueForBlack into one?
 func getBoardValueForWhite(bb *dragontoothmg.Bitboards) int {
 	value := getPiecesBaseValue(bb)
-	value += getPiecePositionBonusValue(&bb.Pawns, whitePawn)
-	value += getPiecePositionBonusValue(&bb.Knights, whiteKnight)
-	value += getPiecePositionBonusValue(&bb.Bishops, whiteBishop)
-	value += getPiecePositionBonusValue(&bb.Rooks, whiteRook)
-	value += getPiecePositionBonusValue(&bb.Queens, whiteQueen)
-	value += getPiecePositionBonusValue(&bb.Kings, whiteKing)
+	// value += getPiecePositionBonusValue(&bb.Pawns, whitePawn)
+	// value += getPiecePositionBonusValue(&bb.Knights, whiteKnight)
+	// value += getPiecePositionBonusValue(&bb.Bishops, whiteBishop)
+	// value += getPiecePositionBonusValue(&bb.Rooks, whiteRook)
+	// value += getPiecePositionBonusValue(&bb.Queens, whiteQueen)
+	// value += getPiecePositionBonusValue(&bb.Kings, whiteKing)
 
 	// fmt.Println("Pieces:")
 	// fmt.Printf("Pawns (%064b) amount %d\r\n", bb.Pawns, bits.OnesCount64(bb.Pawns))
@@ -236,12 +226,12 @@ func getBoardValueForWhite(bb *dragontoothmg.Bitboards) int {
 // Calculate the value for one side
 func getBoardValueForBlack(bb *dragontoothmg.Bitboards) int {
 	value := getPiecesBaseValue(bb)
-	value += getPiecePositionBonusValue(&bb.Pawns, blackPawn)
-	value += getPiecePositionBonusValue(&bb.Knights, blackKnight)
-	value += getPiecePositionBonusValue(&bb.Bishops, blackBishop)
-	value += getPiecePositionBonusValue(&bb.Rooks, blackRook)
-	value += getPiecePositionBonusValue(&bb.Queens, blackQueen)
-	value += getPiecePositionBonusValue(&bb.Kings, blackKing)
+	// value += getPiecePositionBonusValue(&bb.Pawns, blackPawn)
+	// value += getPiecePositionBonusValue(&bb.Knights, blackKnight)
+	// value += getPiecePositionBonusValue(&bb.Bishops, blackBishop)
+	// value += getPiecePositionBonusValue(&bb.Rooks, blackRook)
+	// value += getPiecePositionBonusValue(&bb.Queens, blackQueen)
+	// value += getPiecePositionBonusValue(&bb.Kings, blackKing)
 
 	return value
 }
