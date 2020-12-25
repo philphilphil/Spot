@@ -97,14 +97,15 @@ func calculateBestMove(b *dragontoothmg.Board) dragontoothmg.Move {
 	var bestBoardVal int = 0
 	var bestMove dragontoothmg.Move
 	var bestMoveGlobal dragontoothmg.Move
+	var color int
 	start := time.Now()
 	window_size := 1000
 
 	currDepth := 0 //iterative deepening
 	if b.Wtomove {
-		bestBoardVal = -9999
+		color = 1
 	} else {
-		bestBoardVal = 9999
+		color = -1
 	}
 
 	for {
@@ -127,7 +128,7 @@ func calculateBestMove(b *dragontoothmg.Board) dragontoothmg.Move {
 		for _, move := range moves {
 			unapply := b.Apply(move)
 			nodesSearched++
-			boardVal := negaMaxAlphaBeta(b, currDepth, alpha, beta)
+			boardVal := negaMaxAlphaBeta(b, currDepth, alpha, beta, color)
 			unapply()
 
 			printLog(fmt.Sprintf("White Move: %t Depth: %v Move: %v Eval: %v CurBestEval: %v Nodes: %v Time: %v", b.Wtomove, currDepth, move.String(), boardVal, bestBoardVal, nodesSearched, time.Since(start).Seconds()))
@@ -152,50 +153,42 @@ func calculateBestMove(b *dragontoothmg.Board) dragontoothmg.Move {
 	return bestMoveGlobal
 }
 
-func negaMaxAlphaBeta(b *dragontoothmg.Board, depth int, alpha int, beta int) int {
+func negaMaxAlphaBeta(b *dragontoothmg.Board, depth int, alpha int, beta int, color int) int {
 
 	//check TT Table
-	tt, ok := transpoTable[b.Hash()]
-	if ok && tt.depth >= depth {
-		// fmt.Println("skipping")
-		// fmt.Println(b.Hash())
-		// fmt.Println(depth)
-		return tt.score
-	}
+	// tt, ok := transpoTable[b.Hash()]
+	// if ok && tt.depth >= depth {
+	// 	// fmt.Println("skipping")
+	// 	// fmt.Println(b.Hash())
+	// 	// fmt.Println(depth)
+	// 	return tt.score
+	// }
 
 	if depth == 0 {
-		return getBoardValue(b)
+		return getBoardValue(b) * color
 	}
 
-	bestScore := -9999
+	value := -99999
 	moves := b.GenerateLegalMoves()
 
 	for _, move := range moves {
 		unapply := b.Apply(move)
 		nodesSearched++
-		score := -negaMaxAlphaBeta(b, depth-1, -beta, -alpha)
+		value = Max(value, -negaMaxAlphaBeta(b, depth-1, -beta, -alpha, -color))
 		unapply()
-
+		alpha = Max(alpha, value)
 		//printLog(fmt.Sprintf("White Move: %t Depth: %v Move: %v Eval: %v Nodes: %v", b.Wtomove, depth, move.String(), score, nodesSearched))
 
-		if score >= beta {
-			if debug {
-			}
-			return score
-		}
-		if score > bestScore {
-			bestScore = score
-			if score > alpha {
-				alpha = score
-			}
-		}
-
-		if !ok || depth >= tt.depth && bestScore >= tt.score {
-			transpoTable[b.Hash()] = Hashtable{depth: depth, score: bestScore, move: move}
+		if alpha >= beta {
+			break
 		}
 	}
-	return alpha
 
+	// if !ok || depth >= tt.depth && bestScore >= tt.score {
+	// 	transpoTable[b.Hash()] = Hashtable{depth: depth, score: bestScore, move: move}
+	// }
+
+	return alpha
 }
 
 // Get value for entire board
@@ -204,9 +197,9 @@ func getBoardValue(b *dragontoothmg.Board) int {
 	//fmt.Println("white", b.Wtomove)
 	boardValue := getBoardValueForWhite(&b.White) - getBoardValueForBlack(&b.Black)
 
-	if !b.Wtomove {
-		return -boardValue
-	}
+	// if !b.Wtomove {
+	// 	return -boardValue
+	// }
 
 	return boardValue
 }
