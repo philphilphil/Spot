@@ -145,15 +145,20 @@ func negaMaxAlphaBeta(b dragontoothmg.Board, depth int, alpha int, beta int, col
 
 	}
 
-	value := -99999
+	//value := -99999
 
 	for _, move := range moves {
 		unapply := b.Apply(move)
 		nodesSearched++
-		value = Max(value, -negaMaxAlphaBeta(b, depth-1, -beta, -alpha, -color))
+		score := -negaMaxAlphaBeta(b, depth-1, -beta, -alpha, -color)
 		unapply()
-		if alpha > beta {
-			break
+
+		if score >= beta {
+			return beta
+		}
+
+		if score > alpha {
+			alpha = score
 		}
 	}
 
@@ -161,7 +166,7 @@ func negaMaxAlphaBeta(b dragontoothmg.Board, depth int, alpha int, beta int, col
 	// 	transpoTable[b.Hash()] = Hashtable{depth: depth, score: bestScore, move: move}
 	// }
 
-	return value
+	return alpha
 }
 
 // Get value for entire board
