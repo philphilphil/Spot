@@ -18,6 +18,7 @@ var cpuprofile = flag.String("cpuprofile", "", "write cpu profile to `file`")
 var memprofile = flag.String("memprofile", "", "write memory profile to `file`")
 
 func main() {
+	///////// LOG OUTPUT, CPU/MEMORY PROFLINIG STUFF ///////
 	flag.Parse()
 	if *cpuprofile != "" {
 		f, err := os.Create(*cpuprofile)
@@ -31,26 +32,6 @@ func main() {
 		defer pprof.StopCPUProfile()
 	}
 
-	//debug = true
-	// board := dragontoothmg.ParseFen("rnb1kbnr/pppp1ppp/8/4p1q1/4P3/3P4/PPP2PPP/RNBQKBNR w KQkq - 1 3")
-	// move := calculateBestMove(board)
-	// fmt.Println(move.String())
-	// fmt.Println(transpoTable)
-	// val := getBoardValue(&board)
-	// fmt.Println(val)
-
-	file, err := os.OpenFile("info.log", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
-	log.SetOutput(file)
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	defer file.Close()
-
-	uci := UCIs{}
-	uci.Start()
-
 	if *memprofile != "" {
 		f, err := os.Create(*memprofile)
 		if err != nil {
@@ -62,6 +43,24 @@ func main() {
 			log.Fatal("could not write memory profile: ", err)
 		}
 	}
+
+	file, err := os.OpenFile("info.log", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
+	log.SetOutput(file)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer file.Close()
+	////////////////////////////////////////////////////////
+
+	debug = true
+	board := dragontoothmg.ParseFen("rnb1kbnr/pppp1ppp/8/4p1q1/4P3/3P4/PPP2PPP/RNBQKBNR w KQkq - 1 3")
+	move := calculateBestMove(board)
+	fmt.Println(move.String())
+
+	uci := UCIs{}
+	uci.Start()
 }
 
 func generateAndOrderMoves(moves []dragontoothmg.Move, bestMove dragontoothmg.Move) []dragontoothmg.Move {
@@ -98,10 +97,11 @@ func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 
 	var bestBoardVal int = 9999
 	var bestMove dragontoothmg.Move
-	var bestMoveDepth dragontoothmg.Move
 	var color int
 	currDepth := 0
-	window_size := 500
+	window_size := 1000
+	alpha := -9999
+	beta := 9999
 
 	if b.Wtomove { //beaucse of our root node, colors need to be switched here
 		color = -1
@@ -112,63 +112,77 @@ func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 	start := time.Now()
 
 	for {
+		if currDepth != 0 {
+			alpha = bestBoardVal - window_size
+			beta = bestBoardVal + window_size
+		}
+
 		currDepth++
-		alpha := -bestBoardVal - window_size
-		beta := bestBoardVal + window_size
-
-		printLog(fmt.Sprintf("BestBoardVal: %v Alpha/Beta: %v %v\r\n", bestBoardVal, alpha, beta))
-
 		bestBoardVal = -9999
-		bestMove = bestMoveDepth
+
+		printLog(fmt.Sprintf("BestBoardVal: %v Alpha/Beta: %v / %v\r\n", bestBoardVal, alpha, beta))
 
 		moves := generateAndOrderMoves(b.GenerateLegalMoves(), bestMove)
 		printLog(fmt.Sprintf("Orderd Moves %v", MovesToString(moves)))
 
 		for _, move := range moves {
-			unapply := b.Apply(move)
 			nodesSearched = 0
+
+			unapply := b.Apply(move)
 			boardVal := -negaMaxAlphaBeta(b, currDepth, alpha, beta, color)
 			unapply()
 
 			printLog(fmt.Sprintf("White Move: %t Color: %v Depth: %v Move: %v Eval: %v CurBestEval: %v Nodes: %v Time: %v", b.Wtomove, color, currDepth, move.String(), boardVal, bestBoardVal, nodesSearched, time.Since(start)))
 
 			if boardVal >= bestBoardVal {
-				bestMoveDepth = move
+				bestMove = move
 				bestBoardVal = boardVal
 			}
 
+			// if currDepth == 6 {
+			// 	return bestMove
+			// }
 			if time.Since(start).Seconds() >= 10 { //haredcoded for now: take 10 seconds to find a move!
 				return bestMove
 			}
 		}
 
+		// printLogTop100OfTT()
+		// panic("stop")
 	}
-
-	return bestMove
 }
 
 func negaMaxAlphaBeta(b dragontoothmg.Board, depth int, alpha int, beta int, color int) int {
 
 	//check TT Table
-	// tt, ok := transpoTable[b.Hash()]
-	// if ok && tt.depth >= depth {
-	// 	// fmt.Println("skipping")
-	// 	// fmt.Println(b.Hash()f
-	// 	// fmt.Println(depth)
-	// 	return tt.score
-	// }
+	tt, ok := transpoTable[b.Hash()]
+	if ok && tt.depth >= depth {
+		if tt.bound == Exact {
+			return tt.score
+		} else if tt.bound == LowerBound {
+			alpha = Max(alpha, tt.score)
+		} else if tt.bound == UpperBound {
+			beta = Min(beta, tt.score)
+		}
+
+		if alpha > beta {
+			return tt.score
+		}
+	}
 
 	moves := b.GenerateLegalMoves()
+	alphaOrig := alpha
 
 	if depth == 0 || len(moves) == 0 {
 		return getBoardValue(&b) * color
 
 	}
 
+	score := 0
 	for _, move := range moves {
 		unapply := b.Apply(move)
 		nodesSearched++
-		score := -negaMaxAlphaBeta(b, depth-1, -beta, -alpha, -color)
+		score = -negaMaxAlphaBeta(b, depth-1, -beta, -alpha, -color)
 		unapply()
 
 		if score >= beta {
@@ -180,9 +194,16 @@ func negaMaxAlphaBeta(b dragontoothmg.Board, depth int, alpha int, beta int, col
 		}
 	}
 
-	// if !ok || depth >= tt.depth && bestScore >= tt.score {
-	// 	transpoTable[b.Hash()] = Hashtable{depth: depth, score: bestScore, move: move}
-	// }
+	//write TT
+	ht := Hashtable{depth: depth, score: score, zobrist: b.Hash()}
+	if score < alphaOrig {
+		ht.bound = UpperBound
+	} else if score > beta {
+		ht.bound = LowerBound
+	} else {
+		ht.bound = Exact
+	}
+	transpoTable[b.Hash()] = ht
 
 	return alpha
 }
