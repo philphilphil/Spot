@@ -46,7 +46,7 @@ func TestCalculationWhite_2(t *testing.T) {
 }
 
 func TestCalculationPuzzles(t *testing.T) {
-	debug = true
+	//debug = true
 	testGame := getGameFromFen(strings.Fields("fen 1b1B1rBN/1P1ppqR1/KPpk1p2/1RN4Q/5p2/1n3P2/2P2n2/8 w - - 0 1"))
 	bestMove := calculateBestMove(testGame)
 
