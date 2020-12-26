@@ -142,7 +142,7 @@ func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 			// if currDepth == 6 {
 			// 	return bestMove
 			// }
-			if time.Since(start).Seconds() >= 15 { //haredcoded for now: take 10 seconds to find a move!
+			if time.Since(start).Seconds() >= 10 { //haredcoded for now: take 10 seconds to find a move!
 				return bestMove
 			}
 		}
@@ -246,12 +246,12 @@ func getBoardValueForWhite(bb *dragontoothmg.Bitboards) int {
 // Calculate the value for one side
 func getBoardValueForBlack(bb *dragontoothmg.Bitboards) int {
 	value := getPiecesBaseValue(bb)
-	value += -getPiecePositionBonusValue(&bb.Pawns, blackPawn)
-	value += -getPiecePositionBonusValue(&bb.Knights, blackKnight)
-	value += -getPiecePositionBonusValue(&bb.Bishops, blackBishop)
-	value += -getPiecePositionBonusValue(&bb.Rooks, blackRook)
-	value += -getPiecePositionBonusValue(&bb.Queens, blackQueen)
-	value += -getPiecePositionBonusValue(&bb.Kings, blackKing)
+	value += getPiecePositionBonusValue(&bb.Pawns, blackPawn)
+	value += getPiecePositionBonusValue(&bb.Knights, blackKnight)
+	value += getPiecePositionBonusValue(&bb.Bishops, blackBishop)
+	value += getPiecePositionBonusValue(&bb.Rooks, blackRook)
+	value += getPiecePositionBonusValue(&bb.Queens, blackQueen)
+	value += getPiecePositionBonusValue(&bb.Kings, blackKing)
 
 	return -value
 }
