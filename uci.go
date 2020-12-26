@@ -89,7 +89,7 @@ func (u *UCIs) parseUciCommand(args []string) bool {
 		printLog("go done bestmove: " + bestMove.String())
 		printMessage("bestmove "+bestMove.String())
 	case "eval":
-		fmt.Println(getBoardValue(&game))
+		fmt.Println(getBoardValue(game))
 	case "stop":
 		//stop engine search, return bestmove
 	case "ponderhit":
