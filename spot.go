@@ -96,11 +96,12 @@ func generateAndOrderMoves(moves []dragontoothmg.Move, bestMove dragontoothmg.Mo
 
 func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 
-	var bestBoardVal int = -999999
+	var bestBoardVal int = 9999
 	var bestMove dragontoothmg.Move
 	var bestMoveDepth dragontoothmg.Move
 	var color int
 	currDepth := 0
+	window_size := 500
 
 	if b.Wtomove { //beaucse of our root node, colors need to be switched here
 		color = -1
@@ -112,7 +113,12 @@ func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 
 	for {
 		currDepth++
-		bestBoardVal = -999999
+		alpha := -bestBoardVal - window_size
+		beta := bestBoardVal + window_size
+
+		printLog(fmt.Sprintf("BestBoardVal: %v Alpha/Beta: %v %v\r\n", bestBoardVal, alpha, beta))
+
+		bestBoardVal = -9999
 		bestMove = bestMoveDepth
 
 		moves := generateAndOrderMoves(b.GenerateLegalMoves(), bestMove)
@@ -121,10 +127,10 @@ func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 		for _, move := range moves {
 			unapply := b.Apply(move)
 			nodesSearched = 0
-			boardVal := -negaMaxAlphaBeta(b, currDepth, -99999, 99999, color)
+			boardVal := -negaMaxAlphaBeta(b, currDepth, alpha, beta, color)
 			unapply()
 
-			printLog(fmt.Sprintf("White Move: %t Color: %v Depth: %v Move: %v Eval: %v CurBestEval: %v Nodes: %v", b.Wtomove, color, currDepth, move.String(), boardVal, bestBoardVal, nodesSearched))
+			printLog(fmt.Sprintf("White Move: %t Color: %v Depth: %v Move: %v Eval: %v CurBestEval: %v Nodes: %v Time: %v", b.Wtomove, color, currDepth, move.String(), boardVal, bestBoardVal, nodesSearched, time.Since(start)))
 
 			if boardVal >= bestBoardVal {
 				bestMoveDepth = move
