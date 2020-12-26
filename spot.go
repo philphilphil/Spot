@@ -113,17 +113,16 @@ func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 
 	for {
 		if currDepth != 0 {
-			alpha = bestBoardVal - window_size
+			alpha = -bestBoardVal - window_size
 			beta = bestBoardVal + window_size
 		}
 
+		printLog(fmt.Sprintf("BestBoardVal: %v Alpha/Beta: %v / %v  WindowSize: %v\r\n", bestBoardVal, alpha, beta, window_size))
 		currDepth++
 		bestBoardVal = -9999
 
-		printLog(fmt.Sprintf("BestBoardVal: %v Alpha/Beta: %v / %v\r\n", bestBoardVal, alpha, beta))
-
 		moves := generateAndOrderMoves(b.GenerateLegalMoves(), bestMove)
-		printLog(fmt.Sprintf("Orderd Moves %v", MovesToString(moves)))
+		//printLog(fmt.Sprintf("Orderd Moves %v", MovesToString(moves)))
 
 		for _, move := range moves {
 			nodesSearched = 0
@@ -136,13 +135,14 @@ func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 
 			if boardVal >= bestBoardVal {
 				bestMove = move
+				//printLog("Current best Move: " + move.String())
 				bestBoardVal = boardVal
 			}
 
 			// if currDepth == 6 {
 			// 	return bestMove
 			// }
-			if time.Since(start).Seconds() >= 10 { //haredcoded for now: take 10 seconds to find a move!
+			if time.Since(start).Seconds() >= 15 { //haredcoded for now: take 10 seconds to find a move!
 				return bestMove
 			}
 		}
