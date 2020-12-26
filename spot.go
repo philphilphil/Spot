@@ -218,12 +218,12 @@ func getBoardValue(b *dragontoothmg.Board) int {
 // TODO: Refactor getBoardValueForWhite and getBoardValueForBlack into one?
 func getBoardValueForWhite(bb *dragontoothmg.Bitboards) int {
 	value := getPiecesBaseValue(bb)
-	// value += getPiecePositionBonusValue(&bb.Pawns, whitePawn)
-	// value += getPiecePositionBonusValue(&bb.Knights, whiteKnight)
-	// value += getPiecePositionBonusValue(&bb.Bishops, whiteBishop)
-	// value += getPiecePositionBonusValue(&bb.Rooks, whiteRook)
-	// value += getPiecePositionBonusValue(&bb.Queens, whiteQueen)
-	// value += getPiecePositionBonusValue(&bb.Kings, whiteKing)
+	value += getPiecePositionBonusValue(&bb.Pawns, whitePawn)
+	value += getPiecePositionBonusValue(&bb.Knights, whiteKnight)
+	value += getPiecePositionBonusValue(&bb.Bishops, whiteBishop)
+	value += getPiecePositionBonusValue(&bb.Rooks, whiteRook)
+	value += getPiecePositionBonusValue(&bb.Queens, whiteQueen)
+	value += getPiecePositionBonusValue(&bb.Kings, whiteKing)
 
 	// fmt.Println("Pieces:")
 	// fmt.Printf("Pawns (%064b) amount %d\r\n", bb.Pawns, bits.OnesCount64(bb.Pawns))
@@ -246,12 +246,12 @@ func getBoardValueForWhite(bb *dragontoothmg.Bitboards) int {
 // Calculate the value for one side
 func getBoardValueForBlack(bb *dragontoothmg.Bitboards) int {
 	value := getPiecesBaseValue(bb)
-	// value += getPiecePositionBonusValue(&bb.Pawns, blackPawn)
-	// value += getPiecePositionBonusValue(&bb.Knights, blackKnight)
-	// value += getPiecePositionBonusValue(&bb.Bishops, blackBishop)
-	// value += getPiecePositionBonusValue(&bb.Rooks, blackRook)
-	// value += getPiecePositionBonusValue(&bb.Queens, blackQueen)
-	// value += getPiecePositionBonusValue(&bb.Kings, blackKing)
+	value += -getPiecePositionBonusValue(&bb.Pawns, blackPawn)
+	value += -getPiecePositionBonusValue(&bb.Knights, blackKnight)
+	value += -getPiecePositionBonusValue(&bb.Bishops, blackBishop)
+	value += -getPiecePositionBonusValue(&bb.Rooks, blackRook)
+	value += -getPiecePositionBonusValue(&bb.Queens, blackQueen)
+	value += -getPiecePositionBonusValue(&bb.Kings, blackKing)
 
 	return -value
 }
