@@ -7,10 +7,9 @@ import (
 	"testing"
 )
 
-//debug = true
-
 //TODO: refactor all calc test functions into one and use engine test epd
 func TestCalculationBlack_1(t *testing.T) {
+	debug =  true
 	testGame := getGameFromFen(strings.Fields("fen rnbqkbnr/5ppp/4p3/2PN2B1/1P2P3/p4N2/P1P1BPPP/1R1QK2R b Kkq - 0 1"))
 	bestMove := calculateBestMove(testGame)
 
@@ -42,6 +41,22 @@ func TestCalculationWhite_2(t *testing.T) {
 
 	if bestMove.String() != "c1g5" {
 		t.Errorf("Move wrong got: %v, want: %v", bestMove.String(), "c1g5")
+	}
+}
+
+func TestCalculationPuzzles(t *testing.T) {
+	testGame := getGameFromFen(strings.Fields("fen 1b1B1rBN/1P1ppqR1/KPpk1p2/1RN4Q/5p2/1n3P2/2P2n2/8 w - - 0 1"))
+	bestMove := calculateBestMove(testGame)
+
+	if bestMove.String() != "h8f7" {
+		t.Errorf("Move wrong got: %v, want: %v", bestMove.String(), "h8f7")
+	}
+
+	testGame = getGameFromFen(strings.Fields("fen 	2q3k1/pp1n1ppp/2pQ1b2/5N2/1P6/2P3N1/P4PPP/5RK1 w - - 0 1"))
+	bestMove = calculateBestMove(testGame)
+
+	if bestMove.String() != "d6f6" {
+		t.Errorf("Move wrong got: %v, want: %v", bestMove.String(), "d6f6")
 	}
 }
 
