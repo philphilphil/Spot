@@ -99,7 +99,7 @@ func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 	var bestBoardVal int = -999999
 	var bestMove dragontoothmg.Move
 	var color int
-	depth := 4
+	depth := 2
 
 	if b.Wtomove {
 		color = 1
@@ -107,14 +107,14 @@ func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 		color = -1
 	}
 
-	moves := b.GenerateLegalMoves()//generateAndOrderMoves(b.GenerateLegalMoves(), bestMove)
+	moves := b.GenerateLegalMoves() //generateAndOrderMoves(b.GenerateLegalMoves(), bestMove)
 	printLog(fmt.Sprintf("Orderd Moves %v", MovesToString(moves)))
 
 	for _, move := range moves {
 		unapply := b.Apply(move)
 		nodesSearched = 0
 		// boardVal := negaMaxAlphaBeta(b, depth, -9999, 9999, color)
-		boardVal := alphaBetaMax(b, -999999, 999999, depth)
+		boardVal := maxi(b, depth)
 		unapply()
 
 		printLog(fmt.Sprintf("White Move: %t Color: %v Depth: %v Move: %v Eval: %v CurBestEval: %v Nodes: %v", b.Wtomove, color, depth, move.String(), boardVal, bestBoardVal, nodesSearched))
@@ -128,45 +128,38 @@ func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 	return bestMove
 }
 
-func alphaBetaMax(b dragontoothmg.Board, alpha int, beta int, depthleft int) int {
+func maxi(b dragontoothmg.Board, depthleft int) int {
 	if depthleft == 0 {
 		return getBoardValue(b)
 	}
 	moves := b.GenerateLegalMoves()
+	max := -999999
 	for _, move := range moves {
 		unapply := b.Apply(move)
-		score := alphaBetaMin(b, alpha, beta, depthleft-1)
+		score := mini(b, depthleft-1)
 		unapply()
-		if score >= beta {
-			return beta // fail hard beta-cutoff
-
-		}
-		if score > alpha {
-			alpha = score // alpha acts like max in MiniMax
-
+		if score >= max {
+			max = score
 		}
 	}
-	return alpha
+	return max
 }
 
-func alphaBetaMin(b dragontoothmg.Board, alpha int, beta int, depthleft int) int {
+func mini(b dragontoothmg.Board, depthleft int) int {
 	if depthleft == 0 {
 		return -getBoardValue(b)
 	}
 	moves := b.GenerateLegalMoves()
+	min := 999999
 	for _, move := range moves {
 		unapply := b.Apply(move)
-		score := alphaBetaMax(b, alpha, beta, depthleft-1)
+		score := maxi(b, depthleft-1)
 		unapply()
-		if score <= alpha {
-			return alpha // fail hard alpha-cutoff
-		}
-		if score < beta {
-			beta = score // beta acts like min in MiniMax
-
+		if score < min {
+			min = score // fail hard alpha-cutoff
 		}
 	}
-	return beta
+	return min
 }
 
 // func negaMaxAlphaBeta(b dragontoothmg.Board, depth int, alpha int, beta int, color int) int {
@@ -216,6 +209,8 @@ func alphaBetaMin(b dragontoothmg.Board, alpha int, beta int, depthleft int) int
 
 // Get value for entire board
 func getBoardValue(b dragontoothmg.Board) int {
+
+	//fmt.Printf("value white: %v value black: %v\r\n", getBoardValueForWhite(b.White), getBoardValueForWhite(b.Black))
 	boardValue := getBoardValueForWhite(b.White) + getBoardValueForBlack(b.Black)
 	//fmt.Println(boardValue)
 	return boardValue
@@ -260,7 +255,7 @@ func getBoardValueForBlack(bb dragontoothmg.Bitboards) int {
 	// value += getPiecePositionBonusValue(&bb.Queens, blackQueen)
 	// value += getPiecePositionBonusValue(&bb.Kings, blackKing)
 
-	return value
+	return -value
 }
 
 func getPiecesBaseValue(bb dragontoothmg.Bitboards) int {
