@@ -45,7 +45,7 @@ func main() {
 	}
 
 	file, err := os.OpenFile("info.log", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
-	log.SetOutput(file)
+	//log.SetOutput(file)
 
 	if err != nil {
 		log.Fatal(err)
@@ -55,7 +55,7 @@ func main() {
 	////////////////////////////////////////////////////////
 
 	debug = true
-	board := dragontoothmg.ParseFen("rnb1kbnr/pppp1ppp/8/4p1q1/4P3/3P4/PPP2PPP/RNBQKBNR w KQkq - 1 3")
+	board := dragontoothmg.ParseFen("rnbqkb1r/pp3ppp/2p5/1B1np3/8/P1N5/1PPP1PPP/R1BQK1NR w KQkq - 0 6")
 	move := calculateBestMove(board)
 	fmt.Println(move.String())
 
@@ -63,50 +63,20 @@ func main() {
 	uci.Start()
 }
 
-func generateAndOrderMoves(moves []dragontoothmg.Move, bestMove dragontoothmg.Move) []dragontoothmg.Move {
-
-	var orderedMoves []dragontoothmg.Move
-	var bestMoveLocation int
-
-	if bestMove != 0 {
-		// Step 1 find previus best move and put on pos 1
-		for i, m := range moves {
-			if m == bestMove {
-				orderedMoves = append(orderedMoves, m)
-				bestMoveLocation = i
-			}
-		}
-	}
-
-	//step 2, go over list again and sort other moves
-	// TODO: implement sorting, currently random
-	for i, m := range moves {
-		if bestMoveLocation != 0 && i == bestMoveLocation {
-			continue
-		}
-		orderedMoves = append(orderedMoves, m)
-	}
-
-	// fmt.Println(moves)
-	// fmt.Println(orderedMoves)
-
-	return orderedMoves
-}
-
 func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 
 	var bestBoardVal int = 9999
 	var bestMove dragontoothmg.Move
 	var color int
-	currDepth := 0
-	window_size := 1000
+	currDepth := 1
+	window_size := 500
 	alpha := -9999
 	beta := 9999
 
 	if b.Wtomove { //beaucse of our root node, colors need to be switched here
-		color = -1
-	} else {
 		color = 1
+	} else {
+		color = -1
 	}
 
 	start := time.Now()
@@ -128,7 +98,7 @@ func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 			nodesSearched = 0
 
 			unapply := b.Apply(move)
-			boardVal := -negaMaxAlphaBeta(b, currDepth, alpha, beta, color)
+			boardVal := -negaMaxAlphaBeta(b, currDepth, -beta, -alpha, -color)
 			unapply()
 
 			printLog(fmt.Sprintf("White Move: %t Color: %v Depth: %v Move: %v Eval: %v CurBestEval: %v Nodes: %v Time: %v", b.Wtomove, color, currDepth, move.String(), boardVal, bestBoardVal, nodesSearched, time.Since(start)))
@@ -139,7 +109,7 @@ func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 				bestBoardVal = boardVal
 			}
 
-			// if currDepth == 6 {
+			// if currDepth == 5 {
 			// 	return bestMove
 			// }
 			if time.Since(start).Seconds() >= 10 { //haredcoded for now: take 10 seconds to find a move!
@@ -150,6 +120,8 @@ func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 		// printLogTop100OfTT()
 		// panic("stop")
 	}
+
+	return bestMove
 }
 
 func negaMaxAlphaBeta(b dragontoothmg.Board, depth int, alpha int, beta int, color int) int {
@@ -206,6 +178,36 @@ func negaMaxAlphaBeta(b dragontoothmg.Board, depth int, alpha int, beta int, col
 	transpoTable[b.Hash()] = ht
 
 	return alpha
+}
+
+func generateAndOrderMoves(moves []dragontoothmg.Move, bestMove dragontoothmg.Move) []dragontoothmg.Move {
+
+	var orderedMoves []dragontoothmg.Move
+	var bestMoveLocation int
+
+	if bestMove != 0 {
+		// Step 1 find previus best move and put on pos 1
+		for i, m := range moves {
+			if m == bestMove {
+				orderedMoves = append(orderedMoves, m)
+				bestMoveLocation = i
+			}
+		}
+	}
+
+	//step 2, go over list again and sort other moves
+	// TODO: implement sorting, currently random
+	for i, m := range moves {
+		if bestMoveLocation != 0 && i == bestMoveLocation {
+			continue
+		}
+		orderedMoves = append(orderedMoves, m)
+	}
+
+	// fmt.Println(moves)
+	// fmt.Println(orderedMoves)
+
+	return orderedMoves
 }
 
 // Get value for entire board
