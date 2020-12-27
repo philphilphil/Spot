@@ -84,8 +84,8 @@ func TestCalculationPuzzles(t *testing.T) {
 	testGame := getGameFromFen(strings.Fields("fen 1b1B1rBN/1P1ppqR1/KPpk1p2/1RN4Q/5p2/1n3P2/2P2n2/8 w - - 0 1"))
 	bestMove := calculateBestMove(testGame)
 
-	if bestMove.String() != "h8f7" {
-		t.Errorf("Move wrong got: %v, want: %v", bestMove.String(), "h8f7")
+	if bestMove.String() != "h5f5" {
+		t.Errorf("Move wrong got: %v, want: %v", bestMove.String(), "h5f5")
 	}
 
 	testGame = getGameFromFen(strings.Fields("fen 2q3k1/pp1n1ppp/2pQ1b2/5N2/1P6/2P5/P4PPP/5RK1 w - - 0 1"))
