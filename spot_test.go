@@ -57,7 +57,7 @@ func TestCalculationMateInOnes(t *testing.T) {
 }
 
 func TestCalculationMateInTwos(t *testing.T) {
-	debug = true
+	//debug = true
 	var mateInTwoFens = make(map[string]string)
 	mateInTwoFens["f5f8"] = "3BB1N1/QKp3pb/7p/5R1R/3br1k1/7N/4P2P/6n1 w - - 0 1"
 	mateInTwoFens["d5d7"] = "2rkr3/2ppp3/2n1n3/R2R4/8/8/3K4/8 w - - 0 1"

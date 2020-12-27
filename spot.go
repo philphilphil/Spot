@@ -55,10 +55,10 @@ func main() {
 	defer file.Close()
 	////////////////////////////////////////////////////////
 
-	debug = true
-	board := dragontoothmg.ParseFen("8/8/8/3Q4/k6P/7P/3K4/8 w - - 13 73")
-	move := calculateBestMove(board)
-	fmt.Println(move.String())
+	// debug = true
+	// board := dragontoothmg.ParseFen("rnbqkbnr/5ppp/4p3/2PN2B1/1P2P3/p4N2/P1P1BPPP/1R1QK2R b Kkq - 0 1")
+	// move := calculateBestMove(board)
+	// fmt.Println(move.String())
 
 	uci := UCIs{}
 	uci.Start()
@@ -107,7 +107,7 @@ func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 
 			printLog(fmt.Sprintf("White Move: %t Color: %v Depth: %v Move: %v Eval: %v CurBestEval: %v Nodes: %v Time: %v", b.Wtomove, color, currDepth, move.String(), boardVal, bestBoardVal, nodesSearched, time.Since(start)))
 
-			if boardVal == mateScore || boardVal == -mateScore { //found a forced mate
+			if boardVal == mateScore { //found a forced mate
 				pvline = append(currLine, move.String())
 				reverseStringSlice(pvline)
 				printLog(fmt.Sprintf("Found Mate in line: %v", pvline))
