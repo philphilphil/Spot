@@ -51,16 +51,18 @@ func TestCalculationMateInOnes(t *testing.T) {
 	//mateInOneFens["a8a5"] = "Q7/7K/5Q1P/2k5/8/8/4Q3/8 w - - 23 137" TODO: mate in one fixes. if matein2 is in moveorder before m1, he does the m2
 	mateInOneFens["a1a8"] = "7k/4pppp/8/8/6P1/8/5N2/R2Q1K2 w Q - 0 1"
 	mateInOneFens["f1f7"] = "4rk2/4pppp/8/6N1/6P1/8/8/R4Q1K w Q - 0 1"
+	mateInOneFens["d5b3"] = "8/8/8/3Q4/7P/k1K4P/8/8 w - - 15 74"
 
 	CheckFenForBestMove(mateInOneFens, t)
 }
 
 func TestCalculationMateInTwos(t *testing.T) {
-	//debug = true
+	debug = true
 	var mateInTwoFens = make(map[string]string)
 	mateInTwoFens["f5f8"] = "3BB1N1/QKp3pb/7p/5R1R/3br1k1/7N/4P2P/6n1 w - - 0 1"
 	mateInTwoFens["d5d7"] = "2rkr3/2ppp3/2n1n3/R2R4/8/8/3K4/8 w - - 0 1"
 	mateInTwoFens["a6h6"] = "5Knk/7b/R7/8/7B/8/8/8 w - - 0 1"
+	mateInTwoFens["d2c3"] = "8/8/8/3Q4/k6P/7P/3K4/8 w - - 13 73"
 	
 
 	CheckFenForBestMove(mateInTwoFens, t)

@@ -55,10 +55,10 @@ func main() {
 	defer file.Close()
 	////////////////////////////////////////////////////////
 
-	// debug = true
-	// board := dragontoothmg.ParseFen("Q7/7K/5Q1P/2k5/8/8/4Q3/8 w - - 23 137")
-	// move := calculateBestMove(board)
-	// fmt.Println(move.String())
+	debug = true
+	board := dragontoothmg.ParseFen("8/8/8/3Q4/k6P/7P/3K4/8 w - - 13 73")
+	move := calculateBestMove(board)
+	fmt.Println(move.String())
 
 	uci := UCIs{}
 	uci.Start()
@@ -73,6 +73,8 @@ func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 	window_size := 500
 	alpha := -9999
 	beta := 9999
+	var pvline []string
+	var currLine []string
 
 	if b.Wtomove { //beaucse of our root node, colors need to be switched here
 		color = 1
@@ -97,20 +99,24 @@ func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 
 		for _, move := range moves {
 			nodesSearched = 0
+			currLine = nil
 
 			unapply := b.Apply(move)
-			boardVal := -negaMaxAlphaBeta(b, currDepth, -beta, -alpha, -color)
+			boardVal := -negaMaxAlphaBeta(b, currDepth, -beta, -alpha, -color, &currLine)
 			unapply()
 
 			printLog(fmt.Sprintf("White Move: %t Color: %v Depth: %v Move: %v Eval: %v CurBestEval: %v Nodes: %v Time: %v", b.Wtomove, color, currDepth, move.String(), boardVal, bestBoardVal, nodesSearched, time.Since(start)))
 
 			if boardVal == mateScore || boardVal == -mateScore { //found a forced mate
+				pvline = append(currLine, move.String())
+				reverseStringSlice(pvline)
+				printLog(fmt.Sprintf("Found Mate in line: %v", pvline))
 				return move
 			}
 
 			if boardVal >= bestBoardVal {
 				bestMove = move
-				//printLog("Current best Move: " + move.String())
+				pvline = append(currLine, move.String())
 				bestBoardVal = boardVal
 			}
 
@@ -118,6 +124,8 @@ func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 			// 	return bestMove
 			// }
 			if time.Since(start).Seconds() >= 10 { //haredcoded for now: take 10 seconds to find a move!
+				reverseStringSlice(pvline)
+				printLog(fmt.Sprintf("Line: %v", pvline))
 				return bestMove
 			}
 		}
@@ -129,12 +137,17 @@ func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 	return bestMove
 }
 
-func negaMaxAlphaBeta(b dragontoothmg.Board, depth int, alpha int, beta int, color int) int {
+func negaMaxAlphaBeta(b dragontoothmg.Board, depth int, alpha int, beta int, color int, pvline *[]string) int {
 
+	var line []string
 	moves := b.GenerateLegalMoves()
 
 	//checkMate Check
 	if b.OurKingInCheck() && len(moves) == 0 {
+		// fmt.Println(moves)
+		// fmt.Println(b.OurKingInCheck())
+		// fmt.Println(b.ToFen())
+		// fmt.Println(mateScore * color)
 		return mateScore * color
 	}
 
@@ -165,7 +178,7 @@ func negaMaxAlphaBeta(b dragontoothmg.Board, depth int, alpha int, beta int, col
 	for _, move := range moves {
 		unapply := b.Apply(move)
 		nodesSearched++
-		score = -negaMaxAlphaBeta(b, depth-1, -beta, -alpha, -color)
+		score = -negaMaxAlphaBeta(b, depth-1, -beta, -alpha, -color, &line)
 		unapply()
 
 		if score >= beta {
@@ -175,6 +188,8 @@ func negaMaxAlphaBeta(b dragontoothmg.Board, depth int, alpha int, beta int, col
 		if score > alpha {
 			alpha = score
 		}
+
+		*pvline = append(line, move.String())
 	}
 
 	//write TT
