@@ -1,8 +1,10 @@
 package main
 
-import "github.com/dylhunn/dragontoothmg"
-import "fmt"
-import "sort"
+import  (
+	"github.com/dylhunn/dragontoothmg"
+	"fmt"
+	"sort"
+)
 
 func Max(x, y int) int {
 	if x > y {

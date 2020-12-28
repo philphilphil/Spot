@@ -119,14 +119,14 @@ func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 				bestBoardVal = boardVal
 			}
 
-			// if currDepth == 5 {
-			// 	return bestMove
-			// }
-			if time.Since(start).Seconds() >= 8 { //haredcoded for now: take 10 seconds to find a move!
-				reverseStringSlice(pvline)
-				printLog(fmt.Sprintf("Line: %v", pvline))
+			if currDepth == 5 {
 				return bestMove
 			}
+			// if time.Since(start).Seconds() >= 8 { //haredcoded for now: take 10 seconds to find a move!
+			// 	reverseStringSlice(pvline)
+			// 	printLog(fmt.Sprintf("Line: %v", pvline))
+			// 	return bestMove
+			// }
 		}
 
 		// printLogTop100OfTT()
