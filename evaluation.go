@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/dylhunn/dragontoothmg"
 	"math/bits"
+
+	"github.com/dylhunn/dragontoothmg"
 	//"fmt"
 )
 

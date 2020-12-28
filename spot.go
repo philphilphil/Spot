@@ -11,10 +11,17 @@ import (
 	"time"
 )
 
-var piecePositionMasks = [64]uint64{1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768, 65536, 131072, 262144, 524288, 1048576, 2097152, 4194304, 8388608, 16777216, 33554432, 67108864, 134217728, 268435456, 536870912, 1073741824, 2147483648, 4294967296, 8589934592, 17179869184, 34359738368, 68719476736, 137438953472, 274877906944, 549755813888, 1099511627776, 2199023255552, 4398046511104, 8796093022208, 17592186044416, 35184372088832, 70368744177664, 140737488355328, 281474976710656, 562949953421312, 1125899906842624, 2251799813685248, 4503599627370496, 9007199254740992, 18014398509481984, 36028797018963968, 72057594037927936, 144115188075855872, 288230376151711744, 576460752303423488, 1152921504606846976, 2305843009213693952, 4611686018427387904, 9223372036854775808}
-var nodesSearched uint64
+//Version
+var BuildVersion string = ""
+var BuildTime string = ""
+
+//Debug things
 var cpuprofile = flag.String("cpuprofile", "", "write cpu profile to `file`")
 var memprofile = flag.String("memprofile", "", "write memory profile to `file`")
+
+//Chess things
+var piecePositionMasks = [64]uint64{1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768, 65536, 131072, 262144, 524288, 1048576, 2097152, 4194304, 8388608, 16777216, 33554432, 67108864, 134217728, 268435456, 536870912, 1073741824, 2147483648, 4294967296, 8589934592, 17179869184, 34359738368, 68719476736, 137438953472, 274877906944, 549755813888, 1099511627776, 2199023255552, 4398046511104, 8796093022208, 17592186044416, 35184372088832, 70368744177664, 140737488355328, 281474976710656, 562949953421312, 1125899906842624, 2251799813685248, 4503599627370496, 9007199254740992, 18014398509481984, 36028797018963968, 72057594037927936, 144115188075855872, 288230376151711744, 576460752303423488, 1152921504606846976, 2305843009213693952, 4611686018427387904, 9223372036854775808}
+var nodesSearched uint64
 var mateScore = 9999
 
 func main() {
@@ -44,7 +51,7 @@ func main() {
 		}
 	}
 
-	file, err := os.OpenFile("info.log", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
+	file, err := os.OpenFile("logs_and_debug/info.log", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
 	log.SetOutput(file)
 
 	if err != nil {
@@ -88,25 +95,23 @@ func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 		// 	alpha = -bestBoardVal - window_size
 		// 	beta = bestBoardVal + window_size
 		// }
-
 		printLog(fmt.Sprintf("BestBoardVal: %v Alpha/Beta: %v / %v  WindowSize: %v\r\n", bestBoardVal, alpha, beta, window_size))
 		currDepth++
 		bestBoardVal = -9999
 
 		moves := generateAndOrderMoves(b.GenerateLegalMoves(), bestMove)
-		//printLog(fmt.Sprintf("Orderd Moves %v", MovesToString(moves)))
+		printLog(fmt.Sprintf("Orderd Moves %v", MovesToString(moves)))
 
 		for _, move := range moves {
 			nodesSearched = 0
 			currLine = nil
-
 			unapply := b.Apply(move)
 			boardVal := -negaMaxAlphaBeta(b, currDepth, -beta, -alpha, -color, &currLine)
 			unapply()
 
 			printLog(fmt.Sprintf("White Move: %t Color: %v Depth: %v Move: %v Eval: %v CurBestEval: %v Nodes: %v Time: %v", b.Wtomove, color, currDepth, move.String(), boardVal, bestBoardVal, nodesSearched, time.Since(start)))
 
-			if boardVal == mateScore { //found a forced mate
+			if boardVal >= mateScore-10 || -mateScore+10 > boardVal { //found a forced mate
 				pvline = append(currLine, move.String())
 				reverseStringSlice(pvline)
 				printLog(fmt.Sprintf("Found Mate in line: %v", pvline))
@@ -141,13 +146,10 @@ func negaMaxAlphaBeta(b dragontoothmg.Board, depth int, alpha int, beta int, col
 	var line []string
 	moves := b.GenerateLegalMoves()
 
-	//checkMate Check
-	if b.OurKingInCheck() && len(moves) == 0 {
-		// fmt.Println(moves)
-		// fmt.Println(b.OurKingInCheck())
-		// fmt.Println(b.ToFen())
-		// fmt.Println(mateScore * color)
-		return mateScore * color
+	if !b.OurKingInCheck() && len(moves) == 0 { //stalemate
+		return 1 * color
+	} else if b.OurKingInCheck() && len(moves) == 0 { //checkmate
+		return (mateScore - depth) * color
 	}
 
 	//check TT Table
@@ -170,7 +172,6 @@ func negaMaxAlphaBeta(b dragontoothmg.Board, depth int, alpha int, beta int, col
 
 	if depth == 0 {
 		return getBoardValue(&b) * color
-
 	}
 
 	score := 0
