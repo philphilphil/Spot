@@ -51,6 +51,7 @@ func getBoardValueForBlack(bb *dragontoothmg.Bitboards) int {
 	value += getPiecePositionBonusValue(bb.Queens, blackQueen)
 	value += getPiecePositionBonusValue(bb.Kings, blackKing)
 
+
 	return -value
 }
 
@@ -61,7 +62,14 @@ func getPiecesBaseValue(bb *dragontoothmg.Bitboards) int {
 	rooks := bits.OnesCount64(bb.Rooks)
 	queens := bits.OnesCount64(bb.Queens)
 	king := bits.OnesCount64(bb.Kings)
-	return (pawns * 100) + (kinghts * 320) + (bishops * 330) + (rooks * 500) + (queens * 900) + (king * 3000)
+	baseValue := (pawns * 100) + (kinghts * 320) + (bishops * 330) + (rooks * 500) + (queens * 900) + (king * 3000)
+
+	//add bonus for having two bishops
+	if bishops == 2 {
+		baseValue += 20
+	}
+
+	return baseValue
 }
 
 // Get value for piece depending on position
@@ -90,7 +98,9 @@ func getPiecePositionBonusValue(bb uint64, values [64]int) int {
 }
 
 //tables are reversed because of bit board reading. 
+// From: https://www.chessprogramming.org/Simplified_Evaluation_Function
 // TODO: need to find a way to make it better readable for finetuning
+// TODO: different eval for endgame
 var blackPawn = [64]int{
 	0, 0, 0, 0, 0, 0, 0, 0,
 	50, 50, 50, 50, 50, 50, 50, 50,
