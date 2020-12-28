@@ -87,7 +87,7 @@ func (u *UCIs) parseUciCommand(args []string) bool {
 		printLog("go start")
 		bestMove := calculateBestMove(game)
 		printLog("go done bestmove: " + bestMove.String())
-		printMessage("bestmove "+bestMove.String())
+		printMessage("bestmove " + bestMove.String())
 	case "eval":
 		fmt.Println(getBoardValue(&game))
 	case "stop":
@@ -142,7 +142,7 @@ func (u *UCIs) quit() {
 }
 
 func (u *UCIs) sendId() {
-	printMessage("id name Spot 0.1 alpha")
+	printMessage("id name Spot " + BuildVersion + " (" + BuildTime + ")")
 	printMessage("id author Phil Baum")
 }
 
