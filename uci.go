@@ -1,13 +1,15 @@
 package main
 
-import "fmt"
-import "bufio"
-import "os"
-import "log"
-import "strings"
-
-//import "time"
-import "github.com/dylhunn/dragontoothmg"
+import (
+	"bufio"
+	"fmt"
+	"log"
+	"os"
+	"strconv"
+	"strings"
+	//import "time"
+	"github.com/dylhunn/dragontoothmg"
+)
 
 var game dragontoothmg.Board
 var debug bool = false
@@ -175,6 +177,26 @@ func printLog(msg string) {
 	if debug {
 		log.Println("::DBG:: ", msg)
 	}
+}
+
+func printUCIInfo(move string, depth int, ms int, nodes int, score int, pv []string) {
+	var sb strings.Builder
+	sb.WriteString("info depth " + strconv.Itoa(depth) + " time " + strconv.Itoa(ms) + " nodes " + strconv.Itoa(nodes))
+
+	if move != "" {
+		sb.WriteString(" currmove " + move)
+	}
+
+	if score != 0 {
+		sb.WriteString(" score " + strconv.Itoa(score))
+	}
+
+	if pv != nil && len(pv) > 0 {
+		pvReversed := reverseStringSlice(pv)
+		sb.WriteString(" pv " + strings.Join(pvReversed, " "))
+	}
+
+	printMessage(sb.String())
 }
 
 func getMovesLocation(args []string) int {

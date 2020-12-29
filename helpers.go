@@ -1,8 +1,8 @@
 package main
 
-import  (
-	"github.com/dylhunn/dragontoothmg"
+import (
 	"fmt"
+	"github.com/dylhunn/dragontoothmg"
 	"sort"
 )
 
@@ -20,11 +20,14 @@ func Min(x, y int) int {
 	return y
 }
 
-func reverseStringSlice(ss []string) {
-    last := len(ss) - 1
-    for i := 0; i < len(ss)/2; i++ {
-        ss[i], ss[last-i] = ss[last-i], ss[i]
-    }
+func reverseStringSlice(ss []string) []string {
+	var reversed = make([]string, len(ss))
+	last := len(ss) - 1
+	for i := 0; i < len(ss)/2; i++ {
+		reversed[i], reversed[last-i] = ss[last-i], ss[i]
+	}
+
+	return reversed
 }
 
 func MovesToString(moves []dragontoothmg.Move) string {

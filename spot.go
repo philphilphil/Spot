@@ -51,6 +51,7 @@ func main() {
 	// 	}
 	// }
 
+	//TODO: add errorhandling
 	file, err := os.OpenFile("spot_debug.log", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
 	log.SetOutput(file)
 
@@ -91,10 +92,10 @@ func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 	start := time.Now()
 
 	for {
-		// if currDepth != 0 {
-		// 	alpha = -bestBoardVal - window_size
-		// 	beta = bestBoardVal + window_size
-		// }
+		if currDepth != 0 {
+			alpha = -bestBoardVal - window_size
+			beta = bestBoardVal + window_size
+		}
 		printLog(fmt.Sprintf("BestBoardVal: %v Alpha/Beta: %v / %v  WindowSize: %v\r\n", bestBoardVal, alpha, beta, window_size))
 		currDepth++
 		bestBoardVal = -9999
@@ -113,8 +114,8 @@ func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 
 			if boardVal >= mateScore-10 || -mateScore+10 > boardVal { //found a forced mate
 				pvline = append(currLine, move.String())
-				reverseStringSlice(pvline)
-				printLog(fmt.Sprintf("Found Mate in line: %v", pvline))
+				rv := reverseStringSlice(pvline)
+				printLog(fmt.Sprintf("Found Mate in line: %v", rv))
 				return move
 			}
 
@@ -124,16 +125,18 @@ func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 				bestBoardVal = boardVal
 			}
 
+			//printUCIInfo(move.String(), currDepth, int(time.Since(start).Milliseconds()), int(nodesSearched), bestBoardVal/100, nil)
+
 			// if currDepth == 5 {
 			// 	return bestMove
 			// }
 			if time.Since(start).Seconds() >= 10 { //haredcoded for now: take 10 seconds to find a move!
-				reverseStringSlice(pvline)
-				printLog(fmt.Sprintf("Line: %v", pvline))
+				rv := reverseStringSlice(pvline)
+				printLog(fmt.Sprintf("Line: %v", rv))
 				return bestMove
 			}
 		}
-
+		printUCIInfo("", currDepth, int(time.Since(start).Milliseconds()), int(nodesSearched), bestBoardVal/100, pvline)
 		// printLogTop100OfTT()
 		// panic("stop")
 	}
