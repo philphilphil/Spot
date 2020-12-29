@@ -13,6 +13,7 @@ import (
 
 var game dragontoothmg.Board
 var debug bool = false
+var uciOutput bool = false
 
 // http://page.mi.fu-berlin.de/block/uci.htm
 // Implements the universal chess interface
@@ -74,6 +75,7 @@ func (u *UCIs) parseUciCommand(args []string) bool {
 	case "quit":
 		return false
 	case "uci":
+		uciOutput = true
 		u.sendId()
 		u.sendOptions()
 	case "debug":
@@ -170,7 +172,10 @@ func printMessage(cmd string) {
 	if debug {
 		log.Println("-> ", cmd)
 	}
-	fmt.Println(cmd)
+
+	if uciOutput {
+		fmt.Println(cmd)
+	}
 }
 
 func printLog(msg string) {

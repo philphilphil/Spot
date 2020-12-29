@@ -92,10 +92,10 @@ func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 	start := time.Now()
 
 	for {
-		if currDepth != 0 {
-			alpha = -bestBoardVal - window_size
-			beta = bestBoardVal + window_size
-		}
+		// if currDepth != 0 {
+		// 	alpha = -bestBoardVal - window_size
+		// 	beta = bestBoardVal + window_size
+		// }
 		printLog(fmt.Sprintf("BestBoardVal: %v Alpha/Beta: %v / %v  WindowSize: %v\r\n", bestBoardVal, alpha, beta, window_size))
 		currDepth++
 		bestBoardVal = -9999
