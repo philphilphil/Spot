@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"log"
+	"math"
 	"os"
 	"strconv"
 	"strings"
@@ -193,7 +194,7 @@ func printUCIInfo(move string, depth int, ms int, nodes int, score int, pv []str
 	}
 
 	if score != 0 {
-		sb.WriteString(" score " + strconv.Itoa(score))
+		sb.WriteString(fmt.Sprintf(" score %.1f", math.Round(float64(score))/100))
 	}
 
 	if pv != nil && len(pv) > 0 {
