@@ -28,7 +28,7 @@ func TestCalculationBlack_2(t *testing.T) {
 	}
 }
 func TestCalculationWhite_1(t *testing.T) {
-	debug = true
+	//debug = true
 	testGame := getGameFromFen(strings.Fields("fen rn1qk1nr/7p/5pp1/2PP1b2/7B/p2Q1N2/P1P1BPPP/1R2K2R w Kkq - 0 6"))
 	bestMove := calculateBestMove(testGame)
 
