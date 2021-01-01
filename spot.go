@@ -121,14 +121,14 @@ func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 
 			//printUCIInfo(move.String(), currDepth, int(time.Since(start).Milliseconds()), int(nodesSearched), bestBoardVal, nil)
 
-			if currDepth == 5 {
-				return bestMove
-			}
-			// TODO: Implement using time based on remaining game/move time
-			// if time.Since(start).Seconds() >= 10 { //haredcoded for now: take 10 seconds to find a move!
-			// 	printUCIInfo("", currDepth, int(time.Since(start).Milliseconds()), int(nodesSearched), bestBoardVal, pvline)
+			// if currDepth == 5 {
 			// 	return bestMove
 			// }
+			// TODO: Implement using time based on remaining game/move time
+			if time.Since(start).Seconds() >= 10 { //haredcoded for now: take 10 seconds to find a move!
+				printUCIInfo("", currDepth, int(time.Since(start).Milliseconds()), int(nodesSearched), bestBoardVal, pvline)
+				return bestMove
+			}
 		}
 
 		if bestBoardVal <= alpha || bestBoardVal >= beta {
