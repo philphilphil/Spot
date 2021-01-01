@@ -61,7 +61,7 @@ func main() {
 	defer file.Close()
 	////////////////////////////////////////////////////////
 
-	//debug = true
+	debug = true
 
 	uci := UCIs{}
 	uci.Start()
@@ -69,15 +69,16 @@ func main() {
 
 func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 
-	var bestBoardVal int = 9999
 	var bestMove dragontoothmg.Move
 	var color int
-	currDepth := 0
-	window_size := 500
-	alpha := -9999
-	beta := 9999
 	var pvline []string
 	var currLine []string
+	currDepth := 0
+	var bestBoardVal int = 9999
+	window_size := 500 // TODO: Tweak window size after null move, killer move and move ordering are implemented
+	alpha := -9999
+	beta := 9999
+
 
 	if b.Wtomove { //beaucse of our root node, colors need to be switched here
 		color = 1
@@ -88,11 +89,6 @@ func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 	start := time.Now()
 
 	for {
-		// TODO: fix aspiration window
-		// if currDepth != 0 {
-		// 	alpha = -bestBoardVal - window_size
-		// 	beta = bestBoardVal + window_size
-		// }
 		printLog(fmt.Sprintf("BestBoardVal: %v Alpha/Beta: %v / %v  WindowSize: %v\r\n", bestBoardVal, alpha, beta, window_size))
 		currDepth++
 		bestBoardVal = -9999
@@ -125,14 +121,28 @@ func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 
 			//printUCIInfo(move.String(), currDepth, int(time.Since(start).Milliseconds()), int(nodesSearched), bestBoardVal, nil)
 
-			// if currDepth == 5 {
-			// 	return bestMove
-			// }
-			if time.Since(start).Seconds() >= 10 { //haredcoded for now: take 10 seconds to find a move!
-				printUCIInfo("", currDepth, int(time.Since(start).Milliseconds()), int(nodesSearched), bestBoardVal, pvline)
+			if currDepth == 5 {
 				return bestMove
 			}
+			// TODO: Implement using time based on remaining game/move time
+			// if time.Since(start).Seconds() >= 10 { //haredcoded for now: take 10 seconds to find a move!
+			// 	printUCIInfo("", currDepth, int(time.Since(start).Milliseconds()), int(nodesSearched), bestBoardVal, pvline)
+			// 	return bestMove
+			// }
 		}
+
+		if bestBoardVal <= alpha || bestBoardVal >= beta {
+			printLog("Out of aspiration window bounds, doing research")
+			alpha = -9999
+			beta = 9999
+			currDepth--
+			continue
+		}
+
+		//Aspiration Window
+		alpha = -bestBoardVal - window_size
+		beta = bestBoardVal + window_size
+
 		printUCIInfo("", currDepth, int(time.Since(start).Milliseconds()), int(nodesSearched), bestBoardVal, pvline)
 		// printLogTop100OfTT()
 		// panic("stop")
