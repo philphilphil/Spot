@@ -3,13 +3,11 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"github.com/dylhunn/dragontoothmg"
 	"log"
-	//"math"
 	"os"
 	"strconv"
 	"strings"
-	//import "time"
-	"github.com/dylhunn/dragontoothmg"
 )
 
 var game dragontoothmg.Board
@@ -31,27 +29,20 @@ type UCI interface { //all functions called by chess gui or engine tester
 }
 
 type UCIs struct {
-	//game dragontoothmg.Board
 }
 
 // Starts the UCI process, waiting for command line input from other software
 func (u *UCIs) Start() {
-	u.uci() //TODO maybe not here
 	reader := bufio.NewReader(os.Stdin)
 
 	for {
 
 		line, err := reader.ReadString('\n')
 		if err != nil {
-			printLog("Error in UCI command")
+			printLog("Error in UCI command.")
 		}
 
-		//printLog("SCANNER:" + line)
 		args := strings.Fields(line)
-
-		if !u.validateUciCommand(args) {
-			printLog("Error in UCI command")
-		}
 
 		if debug {
 			log.Println("<- ", args)
@@ -62,11 +53,6 @@ func (u *UCIs) Start() {
 			break
 		}
 	}
-}
-
-// Validates input from the CLI
-func (u *UCIs) validateUciCommand(args []string) bool {
-	return true //TODO validate, is this needed?
 }
 
 // Parses UCI command and excecutes
@@ -84,23 +70,20 @@ func (u *UCIs) parseUciCommand(args []string) bool {
 	case "setoption":
 		//TODO as soon as options are avaibale
 	case "position":
-		//TODO: implement better
-		printLog("pos set start")
 		setGamePosition(&game, args[1:])
-		printLog("pos set done")
 	case "go":
-		printLog("go start")
-		bestMove := calculateBestMove(game)
-		printLog("go done bestmove: " + bestMove.String())
-		printMessage("bestmove " + bestMove.String())
+		u.go_()
 	case "eval":
 		fmt.Println(getBoardValue(&game))
 	case "stop":
-		//stop engine search, return bestmove
+		//TODO: stop engine search, return bestmove
 	case "ponderhit":
 		//TODO, maybe?
 	case "isready":
 		u.isReady()
+	default:
+		printMessage("UCI Command not recognized.")
+
 	}
 
 	return true
@@ -140,6 +123,11 @@ func getGameFromFen(args []string) dragontoothmg.Board {
 		printMessage("ERROR: Invalid command, fen or startpos needed.") //TODO: maybe check this in validateUciCommand?
 	}
 	panic("s")
+}
+
+func (u *UCIs) go_() {
+	bestMove := calculateBestMove(game)
+	printMessage("bestmove " + bestMove.String())
 }
 
 func (u *UCIs) quit() {

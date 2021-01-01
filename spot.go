@@ -1,14 +1,14 @@
 package main
 
 import (
-	//"flag"
 	"fmt"
 	"github.com/dylhunn/dragontoothmg"
 	"log"
 	"os"
+	"time"
+	//"flag"
 	// "runtime"
 	// "runtime/pprof"
-	"time"
 )
 
 //Version
@@ -51,21 +51,15 @@ func main() {
 	// 	}
 	// }
 
-	//TODO: add errorhandling
 	file, err := os.OpenFile("spot_debug.log", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
 	log.SetOutput(file)
 
 	if err != nil {
-		log.Fatal(err)
+		fmt.Println(err)
 	}
 
 	defer file.Close()
 	////////////////////////////////////////////////////////
-
-	// debug = true
-	// board := dragontoothmg.ParseFen("6K1/k7/8/8/8/8/1R6/3N3Q w - - 0 1")
-	// move := calculateBestMove(board)
-	// fmt.Println(move.String())
 
 	uci := UCIs{}
 	uci.Start()
