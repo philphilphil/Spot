@@ -115,19 +115,11 @@ func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 				b.Wtomove, color, currDepth, move.String(), boardVal, bestBoardVal, nodesSearched, time.Since(start)))
 
 			//check mate check
-			// TODO: is there a better way to check for mate score
 			if boardVal >= mateScore-10 { //found a forced mate
 				pvline = append(currLine, move.String())
 				printUCIInfo("", currDepth, int(time.Since(start).Milliseconds()), int(nodesSearched), boardVal, pvline)
 				return move
 			}
-
-			// } else {
-			// 	if boardVal >= mateScore-10 { //found a forced mate
-			// 		printUCIInfo("", currDepth, int(time.Since(start).Milliseconds()), int(nodesSearched), bestBoardVal, pvline)
-			// 		return move
-			// 	}
-			// }
 
 			if boardVal >= bestBoardVal {
 				bestMove = move
