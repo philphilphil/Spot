@@ -21,13 +21,11 @@ func Min(x, y int) int {
 }
 
 func reverseStringSlice(ss []string) []string {
-	var reversed = make([]string, len(ss))
-	last := len(ss) - 1
-	for i := 0; i < len(ss)/2; i++ {
-		reversed[i], reversed[last-i] = ss[last-i], ss[i]
+	for i, j := 0, len(ss)-1; i < j; i, j = i+1, j-1 {
+		ss[i], ss[j] = ss[j], ss[i]
 	}
 
-	return reversed
+	return ss
 }
 
 func MovesToString(moves []dragontoothmg.Move) string {
