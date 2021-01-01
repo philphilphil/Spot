@@ -13,7 +13,7 @@ import (
 
 //Version
 var BuildVersion string = ""
-var BuildTime string = ""
+var CommitHash string = ""
 
 //Debug things
 // var cpuprofile = flag.String("cpuprofile", "", "write cpu profile to `file`")

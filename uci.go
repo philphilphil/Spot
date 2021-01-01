@@ -147,7 +147,7 @@ func (u *UCIs) quit() {
 }
 
 func (u *UCIs) sendId() {
-	printMessage("id name Spot " + BuildVersion + " (" + BuildTime + ")")
+	printMessage("id name Spot " + BuildVersion + " (" + CommitHash + ")")
 	printMessage("id author Phil Baum")
 }
 
