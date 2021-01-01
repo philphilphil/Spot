@@ -61,6 +61,8 @@ func main() {
 	defer file.Close()
 	////////////////////////////////////////////////////////
 
+	//debug = true
+
 	uci := UCIs{}
 	uci.Start()
 }
