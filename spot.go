@@ -149,8 +149,6 @@ func negaMaxAlphaBeta(b dragontoothmg.Board, depth int, alpha int, beta int, col
 	if !b.OurKingInCheck() && len(moves) == 0 { //stalemate
 		return 1 * color
 	} else if b.OurKingInCheck() && len(moves) == 0 { //checkmate
-
-		//fmt.Println("MATE MATE MATE " + b.ToFen())
 		return -(mateScore - depth)
 	}
 
@@ -184,6 +182,8 @@ func negaMaxAlphaBeta(b dragontoothmg.Board, depth int, alpha int, beta int, col
 		unapply()
 
 		if score >= beta {
+			*pvline = append(line, move.String())
+
 			return score
 		}
 
