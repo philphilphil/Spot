@@ -163,7 +163,7 @@ func negaMaxAlphaBeta(b dragontoothmg.Board, depth int, alpha int, beta int, col
 	} else if b.OurKingInCheck() && len(moves) == 0 { //checkmate
 
 		//fmt.Println("MATE MATE MATE " + b.ToFen())
-		return (mateScore - depth) * color
+		return -(mateScore - depth)
 	}
 
 	//check TT Table
