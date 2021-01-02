@@ -73,6 +73,7 @@ func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 	var color int
 	var pvline []string
 	var currLine []string
+	transpoTable = make(map[uint64]Hashtable) // clear tt
 	currDepth := 0
 	var bestBoardVal int = 9999
 	window_size := 500 // TODO: Tweak window size after null move, killer move and move ordering are implemented
