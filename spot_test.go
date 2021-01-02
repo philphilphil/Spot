@@ -131,3 +131,31 @@ func TestMoveOrdering(t *testing.T) {
 		t.Errorf("Move sort wrong got: %d, want: %d", orderedMoves[0], bestMove)
 	}
 }
+
+func TestGenerateCaptureMoves(t *testing.T) {
+	testGame := getGameFromFen(strings.Fields("fen 1qq4k/8/3r2p1/N7/2B1N3/8/8/K4QQ1 b - - 0 1"))
+	testGame2 := getGameFromFen(strings.Fields("fen 7k/6p1/7B/3pP3/8/1q6/7n/KR1B1N2 w - d6 0 2"))
+	testGame3 := getGameFromFen(strings.Fields("fen 6Qk/6p1/3b3B/3pP3/8/1q6/7n/KR1B1N2 b - d6 0 1")) //king in check
+	testGame4 := getGameFromFen(strings.Fields("fen 7k/6p1/3b3B/3pP3/8/1q6/7n/KR1B1N2 b - d6 0 1"))
+	captures := generateCaptureMoves(&testGame)
+	captures2 := generateCaptureMoves(&testGame2)
+	captures3 := generateCaptureMoves(&testGame3)
+	captures4 := generateCaptureMoves(&testGame4)
+	
+	
+	if len(captures) != 1 {
+		t.Errorf("Capture len wrong got: %d, want: %d", len(captures), 1)
+	}
+
+	if len(captures2) != 5 {
+		t.Errorf("Capture len wrong got: %d, want: %d", len(captures), 5)
+	}
+
+	if len(captures3) != 1 {
+		t.Errorf("Capture len wrong got: %d, want: %d", len(captures), 1)
+	}
+
+	if len(captures4) != 5 {
+		t.Errorf("Capture len wrong got: %d, want: %d", len(captures), 5)
+	}
+}

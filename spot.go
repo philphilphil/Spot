@@ -61,7 +61,7 @@ func main() {
 	defer file.Close()
 	////////////////////////////////////////////////////////
 
-	//debug = true
+	debug = true
 
 	uci := UCIs{}
 	uci.Start()
@@ -78,7 +78,6 @@ func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 	window_size := 500 // TODO: Tweak window size after null move, killer move and move ordering are implemented
 	alpha := -9999
 	beta := 9999
-
 
 	if b.Wtomove { //beaucse of our root node, colors need to be switched here
 		color = 1
@@ -121,14 +120,14 @@ func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 
 			//printUCIInfo(move.String(), currDepth, int(time.Since(start).Milliseconds()), int(nodesSearched), bestBoardVal, nil)
 
-			// if currDepth == 5 {
-			// 	return bestMove
-			// }
-			// TODO: Implement using time based on remaining game/move time
-			if time.Since(start).Seconds() >= 10 { //haredcoded for now: take 10 seconds to find a move!
-				printUCIInfo("", currDepth, int(time.Since(start).Milliseconds()), int(nodesSearched), bestBoardVal, pvline)
+			if currDepth == 5 {
 				return bestMove
 			}
+			// TODO: Implement using time based on remaining game/move time
+			// if time.Since(start).Seconds() >= 10 { //haredcoded for now: take 10 seconds to find a move!
+			// 	printUCIInfo("", currDepth, int(time.Since(start).Milliseconds()), int(nodesSearched), bestBoardVal, pvline)
+			// 	return bestMove
+			// }
 		}
 
 		if bestBoardVal <= alpha || bestBoardVal >= beta {
@@ -249,4 +248,19 @@ func generateAndOrderMoves(moves []dragontoothmg.Move, bestMove dragontoothmg.Mo
 	// fmt.Println(orderedMoves)
 
 	return orderedMoves
+}
+
+func generateCaptureMoves(b *dragontoothmg.Board) []dragontoothmg.Move {
+
+	var captures []dragontoothmg.Move
+
+	moves := b.GenerateLegalMoves()
+
+	for _, m := range moves {
+		if dragontoothmg.IsCapture(m, b) {
+			captures = append(captures, m)
+		}
+	}
+
+	return captures
 }
