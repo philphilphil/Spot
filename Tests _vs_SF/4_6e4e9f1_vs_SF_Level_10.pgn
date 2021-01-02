@@ -1,0 +1,578 @@
+[Event "My Tournament"]
+[Site "?"]
+[Date "2021.01.02"]
+[Round "1"]
+[White "SFLVL10"]
+[Black "Spot"]
+[Result "1-0"]
+[ECO "A41"]
+[GameDuration "00:06:26"]
+[GameEndTime "2021-01-02T16:19:08.073 W. Europe Standard Time"]
+[GameStartTime "2021-01-02T16:12:41.530 W. Europe Standard Time"]
+[Opening "Queen's Pawn"]
+[PlyCount "33"]
+[TimeControl "40+15"]
+
+1. d4 {+0.38/28 36s} d6 {0.00/5 10s} 2. Nf3 {+0.65/23 12s} a6 {0.00/5 10s}
+3. g3 {+0.79/21 7.5s} Nc6 {0.00/5 11s} 4. d5 {+0.82/24 17s} h6 {0.00/5 10s}
+5. dxc6 {+4.51/23 9.4s} e6 {0.00/5 11s} 6. Bg2 {+4.94/23 9.7s} a5 {0.00/5 10s}
+7. c4 {+5.44/23 14s} a4 {0.00/5 11s} 8. O-O {+6.47/24 6.9s} h5 {0.00/5 10s}
+9. Nd4 {+6.55/22 7.4s} d5 {0.00/5 11s} 10. cxd5 {+7.94/26 21s} Qxd5 {0.00/5 14s}
+11. Bxd5 {+15.57/22 5.1s} exd5 {0.00/5 11s} 12. Nb5 {+15.62/29 37s}
+Bh3 {0.00/5 10s} 13. cxb7 {+30.78/24 5.9s} c6 {0.00/5 10s}
+14. bxa8=Q+ {+M13/25 5.8s} Ke7 {0.00/5 13s} 15. Qxc6 {+M9/59 5.7s}
+d4 {0.00/5 10s} 16. Qd6+ {+M3/245 6.1s} Ke8 {0.00/1 10s}
+17. Nc7# {+M1/90 7.1s, White mates} 1-0
+
+[Event "My Tournament"]
+[Site "?"]
+[Date "2021.01.02"]
+[Round "2"]
+[White "Spot"]
+[Black "SFLVL10"]
+[Result "0-1"]
+[ECO "A00"]
+[GameDuration "00:08:03"]
+[GameEndTime "2021-01-02T16:20:44.575 W. Europe Standard Time"]
+[GameStartTime "2021-01-02T16:12:41.567 W. Europe Standard Time"]
+[Opening "Dunst (Sleipner, Heinrichsen) Opening"]
+[PlyCount "26"]
+[Termination "stalled connection"]
+[TimeControl "40+15"]
+
+1. Nc3 {0.00/6 12s} e5 {0.00/26 24s} 2. d3 {0.00/5 11s} d5 {+0.47/23 11s}
+3. e3 {0.00/5 10s} c6 {+0.61/27 35s} 4. a3 {0.00/5 10s} Bd6 {+0.65/24 12s}
+5. Nf3 {0.00/5 10s} Nf6 {+0.72/25 17s} 6. h3 {0.00/5 11s} a5 {+0.83/26 24s}
+7. d4 {0.00/5 10s} Nbd7 {+1.53/22 4.0s} 8. Ne2 {0.00/5 10s} e4 {+1.68/24 8.2s}
+9. Nd2 {0.00/5 11s} b5 {+1.53/23 7.1s} 10. f3 {0.00/5 10s} Nh5 {+3.71/24 22s}
+11. f4 {0.00/5 10s} Qh4+ {+5.95/21 8.1s} 12. g3 {0.00/7 77s} Nxg3 {+6.04/24 24s}
+13. Nxg3 {0.00/5 10s} Qxg3+ {+5.92/25 21s, White's connection stalls} 0-1
+
+[Event "My Tournament"]
+[Site "?"]
+[Date "2021.01.02"]
+[Round "3"]
+[White "SFLVL10"]
+[Black "Spot"]
+[Result "1-0"]
+[ECO "B00"]
+[GameDuration "00:10:56"]
+[GameEndTime "2021-01-02T16:23:38.569 W. Europe Standard Time"]
+[GameStartTime "2021-01-02T16:12:41.573 W. Europe Standard Time"]
+[Opening "St. George (Baker) defense"]
+[PlyCount "53"]
+[TimeControl "40+15"]
+
+1. e4 {+0.38/28 36s} a6 {0.00/5 11s} 2. Nf3 {+0.67/23 7.4s} e6 {0.00/5 10s}
+3. c3 {+0.58/27 26s} d5 {0.00/5 11s} 4. d3 {+0.56/25 11s} Nc6 {0.00/5 10s}
+5. e5 {+0.41/24 23s} f6 {0.00/5 11s} 6. exf6 {+0.52/21 3.6s} a5 {0.00/5 11s}
+7. fxg7 {+2.77/21 4.8s} Bxg7 {0.00/5 11s} 8. Bf4 {+2.49/26 19s} Qf6 {0.00/5 11s}
+9. Bg5 {+2.75/23 18s} Qf7 {0.00/5 18s} 10. Be2 {+1.96/24 26s} e5 {0.00/5 11s}
+11. O-O {+1.98/23 17s} a4 {0.00/5 10s} 12. Na3 {+2.80/23 12s} Bf8 {0.00/5 11s}
+13. Nb5 {+5.98/20 6.3s} a3 {0.00/5 11s} 14. d4 {+6.94/22 9.2s} axb2 {0.00/5 11s}
+15. Rb1 {+7.28/22 12s} h6 {0.00/5 10s} 16. Bh4 {+7.48/23 16s} e4 {0.00/5 10s}
+17. Ne5 {+8.25/25 27s} Nxe5 {0.00/5 10s} 18. dxe5 {+8.33/24 14s} h5 {0.00/5 10s}
+19. c4 {+7.94/25 23s} Rxa2 {0.00/5 11s} 20. cxd5 {+9.64/24 15s} Bc5 {0.00/5 10s}
+21. Qb3 {+9.17/24 18s} Ra1 {0.00/5 10s} 22. Rxa1 {+11.01/22 11s}
+bxa1=Q {0.00/6 11s} 23. Rxa1 {+9.25/23 5.6s} Bd7 {0.00/5 10s}
+24. Ra8+ {+M5/20 3.5s} Bc8 {0.00/3 10s} 25. Rxc8+ {+M3/27 11s}
+Kd7 {0.00/1 10.0s} 26. Bg4+ {+M1/245 0.15s} Qf5 {0.00/1 10.0s}
+27. Rd8# {+M1/245 2.9s, White mates} 1-0
+
+[Event "My Tournament"]
+[Site "?"]
+[Date "2021.01.02"]
+[Round "4"]
+[White "Spot"]
+[Black "SFLVL10"]
+[Result "0-1"]
+[ECO "A00"]
+[GameDuration "00:10:08"]
+[GameEndTime "2021-01-02T16:22:49.748 W. Europe Standard Time"]
+[GameStartTime "2021-01-02T16:12:41.588 W. Europe Standard Time"]
+[Opening "Dunst (Sleipner, Heinrichsen) Opening"]
+[PlyCount "48"]
+[TimeControl "40+15"]
+
+1. Nc3 {0.00/6 12s} e5 {0.00/26 24s} 2. d3 {0.00/5 11s} d5 {+0.47/23 11s}
+3. e3 {0.00/5 11s} c6 {+0.61/27 35s} 4. a3 {0.00/5 10s} Nd7 {+0.65/24 12s}
+5. h3 {0.00/5 11s} h6 {+0.67/23 9.7s} 6. d4 {0.00/5 10s} Bd6 {+1.09/25 23s}
+7. Qg4 {0.00/5 12s} Qf6 {+1.79/23 10s} 8. dxe5 {0.00/5 10s} Nxe5 {+1.70/23 11s}
+9. Qd4 {0.00/5 14s} Qe7 {+2.08/22 13s} 10. b4 {0.00/4 10s} Nf6 {+2.95/22 12s}
+11. Bb2 {0.00/4 10s} a5 {+3.19/22 10s} 12. O-O-O {0.00/5 11s}
+axb4 {+4.87/20 4.5s} 13. axb4 {0.00/5 11s} Ned7 {+5.57/27 28s}
+14. Nf3 {0.00/4 10s} Bxb4 {+5.33/22 8.8s} 15. Nxd5 {0.00/5 12s}
+cxd5 {+6.77/24 14s} 16. Bb5 {0.00/4 10s} O-O {+8.05/22 6.4s} 17. h4 {0.00/4 10s}
+Ra5 {+8.86/26 38s} 18. Bxd7 {0.00/4 10s} Bxd7 {+8.82/23 7.9s}
+19. Nh2 {0.00/5 10s} Ra2 {+11.94/23 20s} 20. Qb6 {0.00/4 10s}
+Ba3 {+16.07/22 9.1s} 21. Bxa3 {0.00/5 13s} Qxa3+ {+M17/23 15s}
+22. Qb2 {0.00/6 13s} Qxb2+ {+M5/27 18s} 23. Kd2 {0.00/3 10s}
+Qxc2+ {+M3/211 3.4s} 24. Ke1 {0.00/1 10s} Qxf2# {+M1/245 0.17s, Black mates} 0-1
+
+[Event "My Tournament"]
+[Site "?"]
+[Date "2021.01.02"]
+[Round "5"]
+[White "SFLVL10"]
+[Black "Spot"]
+[Result "1-0"]
+[ECO "A41"]
+[GameDuration "00:08:06"]
+[GameEndTime "2021-01-02T16:20:48.304 W. Europe Standard Time"]
+[GameStartTime "2021-01-02T16:12:41.595 W. Europe Standard Time"]
+[Opening "Queen's Pawn"]
+[PlyCount "31"]
+[Termination "time forfeit"]
+[TimeControl "40+15"]
+
+1. d4 {+0.38/28 36s} d6 {0.00/5 11s} 2. Nf3 {+0.65/23 12s} a6 {0.00/5 10s}
+3. g3 {+0.79/21 7.4s} Nc6 {0.00/5 11s} 4. d5 {+0.82/24 17s} h6 {0.00/5 11s}
+5. dxc6 {+4.51/23 9.5s} e6 {0.00/5 11s} 6. Bg2 {+4.94/23 9.7s} a5 {0.00/5 10s}
+7. c4 {+5.44/23 14s} a4 {0.00/5 11s} 8. Nd4 {+6.47/24 6.9s} d5 {0.00/5 11s}
+9. Bf4 {+6.94/26 25s} e5 {0.00/5 11s} 10. Bxe5 {+8.13/20 4.1s} Qd6 {0.00/5 29s}
+11. Bxd6 {+14.34/22 7.9s} a3 {0.00/5 11s} 12. cxb7 {+18.98/26 10s}
+Bxd6 {0.00/5 16s} 13. bxa8=Q {+35.71/27 23s} Ke7 {0.00/5 12s}
+14. Qxc8 {+M13/35 5.3s} axb2 {0.00/5 14s} 15. Bh3 {+M7/55 6.2s} g5 {0.00/5 12s}
+16. Nc6+ {+M7/52 6.8s, Black loses on time} 1-0
+
+[Event "My Tournament"]
+[Site "?"]
+[Date "2021.01.02"]
+[Round "6"]
+[White "Spot"]
+[Black "SFLVL10"]
+[Result "0-1"]
+[ECO "A00"]
+[GameDuration "00:07:12"]
+[GameEndTime "2021-01-02T16:19:54.464 W. Europe Standard Time"]
+[GameStartTime "2021-01-02T16:12:41.599 W. Europe Standard Time"]
+[Opening "Dunst (Sleipner, Heinrichsen) Opening"]
+[PlyCount "32"]
+[TimeControl "40+15"]
+
+1. Nc3 {0.00/6 12s} d5 {0.00/26 24s} 2. e3 {0.00/5 13s} Nf6 {+0.31/26 23s}
+3. b3 {0.00/5 10s} Nc6 {+0.66/20 4.4s} 4. Bb5 {0.00/5 10s} Bg4 {+0.33/27 25s}
+5. f3 {0.00/5 10s} Bd7 {+0.32/23 7.7s} 6. d3 {0.00/5 10s} e5 {+0.83/24 17s}
+7. Nge2 {0.00/5 10s} Bd6 {+0.86/25 27s} 8. f4 {0.00/5 11s} O-O {+1.95/23 12s}
+9. h3 {0.00/5 11s} Re8 {+2.12/23 9.8s} 10. g3 {0.00/5 11s} d4 {+5.50/24 18s}
+11. fxe5 {0.00/5 11s} Bxe5 {+7.13/22 8.2s} 12. exd4 {0.00/5 11s}
+Nxd4 {+7.94/24 14s} 13. Bxd7 {0.00/5 12s} Qxd7 {+7.86/27 33s}
+14. a4 {0.00/5 10s} Bxg3+ {+12.46/21 5.7s} 15. Kf1 {0.00/6 12s}
+Qf5+ {+13.88/24 13s} 16. Kg2 {0.00/6 18s} Qf2# {+M1/25 9.4s, Black mates} 0-1
+
+[Event "My Tournament"]
+[Site "?"]
+[Date "2021.01.02"]
+[Round "7"]
+[White "SFLVL10"]
+[Black "Spot"]
+[Result "1-0"]
+[ECO "B00"]
+[GameDuration "00:08:33"]
+[GameEndTime "2021-01-02T16:27:41.664 W. Europe Standard Time"]
+[GameStartTime "2021-01-02T16:19:08.081 W. Europe Standard Time"]
+[Opening "St. George (Baker) defense"]
+[PlyCount "35"]
+[TimeControl "40+15"]
+
+1. e4 {+0.42/27 34s} a6 {0.00/5 10s} 2. c3 {+0.76/23 7.5s} d5 {0.00/5 11s}
+3. Nf3 {+0.22/22 5.7s} c6 {0.00/5 10s} 4. e5 {+0.36/24 16s} e6 {0.00/5 10s}
+5. a3 {+0.89/25 18s} Nd7 {0.00/5 10s} 6. d4 {+1.18/24 15s} f6 {0.00/5 10s}
+7. Bd3 {+1.40/27 27s} h6 {0.00/5 10s} 8. Nh4 {+5.50/22 8.7s} fxe5 {0.00/5 10s}
+9. Qh5+ {+7.14/25 14s} g6 {0.00/7 78s} 10. Qxg6+ {+6.29/25 19s} Ke7 {0.00/6 12s}
+11. Qg3 {+5.94/25 14s} e4 {0.00/5 10s} 12. Ng6+ {+7.67/23 5.5s} Kf7 {0.00/6 12s}
+13. Nxh8+ {+12.43/26 16s} Ke7 {0.00/5 11s} 14. Qxg8 {+12.48/27 22s}
+e5 {0.00/5 10s} 15. Be2 {+13.48/27 13s} c5 {0.00/5 11s}
+16. Qh7+ {+20.57/24 4.8s} Bg7 {0.00/5 10s} 17. Qxg7+ {+28.86/26 18s}
+Ke8 {0.00/5 13s} 18. Qf7# {+M1/23 5.8s, White mates} 1-0
+
+[Event "My Tournament"]
+[Site "?"]
+[Date "2021.01.02"]
+[Round "8"]
+[White "Spot"]
+[Black "SFLVL10"]
+[Result "0-1"]
+[ECO "A00"]
+[GameDuration "00:08:39"]
+[GameEndTime "2021-01-02T16:28:34.195 W. Europe Standard Time"]
+[GameStartTime "2021-01-02T16:19:54.498 W. Europe Standard Time"]
+[Opening "Dunst (Sleipner, Heinrichsen) Opening"]
+[PlyCount "42"]
+[TimeControl "40+15"]
+
+1. Nc3 {0.00/6 12s} c5 {0.00/26 25s} 2. e4 {0.00/6 16s} d6 {-0.25/26 18s}
+3. d3 {0.00/5 10s} Nf6 {0.00/25 21s} 4. a3 {0.00/5 10s} Nc6 {+0.15/24 16s}
+5. h3 {0.00/5 10s} d5 {+0.47/24 15s} 6. a4 {0.00/5 11s} e5 {+0.80/24 13s}
+7. exd5 {0.00/5 10s} Nd4 {+0.59/27 22s} 8. Be3 {0.00/5 11s} Be7 {+0.67/22 8.1s}
+9. a5 {0.00/5 10s} h5 {+1.10/25 17s} 10. b3 {0.00/5 12s} Nxd5 {+1.28/22 6.3s}
+11. Nxd5 {0.00/5 11s} Qxd5 {+1.48/23 31s} 12. f3 {0.00/5 11s}
+Bh4+ {+3.57/22 16s} 13. Bf2 {0.00/6 11s} Bxf2+ {+4.81/22 7.8s}
+14. Kd2 {0.00/6 17s} c4 {+10.02/23 8.1s} 15. bxc4 {0.00/5 11s}
+Qd6 {+9.86/20 4.7s} 16. Kc3 {0.00/5 11s} b5 {+11.55/25 23s}
+17. cxb5 {0.00/5 11s} Qc5+ {+M13/28 2.8s} 18. Kb2 {0.00/6 10s}
+Qxb5+ {+M11/41 4.4s} 19. Ka2 {0.00/6 16s} Be3 {+M5/228 5.0s} 20. f4 {0.00/5 10s}
+Rb8 {+M3/245 5.5s} 21. c3 {0.00/5 18s} Qb2# {+M1/245 0.26s, Black mates} 0-1
+
+[Event "My Tournament"]
+[Site "?"]
+[Date "2021.01.02"]
+[Round "9"]
+[White "SFLVL10"]
+[Black "Spot"]
+[Result "1-0"]
+[ECO "A13"]
+[GameDuration "00:10:07"]
+[GameEndTime "2021-01-02T16:30:51.663 W. Europe Standard Time"]
+[GameStartTime "2021-01-02T16:20:44.609 W. Europe Standard Time"]
+[Opening "English Opening"]
+[PlyCount "51"]
+[TimeControl "40+15"]
+
+1. c4 {+0.38/28 38s} e6 {0.00/5 10s} 2. e4 {+0.37/23 5.1s} d6 {0.00/5 10s}
+3. d4 {+0.83/23 5.9s} Nc6 {0.00/5 10s} 4. Be2 {+1.08/23 11s} e5 {0.00/5 11s}
+5. Nf3 {+0.89/21 4.1s} Nf6 {0.00/5 10s} 6. Nc3 {+1.06/29 43s} exd4 {0.00/5 11s}
+7. Nxd4 {+1.05/24 8.2s} Nxd4 {0.00/5 12s} 8. Qxd4 {+1.10/26 35s} c5 {0.00/5 11s}
+9. Qd2 {+2.46/21 5.3s} a6 {0.00/5 11s} 10. Qe3 {+1.99/24 14s} Qe7 {0.00/5 11s}
+11. O-O {+2.43/22 14s} a5 {0.00/5 11s} 12. Nb5 {+4.67/20 7.5s} h6 {0.00/5 11s}
+13. Qd3 {+5.09/25 22s} a4 {0.00/5 12s} 14. Re1 {+5.71/23 8.8s} Qxe4 {0.00/5 13s}
+15. Nc7+ {+7.66/24 13s} Ke7 {0.00/5 14s} 16. Qd2 {+7.94/25 17s} b5 {0.00/5 10s}
+17. Bd3 {+11.77/23 7.7s} Kd7 {0.00/5 12s} 18. Bxe4 {+11.55/26 39s}
+Nxe4 {0.00/5 11s} 19. Qd5 {+11.63/23 9.1s} Bb7 {0.00/5 11s}
+20. Qxb7 {+21.98/23 12s} Rb8 {0.00/5 11s} 21. Qxb8 {+M19/24 9.2s}
+b4 {0.00/5 11s} 22. Rxe4 {+M9/47 3.1s} a3 {0.00/6 12s} 23. Qb7 {+M5/245 0.17s}
+axb2 {0.00/5 10s} 24. Na8+ {+M3/245 0.015s} Kd8 {0.00/1 10.0s}
+25. Qb8+ {+M1/245 0.091s} Kd7 {0.00/1 10s}
+26. Qc7# {+M1/245 0.012s, White mates} 1-0
+
+[Event "My Tournament"]
+[Site "?"]
+[Date "2021.01.02"]
+[Round "10"]
+[White "Spot"]
+[Black "SFLVL10"]
+[Result "0-1"]
+[ECO "A00"]
+[GameDuration "00:10:14"]
+[GameEndTime "2021-01-02T16:31:02.999 W. Europe Standard Time"]
+[GameStartTime "2021-01-02T16:20:48.310 W. Europe Standard Time"]
+[Opening "Dunst (Sleipner, Heinrichsen) Opening"]
+[PlyCount "46"]
+[TimeControl "40+15"]
+
+1. Nc3 {0.00/6 12s} c5 {0.00/26 25s} 2. e4 {0.00/6 16s} Nc6 {-0.25/26 18s}
+3. b3 {0.00/5 10s} e6 {+0.33/23 12s} 4. a3 {0.00/5 10s} d5 {+0.55/24 16s}
+5. Bb5 {0.00/5 11s} Ne7 {+0.72/22 5.7s} 6. Nf3 {0.00/5 10s} g6 {+0.75/27 29s}
+7. exd5 {0.00/5 11s} exd5 {+0.32/26 15s} 8. g3 {0.00/5 10s} Bg7 {+2.33/21 7.6s}
+9. h3 {0.00/5 11s} Bf5 {+3.48/20 7.5s} 10. g4 {0.00/5 11s} Be6 {+3.31/24 41s}
+11. Ng5 {0.00/5 10s} O-O {+4.28/21 14s} 12. O-O {0.00/5 11s} h6 {+5.04/17 3.3s}
+13. Nxe6 {0.00/5 10s} fxe6 {+3.44/21 5.6s} 14. a4 {0.00/5 10s}
+Nd4 {+5.90/22 11s} 15. Bb2 {0.00/5 10s} Qc7 {+7.98/25 12s} 16. f4 {0.00/5 10s}
+Rxf4 {+6.78/24 14s} 17. Rxf4 {0.00/5 10s} Qxf4 {+6.95/27 26s}
+18. Qc1 {0.00/5 11s} Nf3+ {+M7/47 3.6s} 19. Kf2 {0.00/5 26s} Nd4+ {+M7/53 4.8s}
+20. Kg2 {0.00/6 14s} Qf3+ {+M9/39 5.3s} 21. Kg1 {0.00/6 12s} Qg3+ {+M7/31 63s}
+22. Kh1 {0.00/6 12s} Nf3 {+M5/61 2.4s} 23. d3 {0.00/5 12s}
+Qh2# {+M1/245 0.16s, Black mates} 0-1
+
+[Event "My Tournament"]
+[Site "?"]
+[Date "2021.01.02"]
+[Round "11"]
+[White "SFLVL10"]
+[Black "Spot"]
+[Result "1-0"]
+[ECO "B00"]
+[GameDuration "00:11:43"]
+[GameEndTime "2021-01-02T16:34:33.266 W. Europe Standard Time"]
+[GameStartTime "2021-01-02T16:22:49.753 W. Europe Standard Time"]
+[Opening "St. George (Baker) defense"]
+[PlyCount "41"]
+[Termination "time forfeit"]
+[TimeControl "40+15"]
+
+1. e4 {+0.38/28 37s} a6 {0.00/5 10s} 2. c3 {+0.74/23 7.3s} d5 {0.00/5 11s}
+3. exd5 {+0.52/23 7.7s} Qxd5 {0.00/5 12s} 4. d4 {+0.46/27 38s} Nc6 {0.00/4 10s}
+5. Nf3 {+0.38/24 12s} Nf6 {0.00/4 10s} 6. Be2 {+1.00/24 12s} Bf5 {0.00/5 13s}
+7. O-O {+1.01/22 8.1s} Bxb1 {0.00/4 10s} 8. Rxb1 {+1.24/24 14s}
+Qxa2 {0.00/5 14s} 9. Bf4 {+1.52/24 11s} Rc8 {0.00/4 10s} 10. Ra1 {+3.40/25 19s}
+Qxb2 {0.00/4 10s} 11. Bd2 {+3.86/28 25s} e5 {0.00/4 11s} 12. Bc4 {+4.86/21 4.3s}
+Ne4 {0.00/4 11s} 13. Rb1 {+4.59/26 31s} Qa3 {0.00/5 14s}
+14. Rxb7 {+4.92/21 8.7s} Nd6 {0.00/4 11s} 15. Qe2 {+4.52/24 12s}
+Nxb7 {0.00/5 11s} 16. Bxf7+ {+6.66/23 12s} Kxf7 {0.00/5 11s}
+17. Qc4+ {+8.42/25 24s} Ke7 {0.00/5 13s} 18. Qxc6 {+8.36/23 11s}
+Nd6 {0.00/5 10s} 19. Bg5+ {+50.25/25 12s} Ke6 {0.00/7 70s}
+20. Nxe5 {+M43/26 8.0s} h6 {0.00/5 11s}
+21. f4 {+M11/29 33s, Black loses on time} 1-0
+
+[Event "My Tournament"]
+[Site "?"]
+[Date "2021.01.02"]
+[Round "12"]
+[White "Spot"]
+[Black "SFLVL10"]
+[Result "0-1"]
+[ECO "A00"]
+[GameDuration "00:10:10"]
+[GameEndTime "2021-01-02T16:33:49.391 W. Europe Standard Time"]
+[GameStartTime "2021-01-02T16:23:38.574 W. Europe Standard Time"]
+[Opening "Dunst (Sleipner, Heinrichsen) Opening"]
+[PlyCount "48"]
+[TimeControl "40+15"]
+
+1. Nc3 {0.00/6 13s} Nf6 {0.00/26 25s} 2. Nf3 {0.00/6 12s} e6 {+0.18/23 9.5s}
+3. e3 {0.00/5 10s} c5 {+0.17/26 18s} 4. d3 {0.00/5 10s} d5 {+0.42/22 8.8s}
+5. h3 {0.00/5 10s} Nc6 {+0.56/27 27s} 6. g3 {0.00/5 10s} h6 {+0.77/25 17s}
+7. d4 {0.00/5 11s} a6 {+0.83/25 17s} 8. g4 {0.00/5 11s} b5 {+1.44/23 11s}
+9. Ne5 {0.00/5 10s} Nxe5 {+2.28/21 3.1s} 10. dxe5 {0.00/5 10s}
+Nd7 {+2.48/25 31s} 11. a3 {0.00/5 10s} Nxe5 {+3.83/24 11s} 12. f4 {0.00/5 10s}
+Qh4+ {+4.80/23 11s} 13. Ke2 {0.00/6 12s} Nc4 {+5.28/24 18s} 14. f5 {0.00/5 10s}
+Be7 {+5.33/22 14s} 15. Nxd5 {0.00/5 11s} exd5 {+7.13/21 5.7s}
+16. Qxd5 {0.00/5 10s} Rb8 {+7.75/27 42s} 17. e4 {0.00/5 11s}
+Qg3 {+10.40/23 5.7s} 18. Qc6+ {0.00/5 10s} Bd7 {+10.35/23 3.0s}
+19. Qxd7+ {0.00/5 14s} Kxd7 {+19.78/25 14s} 20. c3 {0.00/5 11s}
+Ne5 {+19.71/22 4.4s} 21. a4 {0.00/5 10s} Qd3+ {+M9/27 6.5s} 22. Kf2 {0.00/5 15s}
+Bh4+ {+M7/26 25s} 23. Kg2 {0.00/5 20s} Qf3+ {+M1/70 4.3s} 24. Kg1 {0.00/1 10.0s}
+Qf2# {+M1/65 5.1s, Black mates} 0-1
+
+[Event "My Tournament"]
+[Site "?"]
+[Date "2021.01.02"]
+[Round "13"]
+[White "SFLVL10"]
+[Black "Spot"]
+[Result "1-0"]
+[ECO "A13"]
+[GameDuration "00:10:25"]
+[GameEndTime "2021-01-02T16:38:07.265 W. Europe Standard Time"]
+[GameStartTime "2021-01-02T16:27:41.670 W. Europe Standard Time"]
+[Opening "English Opening"]
+[PlyCount "51"]
+[TimeControl "40+15"]
+
+1. c4 {+0.38/28 38s} e6 {0.00/5 10s} 2. e4 {+0.37/23 5.0s} d6 {0.00/5 10s}
+3. d4 {+0.83/23 6.1s} Nc6 {0.00/5 10s} 4. Nc3 {+1.08/23 10s} a6 {0.00/5 11s}
+5. h3 {+1.07/25 21s} e5 {0.00/5 11s} 6. Be3 {+1.07/24 12s} exd4 {0.00/5 11s}
+7. Bxd4 {+0.02/26 22s} Qg5 {0.00/5 13s} 8. Nf3 {+1.55/25 19s} Qa5 {0.00/5 15s}
+9. Rb1 {+1.88/25 22s} Nxd4 {0.00/5 10s} 10. Nxd4 {+0.16/22 7.2s}
+Bd7 {0.00/5 11s} 11. Be2 {+0.63/26 26s} Kd8 {0.00/4 10s} 12. Qd3 {+3.06/23 16s}
+c5 {0.00/5 13s} 13. Nf5 {+5.40/21 6.2s} Bxf5 {0.00/5 10s}
+14. exf5 {+4.86/23 11s} h6 {0.00/5 11s} 15. Bh5 {+6.27/26 21s} Nf6 {0.00/5 10s}
+16. Bxf7 {+6.40/26 17s} Qc7 {0.00/5 10s} 17. Bd5 {+6.91/27 22s} h5 {0.00/5 13s}
+18. b4 {+7.51/19 3.9s} cxb4 {0.00/5 11s} 19. Rxb4 {+7.59/23 13s} h4 {0.00/5 10s}
+20. O-O {+8.89/22 16s} Qa5 {0.00/5 10s} 21. Rxb7 {+11.86/19 3.9s}
+Nxd5 {0.00/5 10s} 22. Nxd5 {+M19/25 18s} Rg8 {0.00/5 11s} 23. Qe4 {+M13/38 4.1s}
+Rh8 {0.00/5 11s} 24. Rfb1 {+M7/55 4.5s} Ra7 {0.00/5 11s} 25. Rb8+ {+M3/60 5.5s}
+Kd7 {0.00/1 10s} 26. Qe8# {+M1/245 0.22s, White mates} 1-0
+
+[Event "My Tournament"]
+[Site "?"]
+[Date "2021.01.02"]
+[Round "14"]
+[White "Spot"]
+[Black "SFLVL10"]
+[Result "0-1"]
+[ECO "A00"]
+[GameDuration "00:12:08"]
+[GameEndTime "2021-01-02T16:40:42.474 W. Europe Standard Time"]
+[GameStartTime "2021-01-02T16:28:34.233 W. Europe Standard Time"]
+[Opening "Dunst (Sleipner, Heinrichsen) Opening"]
+[PlyCount "54"]
+[TimeControl "40+15"]
+
+1. Nc3 {0.00/6 12s} c5 {0.00/26 25s} 2. e4 {0.00/6 16s} a6 {-0.25/26 18s}
+3. Nge2 {0.00/5 10s} b5 {-0.11/26 20s} 4. d3 {0.00/6 12s} e6 {+0.10/22 9.0s}
+5. h3 {0.00/5 10s} d6 {+0.45/25 24s} 6. b3 {0.00/5 11s} Bb7 {+0.45/22 6.1s}
+7. f3 {0.00/5 10s} Nd7 {+1.14/24 13s} 8. d4 {0.00/5 10s} Ngf6 {+1.91/24 32s}
+9. dxc5 {0.00/5 10s} dxc5 {+2.06/23 16s} 10. Bg5 {0.00/5 11s} Be7 {+2.62/21 15s}
+11. g3 {0.00/5 10s} O-O {+2.30/21 6.0s} 12. f4 {0.00/5 12s} Nxe4 {+6.09/23 8.4s}
+13. Bxe7 {0.00/5 10s} Qxe7 {+5.66/26 21s} 14. a4 {0.00/5 11s}
+Nxc3 {+8.28/23 16s} 15. axb5 {0.00/5 10s} Nxd1 {+15.71/21 4.9s}
+16. Rxa6 {0.00/5 12s} Bxh1 {+18.63/23 20s} 17. Kxd1 {0.00/5 12s}
+Rad8 {+18.78/22 13s} 18. Ra5 {0.00/5 11s} Qd6+ {+23.40/21 11s}
+19. Kc1 {0.00/6 15s} c4 {+M27/22 20s} 20. bxc4 {0.00/5 11s} Qb4 {+M17/22 2.6s}
+21. h4 {0.00/5 11s} Qe1+ {+M13/55 4.4s} 22. Kb2 {0.00/7 101s}
+Qb4+ {+M13/60 5.3s} 23. Ka2 {0.00/6 10s} Qxa5+ {+M7/63 6.2s}
+24. Kb1 {0.00/7 19s} Qb4+ {+M9/70 6.5s} 25. Ka2 {0.00/7 13s} h5 {+M1/245 0.17s}
+26. Bg2 {0.00/7 11s} Ra8+ {+M3/245 2.0s} 27. Bxa8 {0.00/1 10s}
+Rxa8# {+M1/245 2.5s, Black mates} 0-1
+
+[Event "My Tournament"]
+[Site "?"]
+[Date "2021.01.02"]
+[Round "15"]
+[White "SFLVL10"]
+[Black "Spot"]
+[Result "1-0"]
+[ECO "B00"]
+[GameDuration "00:13:58"]
+[GameEndTime "2021-01-02T16:44:49.840 W. Europe Standard Time"]
+[GameStartTime "2021-01-02T16:30:51.666 W. Europe Standard Time"]
+[Opening "St. George (Baker) defense"]
+[PlyCount "49"]
+[Termination "stalled connection"]
+[TimeControl "40+15"]
+
+1. e4 {+0.38/28 38s} a6 {0.00/5 10s} 2. c3 {+0.74/23 7.3s} d5 {0.00/5 11s}
+3. exd5 {+0.53/22 5.8s} Qxd5 {0.00/5 12s} 4. Nf3 {+0.55/27 30s}
+Qe4+ {0.00/5 11s} 5. Be2 {+1.61/22 1.9s} a5 {0.00/5 10s} 6. c4 {+2.10/25 18s}
+Qg4 {0.00/5 11s} 7. g3 {+2.15/23 11s} a4 {0.00/5 12s} 8. a3 {+2.44/24 21s}
+Qh3 {0.00/5 12s} 9. d4 {+2.08/25 19s} Ra7 {0.00/5 10s} 10. Bf4 {+4.55/22 11s}
+Nd7 {0.00/5 11s} 11. Ng5 {+5.19/22 11s} Qf5 {0.00/5 10s} 12. O-O {+4.94/24 23s}
+e6 {0.00/5 13s} 13. Nc3 {+6.71/22 8.3s} Be7 {0.00/4 10s} 14. Bd3 {+6.25/24 15s}
+Qa5 {0.00/4 10s} 15. Nb5 {+6.09/24 14s} Bxg5 {0.00/5 10s}
+16. Bxg5 {+6.72/28 27s} Ra8 {0.00/5 10s} 17. Bd2 {+7.83/23 9.2s}
+Qb6 {0.00/5 11s} 18. c5 {+7.82/21 3.7s} Nxc5 {0.00/5 10s}
+19. dxc5 {+10.78/29 37s} Qa5 {0.00/5 12s} 20. Bxa5 {+15.17/24 3.4s}
+Rxa5 {0.00/5 10s} 21. Nxc7+ {+17.40/27 10s} Kf8 {0.00/6 16s}
+22. Bc4 {+M17/30 16s} g6 {0.00/5 11s} 23. Qd8+ {+23.78/27 30s} Kg7 {0.00/7 98s}
+24. Ne8+ {+22.71/22 5.6s} Kf8 {0.00/7 45s}
+25. Nf6+ {+23.09/29 30s, Black's connection stalls} 1-0
+
+[Event "My Tournament"]
+[Site "?"]
+[Date "2021.01.02"]
+[Round "16"]
+[White "Spot"]
+[Black "SFLVL10"]
+[Result "0-1"]
+[ECO "A00"]
+[GameDuration "00:08:19"]
+[GameEndTime "2021-01-02T16:39:22.235 W. Europe Standard Time"]
+[GameStartTime "2021-01-02T16:31:03.005 W. Europe Standard Time"]
+[Opening "Dunst (Sleipner, Heinrichsen) Opening"]
+[PlyCount "28"]
+[Termination "stalled connection"]
+[TimeControl "40+15"]
+
+1. Nc3 {0.00/6 12s} c5 {0.00/26 25s} 2. e4 {0.00/6 16s} e6 {-0.25/26 18s}
+3. b3 {0.00/5 10s} a6 {+0.19/22 11s} 4. h3 {0.00/5 10s} d5 {+0.45/24 15s}
+5. exd5 {0.00/5 11s} exd5 {+0.35/26 37s} 6. Qe2+ {0.00/5 10s} Be7 {+1.27/27 19s}
+7. a3 {0.00/5 10s} Nc6 {+2.18/18 1.3s} 8. a4 {0.00/5 10s} d4 {+3.28/24 22s}
+9. Nd1 {0.00/5 10s} Nb4 {+5.69/24 11s} 10. d3 {0.00/5 11s} Qa5 {+6.14/23 8.2s}
+11. c3 {0.00/5 10s} dxc3 {+6.00/26 19s} 12. Nf3 {0.00/6 13s} Bf5 {+5.65/27 27s}
+13. Ne5 {0.00/6 10s} Rd8 {+7.28/20 4.4s} 14. Qh5 {0.00/5 10s}
+Nc2+ {+12.73/21 2.9s, White's connection stalls} 0-1
+
+[Event "My Tournament"]
+[Site "?"]
+[Date "2021.01.02"]
+[Round "17"]
+[White "SFLVL10"]
+[Black "Spot"]
+[Result "1-0"]
+[ECO "B00"]
+[GameDuration "00:11:03"]
+[GameEndTime "2021-01-02T16:44:52.827 W. Europe Standard Time"]
+[GameStartTime "2021-01-02T16:33:49.396 W. Europe Standard Time"]
+[Opening "St. George (Baker) defense"]
+[PlyCount "47"]
+[TimeControl "40+15"]
+
+1. e4 {+0.38/28 37s} a6 {0.00/5 11s} 2. c3 {+0.74/23 7.2s} d5 {0.00/5 11s}
+3. exd5 {+0.52/23 7.7s} Qxd5 {0.00/5 12s} 4. h3 {+0.46/27 38s} a5 {0.00/5 12s}
+5. Nf3 {+1.08/21 6.3s} Bf5 {0.00/5 13s} 6. d4 {+1.09/22 8.5s} Bxb1 {0.00/4 10s}
+7. Rxb1 {+1.13/25 32s} Nc6 {0.00/4 10s} 8. Bf4 {+2.28/22 9.5s} Qe4+ {0.00/5 11s}
+9. Be3 {+2.49/23 6.5s} Kd8 {0.00/5 12s} 10. Ng5 {+6.11/23 8.6s} Qd5 {0.00/5 12s}
+11. b3 {+6.63/25 11s} Kc8 {0.00/5 10s} 12. Qg4+ {+5.01/27 32s} f5 {0.00/6 16s}
+13. Bc4 {+5.67/24 11s} fxg4 {0.00/5 16s} 14. Bxd5 {+5.10/28 24s}
+Nf6 {0.00/5 10s} 15. Be6+ {+6.91/22 7.2s} Kb8 {0.00/7 39s}
+16. Nf7 {+6.59/24 15s} gxh3 {0.00/5 10s} 17. Rxh3 {+6.94/26 21s}
+Rg8 {0.00/5 10s} 18. Ng5 {+7.29/24 12s} h6 {0.00/5 11s} 19. d5 {+6.12/22 5.4s}
+Nd8 {0.00/5 11s} 20. Bxg8 {+7.36/22 7.8s} hxg5 {0.00/6 10s}
+21. Rh8 {+7.40/25 19s} Nc6 {0.00/5 10s} 22. Be6 {+13.81/24 3.8s} g4 {0.00/6 10s}
+23. Rxf8+ {+M5/26 5.4s} Nd8 {0.00/7 17s} 24. Rxd8# {+M1/30 33s, White mates} 1-0
+
+[Event "My Tournament"]
+[Site "?"]
+[Date "2021.01.02"]
+[Round "18"]
+[White "Spot"]
+[Black "SFLVL10"]
+[Result "0-1"]
+[ECO "A00"]
+[GameDuration "00:15:53"]
+[GameEndTime "2021-01-02T16:50:27.205 W. Europe Standard Time"]
+[GameStartTime "2021-01-02T16:34:33.272 W. Europe Standard Time"]
+[Opening "Dunst (Sleipner, Heinrichsen) Opening"]
+[PlyCount "80"]
+[TimeControl "40+15"]
+
+1. Nc3 {0.00/6 12s} Nf6 {0.00/26 25s} 2. Nf3 {0.00/6 12s} e6 {+0.18/23 9.5s}
+3. e3 {0.00/5 10s} c5 {+0.17/26 19s} 4. d3 {0.00/5 10s} a6 {+0.42/22 9.0s}
+5. e4 {0.00/5 12s} d5 {+0.32/27 27s} 6. e5 {0.00/5 10s} Nfd7 {+0.86/24 6.5s}
+7. h3 {0.00/5 10s} Qa5 {+2.23/23 12s} 8. Bd2 {0.00/5 10s} Qc7 {+1.82/25 10s}
+9. a3 {0.00/5 10s} h6 {+2.44/25 21s} 10. a4 {0.00/5 10s} Nxe5 {+2.30/23 10s}
+11. Ne2 {0.00/5 10s} Nbd7 {+3.90/22 9.0s} 12. Neg1 {0.00/5 11s}
+Bd6 {+3.59/25 24s} 13. b3 {0.00/5 10s} Ng6 {+4.20/23 11s} 14. Ne2 {0.00/5 10s}
+O-O {+4.37/25 22s} 15. h4 {0.00/5 10s} f5 {+5.13/23 13s} 16. h5 {0.00/5 11s}
+Ne7 {+4.53/22 9.0s} 17. Nfg1 {0.00/5 10s} Nf6 {+5.98/25 42s}
+18. Nf3 {0.00/5 11s} Nc6 {+6.09/22 8.8s} 19. g3 {0.00/5 10s} Re8 {+5.58/22 11s}
+20. Bg2 {0.00/5 11s} e5 {+5.63/21 8.5s} 21. Nh2 {0.00/5 10s} d4 {+6.42/23 25s}
+22. O-O {0.00/5 10s} Be6 {+6.15/22 12s} 23. Bf3 {0.00/5 10s} Bf7 {+6.88/26 30s}
+24. Rc1 {0.00/5 10s} e4 {+7.33/25 11s} 25. dxe4 {0.00/5 10s}
+fxe4 {+7.48/23 8.3s} 26. Nf4 {0.00/5 10s} exf3 {+8.65/23 6.4s}
+27. b4 {0.00/5 10s} Bxf4 {+9.34/23 13s} 28. c3 {0.00/5 11s}
+Bxd2 {+13.94/21 3.1s} 29. c4 {0.00/5 11s} Bxc1 {+19.86/22 5.3s}
+30. Nxf3 {0.00/5 10s} Bg5 {+24.50/25 44s} 31. b5 {0.00/5 11s}
+Ne5 {+22.36/21 9.5s} 32. Nxe5 {0.00/5 11s} Qxe5 {+23.82/22 8.5s}
+33. Qc2 {0.00/5 14s} Qe4 {+25.48/23 8.4s} 34. g4 {0.00/5 13s} Qf3 {+M11/35 3.2s}
+35. bxa6 {0.00/5 11s} Bf4 {+M11/48 5.7s} 36. Ra1 {0.00/5 10s}
+Qxg4+ {+M7/78 6.2s} 37. Kh1 {0.00/5 10s} Qxh5+ {+M5/245 5.0s}
+38. Kg2 {0.00/3 10s} Qh2+ {+M3/245 5.9s} 39. Kf3 {0.00/1 10s}
+Re3+ {+M1/245 0.15s} 40. fxe3 {0.00/1 10.0s} Bh5# {+M1/63 10s, Black mates} 0-1
+
+[Event "My Tournament"]
+[Site "?"]
+[Date "2021.01.02"]
+[Round "19"]
+[White "SFLVL10"]
+[Black "Spot"]
+[Result "1-0"]
+[ECO "A05"]
+[GameDuration "00:09:16"]
+[GameEndTime "2021-01-02T16:47:23.285 W. Europe Standard Time"]
+[GameStartTime "2021-01-02T16:38:07.271 W. Europe Standard Time"]
+[Opening "Reti Opening"]
+[PlyCount "43"]
+[TimeControl "40+15"]
+
+1. Nf3 {+0.38/28 37s} Nf6 {0.00/6 11s} 2. c4 {+0.33/24 9.9s} e6 {0.00/5 10s}
+3. g3 {+0.27/26 17s} d6 {0.00/5 11s} 4. Nc3 {+0.75/26 18s} Bd7 {0.00/5 11s}
+5. d4 {+0.98/23 8.5s} d5 {0.00/5 11s} 6. Ne5 {+1.19/26 31s} dxc4 {0.00/5 12s}
+7. Bg2 {+1.05/22 5.2s} Bc6 {0.00/5 16s} 8. Nxc6 {+1.25/27 26s} Nxc6 {0.00/5 11s}
+9. Qa4 {+1.15/21 2.9s} Qxd4 {0.00/5 10s} 10. Bxc6+ {+7.97/25 15s}
+Nd7 {0.00/5 11s} 11. Bxb7 {+7.67/25 8.5s} Qe5 {0.00/5 10s}
+12. Bf4 {+12.48/22 3.3s} Be7 {0.00/5 11s} 13. Bxe5 {+17.65/24 4.6s}
+O-O {0.00/5 11s} 14. Qxd7 {+20.01/26 15s} Bf6 {0.00/5 12s}
+15. Bxf6 {+23.43/25 17s} gxf6 {0.00/5 11s} 16. Bxa8 {+25.63/24 27s}
+Rxa8 {0.00/5 11s} 17. O-O-O {+M17/28 6.6s} c5 {0.00/5 11s}
+18. Qe7 {+M13/32 3.7s} Re8 {0.00/6 17s} 19. Qxf6 {+M11/33 55s} a5 {0.00/6 10s}
+20. Rd7 {+M9/58 2.3s} a4 {0.00/6 11s} 21. Rxf7 {+M3/231 3.1s} Rf8 {0.00/1 10s}
+22. Rxf8# {+M1/245 0.073s, White mates} 1-0
+
+[Event "My Tournament"]
+[Site "?"]
+[Date "2021.01.02"]
+[Round "20"]
+[White "Spot"]
+[Black "SFLVL10"]
+[Result "0-1"]
+[ECO "A00"]
+[GameDuration "00:08:07"]
+[GameEndTime "2021-01-02T16:47:29.470 W. Europe Standard Time"]
+[GameStartTime "2021-01-02T16:39:22.269 W. Europe Standard Time"]
+[Opening "Dunst (Sleipner, Heinrichsen) Opening"]
+[PlyCount "36"]
+[TimeControl "40+15"]
+
+1. Nc3 {0.00/6 12s} c5 {0.00/26 25s} 2. e4 {0.00/6 16s} a6 {-0.25/26 18s}
+3. Nge2 {0.00/5 10s} e6 {-0.20/26 21s} 4. d3 {0.00/5 11s} b5 {+0.08/23 14s}
+5. h3 {0.00/5 10s} Bb7 {+0.37/23 11s} 6. d4 {0.00/5 10s} Qa5 {+1.42/22 7.5s}
+7. e5 {0.00/5 11s} cxd4 {+2.45/24 18s} 8. Nxd4 {0.00/5 11s} b4 {+2.17/23 11s}
+9. Nce2 {0.00/5 10s} Nc6 {+2.50/25 29s} 10. c3 {0.00/5 10s} Nxe5 {+3.21/21 8.3s}
+11. a3 {0.00/5 10s} bxa3 {+4.10/24 13s} 12. bxa3 {0.00/5 10s} Rc8 {+5.63/23 19s}
+13. Bf4 {0.00/5 10s} Rxc3 {+6.02/23 8.6s} 14. Nxc3 {0.00/5 10s}
+Qxc3+ {+5.93/28 37s} 15. Bd2 {0.00/6 15s} Qxd4 {+5.95/23 9.9s}
+16. Rb1 {0.00/4 10s} Qe4+ {+7.02/20 3.5s} 17. Be2 {0.00/6 13s}
+Nd3+ {+M3/23 7.4s} 18. Kf1 {0.00/1 10s} Qxg2# {+M1/27 25s, Black mates} 0-1
+

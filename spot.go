@@ -61,7 +61,7 @@ func main() {
 	defer file.Close()
 	////////////////////////////////////////////////////////
 
-	debug = true
+	//debug = true
 
 	uci := UCIs{}
 	uci.Start()
@@ -121,14 +121,14 @@ func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 
 			//printUCIInfo(move.String(), currDepth, int(time.Since(start).Milliseconds()), int(nodesSearched), bestBoardVal, nil)
 
-			if currDepth == 5 {
-				return bestMove
-			}
-			// TODO: Implement using time based on remaining game/move time
-			// if time.Since(start).Seconds() >= 10 { //haredcoded for now: take 10 seconds to find a move!
-			// 	printUCIInfo("", currDepth, int(time.Since(start).Milliseconds()), int(nodesSearched), bestBoardVal, pvline)
+			// if currDepth == 5 {
 			// 	return bestMove
 			// }
+			// TODO: Implement using time based on remaining game/move time
+			if time.Since(start).Seconds() >= 10 { //haredcoded for now: take 10 seconds to find a move!
+				printUCIInfo("", currDepth, int(time.Since(start).Milliseconds()), int(nodesSearched), bestBoardVal, pvline)
+				return bestMove
+			}
 		}
 
 		if bestBoardVal <= alpha || bestBoardVal >= beta {
@@ -181,7 +181,9 @@ func negaMaxAlphaBeta(b dragontoothmg.Board, depth int, alpha int, beta int, col
 	alphaOrig := alpha
 
 	if depth == 0 {
-		return getBoardValue(&b) * color
+		val := Quiesce(b, alpha, beta)
+		fmt.Println("Quiense Search:" , val)
+		return val * color
 	}
 	bestScore := -9999
 	score := 0
@@ -251,9 +253,9 @@ func generateAndOrderMoves(moves []dragontoothmg.Move, bestMove dragontoothmg.Mo
 	return orderedMoves
 }
 
-func Quiesce(b *dragontoothmg.Board, alpha int, beta int) int {
+func Quiesce(b dragontoothmg.Board, alpha int, beta int) int {
 
-	eval := getBoardValue(b)
+	eval := getBoardValue(&b)
 
 	if eval >= beta {
 		return beta
@@ -262,7 +264,7 @@ func Quiesce(b *dragontoothmg.Board, alpha int, beta int) int {
 		alpha = eval
 	}
 
-	captureMoves := generateCaptureMoves(b)
+	captureMoves := generateCaptureMoves(&b)
 
 	for _, m := range captureMoves {
 		unapply := b.Apply(m)
