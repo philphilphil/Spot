@@ -250,6 +250,36 @@ func generateAndOrderMoves(moves []dragontoothmg.Move, bestMove dragontoothmg.Mo
 	return orderedMoves
 }
 
+func Quiesce(b *dragontoothmg.Board, alpha int, beta int) int {
+
+	eval := getBoardValue(b)
+
+	if eval >= beta {
+		return beta
+	}
+	if alpha < eval {
+		alpha = eval
+	}
+
+	captureMoves := generateCaptureMoves(b)
+
+	for _, m := range captureMoves {
+		unapply := b.Apply(m)
+		score := -Quiesce(b, -beta, -alpha)
+		unapply()
+
+		if score >= beta {
+			return beta
+
+		}
+		if score > alpha {
+			alpha = score
+		}
+	}
+
+	return alpha
+}
+
 func generateCaptureMoves(b *dragontoothmg.Board) []dragontoothmg.Move {
 
 	var captures []dragontoothmg.Move
