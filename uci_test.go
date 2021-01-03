@@ -50,3 +50,15 @@ func TestSetGamePosition(t *testing.T) {
 	}
 
 }
+
+func TestSetGameTimeForWhite(t *testing.T) {
+
+	game = getGameFromFen(strings.Fields("fen rnbqkbnr/5ppp/4p3/2PN2B1/1P2P3/p4N2/P1P1BPPP/1R1QK2R w Kkq - 0 1"))
+	args := strings.Fields("wtime 55000 winc 15000 btime 40000 binc 15000")
+	setGameTimes(args)
+
+	if(mytime != 55000 || myinc != 15000 || opptime != 40000 || oppinc != 15000) {
+		t.Errorf("Times not set correctly")
+	}
+
+}

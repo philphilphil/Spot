@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"github.com/dylhunn/dragontoothmg"
 	"log"
-	"os"
 	"math"
+	"os"
 	"strconv"
 	"strings"
 )
@@ -73,7 +73,7 @@ func (u *UCIs) parseUciCommand(args []string) bool {
 	case "position":
 		setGamePosition(&game, args[1:])
 	case "go":
-		u.go_()
+		u.go_(args[1:])
 	case "eval":
 		fmt.Println(getBoardValue(&game))
 	case "stop":
@@ -126,7 +126,8 @@ func getGameFromFen(args []string) dragontoothmg.Board {
 	panic("s")
 }
 
-func (u *UCIs) go_() {
+func (u *UCIs) go_(args []string) {
+	setGameTimes(args)
 	bestMove := calculateBestMove(game)
 	printMessage("bestmove " + bestMove.String())
 }
@@ -201,4 +202,44 @@ func getMovesLocation(args []string) int {
 		}
 	}
 	return -1
+}
+
+func setGameTimes(args []string) {
+	for i, a := range args {
+		if a == "wtime" {
+			if game.Wtomove {
+				mytime = convertTime(args[i+1])
+			} else {
+				opptime = convertTime(args[i+1])
+			}
+		} else if a == "btime" {
+			if game.Wtomove {
+				opptime = convertTime(args[i+1])
+			} else {
+				mytime = convertTime(args[i+1])
+			}
+		} else if a == "winc" {
+			if game.Wtomove {
+				myinc = convertTime(args[i+1])
+			} else {
+				oppinc = convertTime(args[i+1])
+			}
+		} else if a == "binc" {
+			if game.Wtomove {
+				oppinc = convertTime(args[i+1])
+			} else {
+				myinc = convertTime(args[i+1])
+			}
+		}
+	}
+}
+
+func convertTime(time string) int {
+	s, err := strconv.Atoi(time)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return s
 }
