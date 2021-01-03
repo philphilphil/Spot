@@ -23,7 +23,8 @@ var CommitHash string = ""
 var piecePositionMasks = [64]uint64{1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768, 65536, 131072, 262144, 524288, 1048576, 2097152, 4194304, 8388608, 16777216, 33554432, 67108864, 134217728, 268435456, 536870912, 1073741824, 2147483648, 4294967296, 8589934592, 17179869184, 34359738368, 68719476736, 137438953472, 274877906944, 549755813888, 1099511627776, 2199023255552, 4398046511104, 8796093022208, 17592186044416, 35184372088832, 70368744177664, 140737488355328, 281474976710656, 562949953421312, 1125899906842624, 2251799813685248, 4503599627370496, 9007199254740992, 18014398509481984, 36028797018963968, 72057594037927936, 144115188075855872, 288230376151711744, 576460752303423488, 1152921504606846976, 2305843009213693952, 4611686018427387904, 9223372036854775808}
 var nodesSearched uint64
 var mateScore = 9999
-var opptime, oppinc, mytime, myinc int //times in ms
+var opptime, oppinc, mytime, myinc int64 //times in ms
+var stopSearch bool = false
 
 func main() {
 	///////// LOG OUTPUT, CPU/MEMORY PROFLINIG STUFF ///////
@@ -68,7 +69,7 @@ func main() {
 	uci.Start()
 }
 
-func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
+func calculateBestMove(b dragontoothmg.Board, searchFixedDepth int) dragontoothmg.Move {
 
 	var bestMove dragontoothmg.Move
 	var color int
@@ -77,7 +78,7 @@ func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 	transpoTable = make(map[uint64]Hashtable) // clear tt
 	currDepth := 0
 	var bestBoardVal int = 9999
-	window_size := 500 // TODO: Tweak window size after null move, killer move and move ordering are implemented
+	window_size := 1000 // TODO: Tweak window size after null move, killer move and move ordering are implemented
 	alpha := -9999
 	beta := 9999
 
@@ -87,10 +88,12 @@ func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 		color = -1
 	}
 
+	timeForMove := calculateTimeForMove()
+	printLog(fmt.Sprintf("Time to calc move: %v sec", timeForMove/1000))
 	start := time.Now()
 
 	for {
-		printLog(fmt.Sprintf("BestBoardVal: %v Alpha/Beta: %v / %v  WindowSize: %v\r\n", bestBoardVal, alpha, beta, window_size))
+		printLog(fmt.Sprintf("START: BestBoardVal: %v Alpha/Beta: %v / %v  WindowSize: %v\r\n", bestBoardVal, alpha, beta, window_size))
 		currDepth++
 		bestBoardVal = -9999
 
@@ -104,7 +107,7 @@ func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 			boardVal := -negaMaxAlphaBeta(b, currDepth, -beta, -alpha, -color, &currLine)
 			unapply()
 
-			printLog(fmt.Sprintf("White Move: %t Color: %v Depth: %v Move: %v Eval: %v CurBestEval: %v Nodes: %v Time: %v",
+			printLog(fmt.Sprintf("White Move: %t Color: %v Depth: %v Move: %v Eval: %v CurBestEval: %v Nodes: %v Time: %v sec",
 				b.Wtomove, color, currDepth, move.String(), boardVal, bestBoardVal, nodesSearched, time.Since(start)))
 
 			//check mate check
@@ -122,31 +125,38 @@ func calculateBestMove(b dragontoothmg.Board) dragontoothmg.Move {
 
 			//printUCIInfo(move.String(), currDepth, int(time.Since(start).Milliseconds()), int(nodesSearched), bestBoardVal, nil)
 
-			// if currDepth == 5 {
-			// 	return bestMove
-			// }
-			// TODO: Implement using time based on remaining game/move time
-			if time.Since(start).Seconds() >= 10 { //haredcoded for now: take 10 seconds to find a move!
-				printUCIInfo("", currDepth, int(time.Since(start).Milliseconds()), int(nodesSearched), bestBoardVal, pvline)
+			if stopSearch { //Stop search if triggerd by uci
 				return bestMove
+			} else if mytime != 0 { //stop search when time limit reached
+				if time.Since(start).Milliseconds() >= timeForMove {
+					printUCIInfo("", currDepth, int(time.Since(start).Milliseconds()), int(nodesSearched), bestBoardVal, pvline)
+					return bestMove
+				}
 			}
 		}
+		printUCIInfo("", currDepth, int(time.Since(start).Milliseconds()), int(nodesSearched), bestBoardVal, pvline)
 
 		if bestBoardVal <= alpha || bestBoardVal >= beta {
-			printLog("Out of aspiration window bounds, doing research")
+			printLog(fmt.Sprintf("Out of aspiration window bounds, doing research Alpha %v Beta: %v BestVal: %v", alpha, beta, bestBoardVal))
 			alpha = -9999
 			beta = 9999
 			currDepth--
-			continue
+		} else {
+			//Aspiration Window
+			alpha = -bestBoardVal - window_size
+			beta = bestBoardVal + window_size
 		}
 
-		//Aspiration Window
-		alpha = -bestBoardVal - window_size
-		beta = bestBoardVal + window_size
+		//Check if search needs to stop
+		// Uci sends stop command or fixed depth reached.  times check is done above
+		if stopSearch || (searchFixedDepth != 0 && currDepth == searchFixedDepth) {
+			return bestMove
+		}
 
-		printUCIInfo("", currDepth, int(time.Since(start).Milliseconds()), int(nodesSearched), bestBoardVal, pvline)
 		// printLogTop100OfTT()
 		// panic("stop")
+		printLog(fmt.Sprintf("END: BestBoardVal: %v Alpha/Beta: %v / %v  WindowSize: %v\r\n", bestBoardVal, alpha, beta, window_size))
+
 	}
 
 	return bestMove
@@ -296,4 +306,20 @@ func generateCaptureMoves(b *dragontoothmg.Board) []dragontoothmg.Move {
 	}
 
 	return captures
+}
+
+// ty Jonatan! :)
+// https://mediocrechess.blogspot.com/2007/01/guide-time-management.html
+func calculateTimeForMove() int64 {
+
+	// Use 2.25% of the time + half of the increment
+	timeForMove := mytime/40 + (myinc / 2)
+
+	// use 1 seconds to atleast get some move.
+	if timeForMove < 0 {
+		timeForMove = 1000
+
+	}
+
+	return timeForMove
 }

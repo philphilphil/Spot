@@ -128,7 +128,7 @@ func getGameFromFen(args []string) dragontoothmg.Board {
 
 func (u *UCIs) go_(args []string) {
 	setGameTimes(args)
-	bestMove := calculateBestMove(game)
+	bestMove := calculateBestMove(game, 0)
 	printMessage("bestmove " + bestMove.String())
 }
 
@@ -234,12 +234,12 @@ func setGameTimes(args []string) {
 	}
 }
 
-func convertTime(time string) int {
+func convertTime(time string) int64 {
 	s, err := strconv.Atoi(time)
 
 	if err != nil {
 		panic(err)
 	}
 
-	return s
+	return int64(s)
 }

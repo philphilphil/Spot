@@ -11,7 +11,7 @@ import (
 func TestCalculationBlack_1(t *testing.T) {
 	//debug = true
 	testGame := getGameFromFen(strings.Fields("fen rnbqkbnr/5ppp/4p3/2PN2B1/1P2P3/p4N2/P1P1BPPP/1R1QK2R b Kkq - 0 1"))
-	bestMove := calculateBestMove(testGame)
+	bestMove := calculateBestMove(testGame, 5)
 
 	if bestMove.String() != "f7f6" {
 		t.Errorf("Move wrong got: %v, want: %v", bestMove.String(), "f7f6")
@@ -21,7 +21,7 @@ func TestCalculationBlack_1(t *testing.T) {
 func TestCalculationBlack_2(t *testing.T) {
 	//debug = true
 	testGame := getGameFromFen(strings.Fields("fen rnb1kbnr/pppp1ppp/8/4p1q1/4P1Q1/3P4/PPP2PPP/RNB1KBNR b KQkq - 2 3"))
-	bestMove := calculateBestMove(testGame)
+	bestMove := calculateBestMove(testGame, 4)
 
 	if bestMove.String() != "g5g4" {
 		t.Errorf("Move wrong got: %v, want: %v", bestMove.String(), "g5g4")
@@ -30,7 +30,7 @@ func TestCalculationBlack_2(t *testing.T) {
 func TestCalculationWhite_1(t *testing.T) {
 	//debug = true
 	testGame := getGameFromFen(strings.Fields("fen rn1qk1nr/7p/5pp1/2PP1b2/7B/p2Q1N2/P1P1BPPP/1R2K2R w Kkq - 0 6"))
-	bestMove := calculateBestMove(testGame)
+	bestMove := calculateBestMove(testGame, 4)
 
 	if bestMove.String() != "d3e3" {
 		t.Errorf("Move wrong got: %v, want: %v", bestMove.String(), "d3e3")
@@ -39,7 +39,7 @@ func TestCalculationWhite_1(t *testing.T) {
 
 func TestCalculationWhite_2(t *testing.T) {
 	testGame := getGameFromFen(strings.Fields("fen rnb1kbnr/pppp1ppp/8/4p1q1/4P3/3P4/PPP2PPP/RNBQKBNR w KQkq - 1 3"))
-	bestMove := calculateBestMove(testGame)
+	bestMove := calculateBestMove(testGame, 4)
 
 	if bestMove.String() != "c1g5" {
 		t.Errorf("Move wrong got: %v, want: %v", bestMove.String(), "c1g5")
@@ -91,7 +91,7 @@ func TestCalculationCheckMateDebugger(t *testing.T) {
 func CheckFenForBestMove(movePos map[string]string, t *testing.T) {
 	for move, fen := range movePos {
 		board := dragontoothmg.ParseFen(fen)
-		bestMove := calculateBestMove(board)
+		bestMove := calculateBestMove(board, 5)
 
 		if bestMove.String() != move {
 			t.Errorf("Move wrong got: %v, want: %v, Fen: https://lichess.org/analysis/fromPosition/%v", bestMove.String(), move, strings.ReplaceAll(fen, " ", "_"))
@@ -102,14 +102,14 @@ func CheckFenForBestMove(movePos map[string]string, t *testing.T) {
 func TestCalculationPuzzles(t *testing.T) {
 	//debug = true
 	testGame := getGameFromFen(strings.Fields("fen 1b1B1rBN/1P1ppqR1/KPpk1p2/1RN4Q/5p2/1n3P2/2P2n2/8 w - - 0 1"))
-	bestMove := calculateBestMove(testGame)
+	bestMove := calculateBestMove(testGame, 4)
 
 	if bestMove.String() != "h5f5" {
 		t.Errorf("Move wrong got: %v, want: %v", bestMove.String(), "h5f5")
 	}
 
 	testGame = getGameFromFen(strings.Fields("fen 2q3k1/pp1n1ppp/2pQ1b2/5N2/1P6/2P5/P4PPP/5RK1 w - - 0 1"))
-	bestMove = calculateBestMove(testGame)
+	bestMove = calculateBestMove(testGame, 4)
 
 	if bestMove.String() != "d6f6" {
 		t.Errorf("Move wrong got: %v, want: %v", bestMove.String(), "d6f6")
