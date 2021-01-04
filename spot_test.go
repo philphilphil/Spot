@@ -141,8 +141,7 @@ func TestGenerateCaptureMoves(t *testing.T) {
 	captures2 := generateCaptureMoves(&testGame2)
 	captures3 := generateCaptureMoves(&testGame3)
 	captures4 := generateCaptureMoves(&testGame4)
-	
-	
+
 	if len(captures) != 1 {
 		t.Errorf("Capture len wrong got: %d, want: %d", len(captures), 1)
 	}
@@ -157,5 +156,17 @@ func TestGenerateCaptureMoves(t *testing.T) {
 
 	if len(captures4) != 5 {
 		t.Errorf("Capture len wrong got: %d, want: %d", len(captures), 5)
+	}
+}
+
+func TestCalculateTimeForMove(t *testing.T) {
+	game = getGameFromFen(strings.Fields("fen rnbqkbnr/5ppp/4p3/2PN2B1/1P2P3/p4N2/P1P1BPPP/1R1QK2R w Kkq - 0 1"))
+	args := strings.Fields("wtime 55000 winc 15000 btime 40000 binc 15000")
+	setGameTimes(args)
+
+	moveTime := calculateTimeForMove()
+
+	if moveTime != 13375 {
+		t.Errorf("MoveTime not calculated correctly. Expectyed %v got %v", 13375, moveTime)
 	}
 }
